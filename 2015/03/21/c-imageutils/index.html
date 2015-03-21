@@ -4,22 +4,34 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Goodbye HeFei | yywang&#39;s blog</title>
+    <title>yywang&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="yywang">
     
 
     
-    <meta name="description" content="明天早上就要离开合肥了。从2009年9月到合肥以来，已经是生活了五年多的城市。虽说我对合肥还是感觉不熟悉。但是这五六年来在合肥的学习和工作使我成长了很多，收获了很多。">
+    <meta name="description" content="title: ‘c# imageUtils’date: 2014-06-06 00:03:47categories:
+
+wpftags:-wpf
+
+最近在做一个简单的图片等比缩放的功能，在网上搜了半天，代码倒是很多但是很少能够封装的和业务无关。  帮助类直接上代码。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Goodbye HeFei">
-<meta property="og:url" content="http://yywang.info/2015/03/12/goodbye-hefei/index.html">
+<meta property="og:title" content="yywang's blog">
+<meta property="og:url" content="http://yywang.info/2015/03/21/c-imageutils/index.html">
 <meta property="og:site_name" content="yywang's blog">
-<meta property="og:description" content="明天早上就要离开合肥了。从2009年9月到合肥以来，已经是生活了五年多的城市。虽说我对合肥还是感觉不熟悉。但是这五六年来在合肥的学习和工作使我成长了很多，收获了很多。">
+<meta property="og:description" content="title: ‘c# imageUtils’date: 2014-06-06 00:03:47categories:
+
+wpftags:-wpf
+
+最近在做一个简单的图片等比缩放的功能，在网上搜了半天，代码倒是很多但是很少能够封装的和业务无关。  帮助类直接上代码。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Goodbye HeFei">
-<meta name="twitter:description" content="明天早上就要离开合肥了。从2009年9月到合肥以来，已经是生活了五年多的城市。虽说我对合肥还是感觉不熟悉。但是这五六年来在合肥的学习和工作使我成长了很多，收获了很多。">
+<meta name="twitter:title" content="yywang's blog">
+<meta name="twitter:description" content="title: ‘c# imageUtils’date: 2014-06-06 00:03:47categories:
+
+wpftags:-wpf
+
+最近在做一个简单的图片等比缩放的功能，在网上搜了半天，代码倒是很多但是很少能够封装的和业务无关。  帮助类直接上代码。">
 
     
     <link rel="alternative" href="/atom.xml" title="yywang&#39;s blog" type="application/atom+xml">
@@ -78,14 +90,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/12/goodbye-hefei/" title="Goodbye HeFei" itemprop="url">Goodbye HeFei</a>
+      <a href="/2015/03/21/c-imageutils/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://yywang.info/about" title="yywang" target="_blank" itemprop="author">yywang</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-12T11:32:18.000Z" itemprop="datePublished"> 發表於 2015-03-12</time>
+    <time datetime="2015-03-21T08:19:53.000Z" itemprop="datePublished"> 發表於 2015-03-21</time>
     
   </p>
 </header>
@@ -98,23 +110,17 @@
 		
 		</div>
 		
-		<p>明天早上就要离开合肥了。从2009年9月到合肥以来，已经是生活了五年多的城市。虽说我对合肥还是感觉不熟悉。但是这五六年来在合肥的学习和工作使我成长了很多，收获了很多。<a id="more"></a>就要离开了，感谢这里的所有帮助我的朋友同学同事。感谢这里曾经教过我的所有老师。</p>
-<p>下一站将要去的是魔都上海，都说大城市机会多，眼界广。虽说现在给我的感觉是租房贵消费高，但是还是相信通过自己的努力可以再上海生活的更好。现在还不敢提能够在上海买房安家，需要脚踏实地的一步一步来。相信那些现在看来遥不可及的事情，通过自己的努力几年后会和你离那么的近，并且很容易就能实现。现在可以好好享受奋斗的过程！</p>
+		<p>title: ‘c# imageUtils’<br>date: 2014-06-06 00:03:47<br>categories:</p>
+<ul>
+<li>wpf<br>tags:<br>-wpf</li>
+</ul>
+<p>最近在做一个简单的图片等比缩放的功能，在网上搜了半天，代码倒是很多但是很少能够封装的和业务无关。<br>  帮助类直接上代码。<a id="more"></a><br>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/// &#60;summary&#62;&#10; /// ImageUtils&#24110;&#21161;&#31867;&#10; /// &#60;/summary&#62;&#10; public sealed class ImageUtils&#10; &#123;&#10;     /// &#60;summary&#62;&#10;     /// &#22270;&#29255;&#31561;&#27604;&#32553;&#25918;&#10;     /// &#60;/summary&#62;&#10;     /// &#60;param name=&#34;originalImage&#34;&#62;&#21407;&#22270;&#29255;&#60;/param&#62;&#10;     /// &#60;param name=&#34;width&#34;&#62;&#32553;&#25918;&#21518;&#30340;&#23485;&#60;/param&#62;&#10;     /// &#60;param name=&#34;height&#34;&#62;&#32553;&#25918;&#21518;&#30340;&#39640;&#60;/param&#62;&#10;     /// &#60;returns&#62;&#32553;&#25918;&#21518;&#30340;&#22270;&#29255;&#60;/returns&#62;&#10;     public static Image Resize(Image originalImage, int width, int height)&#10;     &#123;&#10;         if (originalImage == null || width &#60; 0 || height &#60; 0)&#10;         &#123;&#10;             throw new ArgumentException(&#34;&#21442;&#25968;&#19981;&#21512;&#27861;&#12290;originalImage is null or width&#60;0 or height&#60;0&#34;);&#10;         &#125;&#10;         double originalWidth = originalImage.Width;&#10;         double originalHeight = originalImage.Height;&#10;         double targetWidth = 0.0, targetHeight = 0.0;&#10;         if (originalWidth &#60;= width &#38;&#38; originalHeight &#60;= height)&#10;         &#123;&#10;             return originalImage;&#10;         &#125;&#10;         if (width*1.0 /originalWidth &#60; height*1.0 / originalHeight)&#10;         &#123;&#10;             double rate = (width * 1.0 / originalWidth);&#10;             targetWidth = width;&#10;             targetHeight = rate * originalHeight;&#10;         &#125;&#10;         else&#10;         &#123;&#10;             targetHeight = height;&#10;             targetWidth = height * 1.0 / originalHeight * originalWidth;&#10;         &#125;&#10;         Image newImage = null;&#10;         Graphics newGraphic = null;&#10;         try&#10;         &#123;&#10;             newImage = new Bitmap(Convert.ToInt32(Math.Round(targetWidth)), Convert.ToInt32(Math.Round(targetHeight)));&#10;             newGraphic = Graphics.FromImage(newImage);&#10;             newGraphic.InterpolationMode = InterpolationMode.HighQualityBicubic;&#10;             newGraphic.SmoothingMode = SmoothingMode.HighQuality;&#10;             newGraphic.Clear(Color.White);&#10;             newGraphic.DrawImage(originalImage,&#10;                 new System.Drawing.Rectangle(0, 0, newImage.Width, newImage.Height),&#10;                 new System.Drawing.Rectangle(0, 0, originalImage.Width, originalImage.Height),&#10;                 System.Drawing.GraphicsUnit.Pixel);&#10;             byte[] bytes = ImageToByteArray(newImage);&#10;             return ByteArrayToImage(bytes);&#10;         &#125;&#10;         finally &#123;&#10;             if (newGraphic != null)&#10;             &#123;&#10;                 newGraphic.Dispose();&#10;             &#125;&#10;             if (newImage != null)&#10;             &#123;&#10;                 newImage.Dispose();&#10;             &#125;&#10;             originalImage.Dispose();&#10;         &#125;&#10;     &#125;&#10;&#10;     /// &#60;summary&#62;&#10;     /// BitmapImage To ByteArray&#10;     /// &#60;/summary&#62;&#10;     /// &#60;param name=&#34;bmp&#34;&#62;bitMap&#60;/param&#62;&#10;     /// &#60;returns&#62;ByteArray&#60;/returns&#62;&#10;     public static byte[] BitmapImageToByteArray(BitmapImage bmp)&#10;     &#123;&#10;         if (bmp == null)&#10;         &#123;&#10;             throw new ArgumentException(&#34;&#21442;&#25968;&#19981;&#21512;&#27861;&#65292;bmp is null&#34;);&#10;         &#125;&#10;         byte[] byteArray = null;&#10;         JpegBitmapEncoder encoder = new JpegBitmapEncoder();&#10;         encoder.Frames.Add(BitmapFrame.Create(bmp));&#10;         Stream sMarket = new MemoryStream();&#10;         encoder.Save(sMarket);&#10;         if (sMarket != null &#38;&#38; sMarket.Length &#62; 0)&#10;         &#123;&#10;             sMarket.Position = 0;&#10;             using (BinaryReader br = new BinaryReader(sMarket))&#10;             &#123;&#10;                 byteArray = br.ReadBytes((int)sMarket.Length);&#10;             &#125;&#10;&#10;         &#125;&#10;         return byteArray;&#10;     &#125;&#10;&#10;     /// &#60;summary&#62;&#10;     /// ByteArray to BitmapImage&#10;     /// &#60;/summary&#62;&#10;     /// &#60;param name=&#34;bytes&#34;&#62;byte array&#60;/param&#62;&#10;     /// &#60;returns&#62;BitmapImage&#60;/returns&#62;&#10;     public static BitmapImage ByteArrayToBitmapImage(byte[] bytes)&#10;     &#123;&#10;         if (bytes == null || bytes.Length == 0)&#10;         &#123;&#10;             throw new ArgumentException(&#34;&#21442;&#25968;&#19981;&#21512;&#27861;&#65292;bytes is null or empty&#34;);&#10;         &#125;&#10;         BitmapImage bmp = new BitmapImage();&#10;         bmp.BeginInit();&#10;         bmp.StreamSource = new MemoryStream(bytes);&#10;         bmp.EndInit();&#10;         return bmp;&#10;     &#125;&#10;&#10;     /// &#60;summary&#62;&#10;     /// byte array to Image&#10;     /// &#60;/summary&#62;&#10;     /// &#60;param name=&#34;bytes&#34;&#62;byte&#60;/param&#62;&#10;     /// &#60;returns&#62;bytes&#60;/returns&#62;&#10;     public static Image ByteArrayToImage(byte[] bytes)&#10;     &#123;&#10;         if (bytes == null || bytes.Length == 0)&#10;         &#123;&#10;             throw new ArgumentException(&#34;&#21442;&#25968;&#19981;&#21512;&#27861;&#65292;bytes is null or empty&#34;);&#10;         &#125;&#10;         Image image = null;&#10;         using (Stream stream = new MemoryStream(bytes))&#10;         &#123;&#10;             stream.Write(bytes, 0, bytes.Length);&#10;             image = Image.FromStream(stream, true);&#10;         &#125;&#10;         return image;&#10;     &#125;&#10;&#10;     /// &#60;summary&#62;&#10;     /// byte to Array&#10;     /// &#60;/summary&#62;&#10;     /// &#60;param name=&#34;image&#34;&#62;image&#60;/param&#62;&#10;     /// &#60;returns&#62;byte array&#60;/returns&#62;&#10;     public static byte[] ImageToByteArray(Image image)&#10;     &#123;&#10;         if (image == null)&#10;         &#123;&#10;             throw new ArgumentException(&#34;&#21442;&#25968;&#19981;&#21512;&#27861;&#65292;image is null.&#34;);&#10;         &#125;&#10;         byte[] bytes = null;&#10;         using (Stream stream = new MemoryStream())&#10;         &#123;&#10;             Bitmap bmp = new Bitmap(image);&#10;             bmp.Save(stream, ImageFormat.Jpeg);&#10;             bytes = new byte[stream.Length];&#10;             stream.Position = 0;&#10;             stream.Read(bytes, 0, Convert.ToInt32(bytes.Length));&#10;         &#125;&#10;         return bytes;&#10;     &#125;&#10; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>  以上帮助类除了提供图片缩放功能之外，还提供了c#中各种Image的转换。<br>  Image=&gt;BitmapImage 步骤：Image=&gt;byte[]=&gt;BitmapImage<br>  Stream=&gt;Image  步骤：Stream=&gt;byte[]=&gt;Image<br>  BitmapImage=&gt;Image 步骤：BitmapImage=&gt;byte[]=&gt;Image</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/个人生活/">个人生活</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/个人生活/">个人生活</a>
-  </div>
 
 </div>
 
@@ -122,7 +128,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yywang.info/2015/03/12/goodbye-hefei/" data-title="Goodbye HeFei | yywang&#39;s blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yywang.info/2015/03/21/c-imageutils/" data-title="yywang&#39;s blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -135,19 +141,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/21/c-imageutils/" title="">
-  <strong>上一篇：</strong><br/>
-  <span>
-  (no title)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/17/thread-pool-pattern/"  title="【翻译】线程池">
+<a href="/2015/03/12/goodbye-hefei/"  title="Goodbye HeFei">
  <strong>下一篇：</strong><br/> 
- <span>【翻译】线程池
+ <span>Goodbye HeFei
 </span>
 </a>
 </div>
@@ -156,7 +154,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/12/goodbye-hefei/" data-title="Goodbye HeFei" data-url="http://yywang.info/2015/03/12/goodbye-hefei/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/21/c-imageutils/" data-title="" data-url="http://yywang.info/2015/03/21/c-imageutils/"></div>
 </section>
 
 
