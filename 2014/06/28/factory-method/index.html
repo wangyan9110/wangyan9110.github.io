@@ -1,0 +1,626 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>设计模式学习--Factory Method | yywang&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="yywang">
+    
+
+    
+    <meta name="description" content="What
+Factory Method：定义一个创建对象的接口，让子类来决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式学习--Factory Method">
+<meta property="og:url" content="http://yywang.info/2014/06/28/factory-method/index.html">
+<meta property="og:site_name" content="yywang's blog">
+<meta property="og:description" content="What
+Factory Method：定义一个创建对象的接口，让子类来决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。">
+<meta property="og:image" content="http://yywang.qiniudn.com/factorymethod.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式学习--Factory Method">
+<meta name="twitter:description" content="What
+Factory Method：定义一个创建对象的接口，让子类来决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="yywang&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="yywang&#39;s blog" title="yywang&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="yywang&#39;s blog">yywang&#39;s blog</a></h1>
+				<h2 class="blog-motto">记录成长的点点滴滴</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yywang.info">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/06/28/factory-method/" title="设计模式学习--Factory Method" itemprop="url">设计模式学习--Factory Method</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yywang.info/about" title="yywang" target="_blank" itemprop="author">yywang</a>
+		
+  <p class="article-time">
+    <time datetime="2014-06-28T14:40:42.000Z" itemprop="datePublished"> 發表於 2014-06-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How"><span class="toc-number">3.</span> <span class="toc-text">How</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Discuss"><span class="toc-number">4.</span> <span class="toc-text">Discuss</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="What"><strong>What</strong></h3><blockquote>
+<p>Factory Method：定义一个创建对象的接口，让子类来决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。<a id="more"></a></p>
+</blockquote>
+<h3 id="Why"><strong>Why</strong></h3><p>Factory Method是一个比较基础的创建型模式，它主要在于由子类决定实例化哪一个类。主要用于框架代码或者工具包中。<br>适用于如下场景：<br>1、当一个类不知道它所必须创建的对象的类的时候<br>2、当一个类希望由子类来指定它所创建对象的时候<br>3、当类将创建对象的职责委托给多个帮助子类的某一个，并且你希望将哪一个帮助子类是代理者这一信息局部化的时候</p>
+<h3 id="How"><strong>How</strong></h3><p>假设如下场景，写一个语法分析器，需要支持C与java代码的语法分析，需要完成代码语法检查和语法解析工作。以此为例实现工厂模式。<br>语法分析器接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Parsing</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">checkGrammar</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">parseCode</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>C代码语法分析器实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CParsing</span> <span class="keyword">implements</span> <span class="title">Parsing</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkGrammar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"check c grammar"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parseCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"parse c code"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Java代码语法分析器实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaParsing</span> <span class="keyword">implements</span> <span class="title">Parsing</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkGrammar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"check java grammar"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parseCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"parse java code"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>解析器工厂接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ParsingFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">Parsing <span class="title">createParsing</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>C代码解析器工厂实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CParsingFactory</span> <span class="keyword">implements</span> <span class="title">ParsingFactory</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Parsing <span class="title">createParsing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CParsing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Java代码解析器工厂实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaParsingFactory</span> <span class="keyword">implements</span> <span class="title">ParsingFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Parsing <span class="title">createParsing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> JavaParsing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>客户端调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span>&#123;</span><br><span class="line">        ParsingFactory factory=<span class="keyword">new</span> CParsingFactory();</span><br><span class="line">        Parsing parsing=factory.createParsing();</span><br><span class="line">        parsing.checkGrammar();</span><br><span class="line">        parsing.parseCode();</span><br><span class="line"></span><br><span class="line">        ParsingFactory factory1=<span class="keyword">new</span> JavaParsingFactory();</span><br><span class="line">        Parsing parsing1=factory1.createParsing();</span><br><span class="line">        parsing1.checkGrammar();</span><br><span class="line">        parsing1.parseCode();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上示例类图如下：<br><img src="http://yywang.qiniudn.com/factorymethod.png" alt="Factory Method"></p>
+<h3 id="Discuss"><strong>Discuss</strong></h3><p>Abstarct Factory VS Factory Method<br>在学习Factory Method就对Factory Method模式和Abstarct Factory很迷惑，经过反复阅读两个章节，基本上总结出了两者的一个联系，Abstarct Factory是一个特殊的Factory Method，但是两者区别在哪呢？<br>完成Factory Method的示例发现，在Abstract Factory中示例的UML和Factory Method的示例的UML是结构是一样的，于是就思考为什么？<br>两者的意图如下：<br>Factory Method：定义<strong>一个创建对象的接口</strong>，<strong>让子类来决定实例化哪一个类</strong>。Factory Method使一个类的<strong>实例化延迟到其子类</strong>。<br>Abstarct Factory：提供一个创建<strong>一系列相关或相互依赖的接口</strong>，而无需指定他们具体类。<br>从以上粗体部分就可以体现其区别的地方。<br>1.Abstarct Factory强调的是创建一系列相关相互依赖的接口，也就是Abstarct这个工厂可以生产一系列的对象，是一个一对多的关系，然后我又重新考虑了一下，Abstarct Factory的示例，并进行了完善（详情见：<a href="http://yywang.info/2014/06/23/abstract-factory/" target="_blank" rel="external">设计模式学习—Abstarct Factory的ChangeLog</a>）。它的扩展性侧重横向扩展。比如在Abstarct Factory学习中的例子，我们又来一个RoleDao，我们是在DaoFactory中增加createRoleDao方法。<br>2.Factory Method强调的是创建一个对象接口，让子类来决定实例化哪一个类，也就是它的工厂和产品是一对一的关系。它的扩展性侧重的是垂直扩展，比如本节的示例，我们需要增加一个支持Sql语言的语法分析器，我需要增加一个SqlParsingFactory类和一个SqlParsing类。<br>关于Abstarct Factory VS Factory Method的讨论还有如下可以参考：<br><a href="http://www.cnblogs.com/happyhippy/archive/2010/09/26/1836223.html" target="_blank" rel="external">http://www.cnblogs.com/happyhippy/archive/2010/09/26/1836223.html</a><br><a href="http://www.cnblogs.com/procoder/archive/2009/04/24/1442920.html" target="_blank" rel="external">http://www.cnblogs.com/procoder/archive/2009/04/24/1442920.html</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Design-pattern/">Design pattern</a>►<a class="article-category-link" href="/categories/Design-pattern/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Design-pattern/">Design pattern</a><a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yywang.info/2014/06/28/factory-method/" data-title="设计模式学习--Factory Method | yywang&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/07/02/fastjson-define-serialize-parser/" title="FastJson 自定义Serialize、Parser">
+  <strong>上一篇：</strong><br/>
+  <span>
+  FastJson 自定义Serialize、Parser</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/06/24/builder/"  title="设计模式学习--Builder">
+ <strong>下一篇：</strong><br/> 
+ <span>设计模式学习--Builder
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2014/06/28/factory-method/" data-title="设计模式学习--Factory Method" data-url="http://yywang.info/2014/06/28/factory-method/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How"><span class="toc-number">3.</span> <span class="toc-text">How</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Discuss"><span class="toc-number">4.</span> <span class="toc-text">Discuss</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Design-pattern/" title="Design pattern">Design pattern<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Maven/" title="Maven">Maven<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/" title="c#">c#<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/spring/" title="spring">spring<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>27</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-pattern/" title="Design pattern">Design pattern<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/maven/" title="maven">maven<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/c/" title="c#">c#<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/wpf/" title="wpf">wpf<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/in-action/" title="in action">in action<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/quartz/" title="quartz">quartz<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Thread-pool/" title="Thread pool">Thread pool<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/fastjson/" title="fastjson">fastjson<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.cnblogs.com/JerryWang1991/" target="_blank" title="博客园博客">博客园博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.isming.me/" target="_blank" title="码农明明桑">码农明明桑</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.baizihan.cn/" target="_blank" title="梓涵的博客">梓涵的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m  yywang. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wangyan9110" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wangyan9110" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:wangyan9110@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yywang.info/about" target="_blank" title="yywang">yywang</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yywang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

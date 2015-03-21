@@ -1,0 +1,623 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>设计模式学习--Adapter | yywang&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="yywang">
+    
+
+    
+    <meta name="description" content="What
+Adapter：将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式学习--Adapter">
+<meta property="og:url" content="http://yywang.info/2014/07/26/adapter/index.html">
+<meta property="og:site_name" content="yywang's blog">
+<meta property="og:description" content="What
+Adapter：将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。">
+<meta property="og:image" content="http://yywang.qiniudn.com/adapter.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式学习--Adapter">
+<meta name="twitter:description" content="What
+Adapter：将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="yywang&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="yywang&#39;s blog" title="yywang&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="yywang&#39;s blog">yywang&#39;s blog</a></h1>
+				<h2 class="blog-motto">记录成长的点点滴滴</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yywang.info">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/07/26/adapter/" title="设计模式学习--Adapter" itemprop="url">设计模式学习--Adapter</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yywang.info/about" title="yywang" target="_blank" itemprop="author">yywang</a>
+		
+  <p class="article-time">
+    <time datetime="2014-07-26T14:40:33.000Z" itemprop="datePublished"> 發表於 2014-07-26</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How"><span class="toc-number">3.</span> <span class="toc-text">How</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Discuss"><span class="toc-number">4.</span> <span class="toc-text">Discuss</span></a></li></ol>
+		
+		</div>
+		
+		<h4 id="What"><strong>What</strong></h4><blockquote>
+<p>Adapter：将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。<a id="more"></a></p>
+</blockquote>
+<h4 id="Why"><strong>Why</strong></h4><p>Adpater主要用于系统接口兼容性问题，比如有一个现有的组件，它提供了我们需要的部分功能，我们就可以再该组件上封装一层Adapter以方便我们的代码调用。<br>以下情况适用：<br>1、你使用一个已存在的类，而它的接口不符合你的需求。<br>2、你想创建一个可以复用的类，该类可以与其他不相关的类或不可预见的类协同工作。<br>3、你想使用一些已经存在的子类，但是不可能对每一个都进行子类化以匹配它们的接口。</p>
+<h4 id="How"><strong>How</strong></h4><p>假设如下场景：需要提供一种word下载功能，使用aspose组件生成word，需要设计一种接口，可以适用于以后更换组件，比如apache poi。<br>不同的组件可能提供的接口不同，调用的方式也不同，所以可以使用adapter模式来统一不同组件调用方式不同给我们带来的困扰，在更换组件时我们的代码可以不改变或者少量改变。<br>模拟aspose的类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Aspose</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">asposeCreateDoc</span><span class="params">()</span></span>&#123;</span><br><span class="line">         System.out.print(<span class="string">"Aspose create a doc"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">asposeCreateTable</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.print(<span class="string">"Aspose create a table"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>word操作接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">WordOperate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createDoc</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createTable</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>word操作的适配器<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WordOperateImpl</span> <span class="keyword">implements</span> <span class="title">WordOperate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Aspose aspose=<span class="keyword">new</span> Aspose();</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createDoc</span><span class="params">()</span></span>&#123;</span><br><span class="line">        aspose.asposeCreateDoc();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createTable</span><span class="params">()</span></span>&#123;</span><br><span class="line">        aspose.asposeCreateTable();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>客户端调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WordOperate wordOperate = <span class="keyword">new</span> WordOperateImpl();</span><br><span class="line">wordOperate.createDoc();</span><br><span class="line">wordOperate.createTable();</span><br></pre></td></tr></table></figure></p>
+<p>以上代码的UML类图如下：<br><img src="http://yywang.qiniudn.com/adapter.png" alt="adapter"></p>
+<h4 id="Discuss"><strong>Discuss</strong></h4><p>在实现以上示例的过程中，从代码的角度上看，就是一个接口然后是一个接口的实现，总感觉这不是adapter模式，经过一些思考，以上假设的场景确实也适合adapter模式实现，在我们平常了开发中不能为了设计模式而使用设计模式，需要根据业务场景去分析，找到合适的实现方法。在学习设计模式的过程中，需要根据这个设计模式适用的情况，举出适用于该设计模式的业务场景，这是个相反的过程。所以每种设计模式是为了解决某种业务问题，不是类图像某个设计模式，就是设计模式。设计模式不是定律。是解决业务问题的常见方法。<br>adapter模式在java jdk中也有应用比如如下：<br>java.util.Arrays#asList()<br>java.io.InputStreamReader(InputStream)<br>java.io.OutputStreamWriter(OutputStream) </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Design-pattern/">Design pattern</a>►<a class="article-category-link" href="/categories/Design-pattern/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Design-pattern/">Design pattern</a><a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yywang.info/2014/07/26/adapter/" data-title="设计模式学习--Adapter | yywang&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/07/29/bridge/" title="设计模式学习--Bridge">
+  <strong>上一篇：</strong><br/>
+  <span>
+  设计模式学习--Bridge</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/13/ftp-learnning/"  title="FTP协议以及FTP服务器工作原理学习">
+ <strong>下一篇：</strong><br/> 
+ <span>FTP协议以及FTP服务器工作原理学习
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2014/07/26/adapter/" data-title="设计模式学习--Adapter" data-url="http://yywang.info/2014/07/26/adapter/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How"><span class="toc-number">3.</span> <span class="toc-text">How</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Discuss"><span class="toc-number">4.</span> <span class="toc-text">Discuss</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Design-pattern/" title="Design pattern">Design pattern<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Maven/" title="Maven">Maven<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/" title="c#">c#<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/spring/" title="spring">spring<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>27</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-pattern/" title="Design pattern">Design pattern<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/maven/" title="maven">maven<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/c/" title="c#">c#<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/wpf/" title="wpf">wpf<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/in-action/" title="in action">in action<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/quartz/" title="quartz">quartz<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Thread-pool/" title="Thread pool">Thread pool<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/fastjson/" title="fastjson">fastjson<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.cnblogs.com/JerryWang1991/" target="_blank" title="博客园博客">博客园博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.isming.me/" target="_blank" title="码农明明桑">码农明明桑</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.baizihan.cn/" target="_blank" title="梓涵的博客">梓涵的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m  yywang. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wangyan9110" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wangyan9110" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:wangyan9110@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yywang.info/about" target="_blank" title="yywang">yywang</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yywang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

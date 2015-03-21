@@ -1,0 +1,639 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>设计模式学习--Flyweight | yywang&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="yywang">
+    
+
+    
+    <meta name="description" content="What
+运用共享技术有效地支持大量细粒度的对象。
+
+Why在创建大量对象时，如果每个小对象都创建一个对象都是非常消耗内存的。在古代我们的先人已经发现了，重复工作带来的成本消耗，我国古代四大发明之一活字印刷术，就是解决的这类问题。我们把每个字看做一个细粒度的对象的话，印刷一本书，就会有成千上万个小对象存在，这成千上万个字除了位置不同之外，没有其他区别。如果采用活字印刷术，就可以方便字的重用，节省大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式学习--Flyweight">
+<meta property="og:url" content="http://yywang.info/2014/12/19/flyweight/index.html">
+<meta property="og:site_name" content="yywang's blog">
+<meta property="og:description" content="What
+运用共享技术有效地支持大量细粒度的对象。
+
+Why在创建大量对象时，如果每个小对象都创建一个对象都是非常消耗内存的。在古代我们的先人已经发现了，重复工作带来的成本消耗，我国古代四大发明之一活字印刷术，就是解决的这类问题。我们把每个字看做一个细粒度的对象的话，印刷一本书，就会有成千上万个小对象存在，这成千上万个字除了位置不同之外，没有其他区别。如果采用活字印刷术，就可以方便字的重用，节省大">
+<meta property="og:image" content="http://7i7jaz.com1.z0.glb.clouddn.com/flyweight.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式学习--Flyweight">
+<meta name="twitter:description" content="What
+运用共享技术有效地支持大量细粒度的对象。
+
+Why在创建大量对象时，如果每个小对象都创建一个对象都是非常消耗内存的。在古代我们的先人已经发现了，重复工作带来的成本消耗，我国古代四大发明之一活字印刷术，就是解决的这类问题。我们把每个字看做一个细粒度的对象的话，印刷一本书，就会有成千上万个小对象存在，这成千上万个字除了位置不同之外，没有其他区别。如果采用活字印刷术，就可以方便字的重用，节省大">
+
+    
+    <link rel="alternative" href="/atom.xml" title="yywang&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="yywang&#39;s blog" title="yywang&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="yywang&#39;s blog">yywang&#39;s blog</a></h1>
+				<h2 class="blog-motto">记录成长的点点滴滴</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yywang.info">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/12/19/flyweight/" title="设计模式学习--Flyweight" itemprop="url">设计模式学习--Flyweight</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yywang.info/about" title="yywang" target="_blank" itemprop="author">yywang</a>
+		
+  <p class="article-time">
+    <time datetime="2014-12-19T15:09:54.000Z" itemprop="datePublished"> 發表於 2014-12-19</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How"><span class="toc-number">3.</span> <span class="toc-text">How</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Discuss"><span class="toc-number">4.</span> <span class="toc-text">Discuss</span></a></li></ol>
+		
+		</div>
+		
+		<h4 id="What">What</h4><blockquote>
+<p>运用共享技术有效地支持大量细粒度的对象。</p>
+</blockquote>
+<h4 id="Why">Why</h4><p>在创建大量对象时，如果每个小对象都创建一个对象都是非常消耗内存的。在古代我们的先人已经发现了，重复工作带来的成本消耗，我国古代四大发明之一活字印刷术，就是解决的这类问题。我们把每个字看做一个细粒度的对象的话，印刷一本书，就会有成千上万个小对象存在，这成千上万个字除了位置不同之外，没有其他区别。如果采用活字印刷术，就可以方便字的重用，节省大量的工作量。同样的，如果对象可以在计算机中共享，相同的对象只创建一个对象，也可以节省大量的内存空间和创建对象消耗的时间。这就是flyweight的好处。如下场景适合用flyweight模式：</p>
+<ol>
+<li>一个应用程序使用了大量的对象。</li>
+<li>完全由于使用大量的对象，造成很大的存储开销。</li>
+<li>对象的大多数状态都可变为外部状态。以上活字印刷的例子，字的位置就是外部状态。</li>
+<li>如果删除的外部状态，那么可以用相对较少的共享对象取代很多组对象。</li>
+<li>应用程序不依赖与对象标识。<a id="more"></a></li>
+</ol>
+<h4 id="How">How</h4><p>假设如下场景：设计一个艺术字生成器。<br>分析：这个例子就可以类似我们祖先发明的活字印刷术的思想来做，先检查池里是否有这个字，如果没有雕刻这个字，并存储到“池”中，如果存在从“池”中拿出这个字，放到相应的位置就可以了。</p>
+<p>艺术字工厂类，创建字以及已创建字的缓存<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArtWordFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String,ArtWord&gt; artWordMap=<span class="keyword">new</span> HashMap&lt;String, ArtWord&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ArtWord <span class="title">getArtWord</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">        ArtWord artWord=artWordMap.get(word);</span><br><span class="line">        <span class="keyword">if</span>(artWord==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(word.equals(<span class="string">"zhong"</span>))&#123;</span><br><span class="line">                artWord=<span class="keyword">new</span> ZhongArtWord();</span><br><span class="line">                artWordMap.put(<span class="string">"zhong"</span>,artWord);</span><br><span class="line">            &#125;<span class="function"><span class="keyword">else</span> <span class="title">if</span><span class="params">(word.equals(<span class="string">"guo"</span>)</span>)</span>&#123;</span><br><span class="line">                artWord=<span class="keyword">new</span> GuoArtWord();</span><br><span class="line">                artWordMap.put(<span class="string">"guo"</span>,artWord);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> artWord;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>艺术字的共享接口，在艺术字中艺术字的位置是不共享的<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ArtWord</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 不同艺术字布局不共享</span><br><span class="line">     *<span class="javadoctag"> @param</span> position 位置</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">layout</span><span class="params">(Position position)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>中字实现类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ZhongArtWord</span> <span class="keyword">implements</span> <span class="title">ArtWord</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">layout</span><span class="params">(Position position)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"中的位置："</span>+position.getX()+<span class="string">" "</span>+position.getY());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>国字实现类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GuoArtWord</span> <span class="keyword">implements</span> <span class="title">ArtWord</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">layout</span><span class="params">(Position position)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"国的位置："</span>+position.getX()+<span class="string">" "</span>+position.getY());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>客户端调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        ArtWord zhongArtWord=ArtWordFactory.getArtWord(<span class="string">"zhong"</span>);</span><br><span class="line">        zhongArtWord.layout(<span class="keyword">new</span> Position(<span class="number">1</span>,<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">        ArtWord guoArtWord=ArtWordFactory.getArtWord(<span class="string">"guo"</span>);</span><br><span class="line">        guoArtWord.layout(<span class="keyword">new</span> Position(<span class="number">3</span>,<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码类图</p>
+<p><img src="http://7i7jaz.com1.z0.glb.clouddn.com/flyweight.png" alt="flyweight"></p>
+<h4 id="Discuss">Discuss</h4><p>flyweight在系统需要创建大量对象的情况下，非常有用，在详细设计时，可以抽离对象的共性共享，不同变成外部状态，比如以上的例子，每个艺术字的对象是共享的，由于需要排版，所以字的位置不能固定。从此可以看出，我们的祖先是多么的聪明，在北宋时期，就使用了flyweight模式，发明了活字印刷术。这要比四人帮提出这个模式要早不知多少年。^_^</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Design-pattern/">Design pattern</a>►<a class="article-category-link" href="/categories/Design-pattern/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Design-pattern/">Design pattern</a><a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yywang.info/2014/12/19/flyweight/" data-title="设计模式学习--Flyweight | yywang&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/12/20/detailed-design-preface/" title="如何做详细设计之序">
+  <strong>上一篇：</strong><br/>
+  <span>
+  如何做详细设计之序</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/11/08/jdk-tools/"  title="JDK那些有用的工具">
+ <strong>下一篇：</strong><br/> 
+ <span>JDK那些有用的工具
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2014/12/19/flyweight/" data-title="设计模式学习--Flyweight" data-url="http://yywang.info/2014/12/19/flyweight/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#What"><span class="toc-number">1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How"><span class="toc-number">3.</span> <span class="toc-text">How</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Discuss"><span class="toc-number">4.</span> <span class="toc-text">Discuss</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Design-pattern/" title="Design pattern">Design pattern<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Maven/" title="Maven">Maven<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/" title="c#">c#<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/spring/" title="spring">spring<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>27</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-pattern/" title="Design pattern">Design pattern<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/maven/" title="maven">maven<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/c/" title="c#">c#<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/wpf/" title="wpf">wpf<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/in-action/" title="in action">in action<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/quartz/" title="quartz">quartz<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Thread-pool/" title="Thread pool">Thread pool<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/fastjson/" title="fastjson">fastjson<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.cnblogs.com/JerryWang1991/" target="_blank" title="博客园博客">博客园博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.isming.me/" target="_blank" title="码农明明桑">码农明明桑</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.baizihan.cn/" target="_blank" title="梓涵的博客">梓涵的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m  yywang. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wangyan9110" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wangyan9110" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:wangyan9110@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yywang.info/about" target="_blank" title="yywang">yywang</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yywang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

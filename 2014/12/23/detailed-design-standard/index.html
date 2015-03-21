@@ -1,0 +1,642 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>如何做详细设计之规范 | yywang&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="yywang">
+    
+
+    
+    <meta name="description" content="在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、接口调用者才能更好的理解接口。
+起名难吗？如果你认真的为一个方法名或者一个类名思考过或者纠结过，说明我们">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何做详细设计之规范">
+<meta property="og:url" content="http://yywang.info/2014/12/23/detailed-design-standard/index.html">
+<meta property="og:site_name" content="yywang's blog">
+<meta property="og:description" content="在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、接口调用者才能更好的理解接口。
+起名难吗？如果你认真的为一个方法名或者一个类名思考过或者纠结过，说明我们">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何做详细设计之规范">
+<meta name="twitter:description" content="在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、接口调用者才能更好的理解接口。
+起名难吗？如果你认真的为一个方法名或者一个类名思考过或者纠结过，说明我们">
+
+    
+    <link rel="alternative" href="/atom.xml" title="yywang&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="yywang&#39;s blog" title="yywang&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="yywang&#39;s blog">yywang&#39;s blog</a></h1>
+				<h2 class="blog-motto">记录成长的点点滴滴</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yywang.info">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/12/23/detailed-design-standard/" title="如何做详细设计之规范" itemprop="url">如何做详细设计之规范</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yywang.info/about" title="yywang" target="_blank" itemprop="author">yywang</a>
+		
+  <p class="article-time">
+    <time datetime="2014-12-23T15:26:27.000Z" itemprop="datePublished"> 發表於 2014-12-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#起名难吗？"><span class="toc-number">1.</span> <span class="toc-text">起名难吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#顺序重要吗？"><span class="toc-number">2.</span> <span class="toc-text">顺序重要吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#善用注释"><span class="toc-number">3.</span> <span class="toc-text">善用注释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他"><span class="toc-number">4.</span> <span class="toc-text">其他</span></a></li></ol>
+		
+		</div>
+		
+		<p>在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、接口调用者才能更好的理解接口。</p>
+<h4 id="起名难吗？">起名难吗？</h4><p>如果你认真的为一个方法名或者一个类名思考过或者纠结过，说明我们都在为起一个好名字而努力。以下是个人就一些场景起名的一个看法。</p>
+<ol>
+<li>业务领域类，或者叫实体类，首先类名需要能够准确表达领域类的意图，比如我们一个领域类，School类，我们不可能拿它来表示班级。这是最简单的情况。<ul>
+<li>具备共性的领域类，使用相同的结尾或者开头，比如Archive类，档案类，另外我们根据学生、班级、学校各有一个档案的领域类，这就是一个档案类的族，我们叫UserArchive、ClassArchive、SchoolArchive等。<a id="more"></a></li>
+<li>具有对应关系的领域类，使用相同的开头，比如Order类，订单类，通常订单类还需要一个订单详情类，我们叫OrderDetail类。</li>
+</ul>
+</li>
+<li>业务接口名<ul>
+<li>业务接口类，和详细设计者的抽象设计有关，不过一般业务接口类都有一个门面，门面类名字需要和具体的业务模块用例相关。比如阅卷门面接口类，我们就可以叫MarkingService。当然也有些不一定和业务用例有关，是设计者为实现某个用例，抽象出来的接口，比如以上的阅卷业务类，部分业务接口比较复杂，需要继续抽象。我们抽象出来一个阅卷任务类，我们就可以叫MarkingTask，当然MarkingTask不能被外部调用。需要通过门面接口类MarkingService对外提供服务。</li>
+<li>业务接口方法，业务接口方法和业务用例相关。比如我们有个业务用例是生成档案，我们就叫generateArchive，这个名字和业务相关。</li>
+</ul>
+</li>
+<li>数据持久层接口名<ul>
+<li>一般持久层接口设计比较轻，这个具体的接口设计原则，会在下次讲到。接口方法设计，一般几个固定开头就够用了，比如：insert,update,delete,find开头就够用。比如查询一条用户档案就叫findUserArchive。</li>
+</ul>
+</li>
+</ol>
+<h4 id="顺序重要吗？">顺序重要吗？</h4><p>不知大家有没有思考过，类中字段顺序、接口方法顺序的问题。我个人思考过这个问题，但是我自己在工作中，也做的不好。</p>
+<ol>
+<li>属性的顺序，比如两个类有几个相同的属性（不考虑是否需要抽离到一个Base的抽象类中），在一个类中，把它们放在开头，另一个类中放在后面，当自己的调试一些问题，或者别人阅读时总是不方便，不好找。建议表达相近的属性放在一块，并保持顺序一致，比如表达个人信息的基础信息（userId,userCode,userName）放在连续顺序。所以字段顺序保持一致性也是非常好的习惯。</li>
+<li>方法的顺序，和字段同样的问题，比如两个重载方法，方法名一致，参数列表不同，如果把一个放在开头，另一个放在结尾。看着肯定累。<br>建议，表达相近业务的方法放在连续，并保持顺序一致。比如获取档案列表接口getUserArchive() getUserArchivesByClassId,getUserArchivesBySchoolId就可以保持连续。</li>
+<li>参数列表一致性,定义接口时参数列表的顺序不知道大家有没有注意过，比如两个接口，一个接口方法A(String userId,String classId)，接口方法B(String classId,String userId)，两个相同的接口，参数列表不同，首先我们从调用者的角度考虑，非常容易把参数写反，造成不必要的问题。另外查看我们的接口列表也会非常奇怪。<br>所以在参数相近的接口，一定需要注意参数列表的顺序。</li>
+</ol>
+<h4 id="善用注释">善用注释</h4><p>在设计接口时，特别是业务接口方法时，通常不能通过简单的英文单词就能表达接口的意思。这时我们需要考虑两点，第一这个接口职责单一吗？第二如何起个好名字?当然第一种情况就是需要检查接口是否合理，第二种情况就需要我们在方法名和注释和权衡。<br>比如有这样一个接口，获取某个学生每个学科最近一次的考试分数以及排名。如果我们完全按照字面意思来写方法名如下：getStudentEverySubjectsRecentlyScoreAndRank(),显然这不是个好名字.<br>遇到以上情况，我们需要思考如下：<br>1、业务接口方法解决的主要问题是干什么？<br>2、可不可以通过方法参数列表或者返回值来更好的表达？<br>以上需求最主要表达是获取学生成绩。我们在来看用户分以及排名应该是个DTO，我们叫UserScoreDTO，所以DTO可以用类表示用户的成绩。我们在看传入参数，应该为一个userId表示学生，所以通过以上我们可以变成如下接口List<userscoredto> getEverySubjectsRecently(String userId);<br>以上名字依然不好，可能看到这个接口之后，更晕了，还不通顺。这时候注释就派上了用场。以上的EverySubjectsRecently可以通过注释类描述。我们接口就变成List<userscoredto> get(String userId)或者叫List<userscoredto> getUserScores(String userId);这个接口最终如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line"> * 获取某个学生每个学科最近一次的考试成绩。</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> *     仅返回有答题记录的用户的学科。</span><br><span class="line"> * &lt;/p&gt;</span><br><span class="line"> *<span class="javadoctag"> @param</span> userId 用户id</span><br><span class="line"> *<span class="javadoctag"> @return</span> 用户成绩</span><br><span class="line"> */</span></span><br><span class="line"><span class="function">List&lt;UserScoreDTO&gt; <span class="title">getUserScores</span><span class="params">(String userId)</span></span>;</span><br></pre></td></tr></table></figure></userscoredto></userscoredto></userscoredto></p>
+<h4 id="其他">其他</h4><ol>
+<li>尽量不要使用缩写，除非团队规定</li>
+<li>开启代码检查工具，比如java的checkstyle，避免手误。</li>
+</ol>
+<p>本篇内容是在平常工作中的实践思考与总结。如有不妥之处，欢迎讨论。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/detailed-design/">detailed design</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Design-pattern/">Design pattern</a><a href="/tags/detailed-design/">detailed design</a><a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yywang.info/2014/12/23/detailed-design-standard/" data-title="如何做详细设计之规范 | yywang&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/12/29/detailed-design-principle/" title="如何做详细设计之设计原则">
+  <strong>上一篇：</strong><br/>
+  <span>
+  如何做详细设计之设计原则</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/12/21/detailed-design-coding/"  title="如何做详细设计之设计即编码">
+ <strong>下一篇：</strong><br/> 
+ <span>如何做详细设计之设计即编码
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2014/12/23/detailed-design-standard/" data-title="如何做详细设计之规范" data-url="http://yywang.info/2014/12/23/detailed-design-standard/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#起名难吗？"><span class="toc-number">1.</span> <span class="toc-text">起名难吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#顺序重要吗？"><span class="toc-number">2.</span> <span class="toc-text">顺序重要吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#善用注释"><span class="toc-number">3.</span> <span class="toc-text">善用注释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他"><span class="toc-number">4.</span> <span class="toc-text">其他</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Design-pattern/" title="Design pattern">Design pattern<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Maven/" title="Maven">Maven<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/" title="c#">c#<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/spring/" title="spring">spring<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>27</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-pattern/" title="Design pattern">Design pattern<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/maven/" title="maven">maven<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/c/" title="c#">c#<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/wpf/" title="wpf">wpf<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/in-action/" title="in action">in action<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/quartz/" title="quartz">quartz<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Thread-pool/" title="Thread pool">Thread pool<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/fastjson/" title="fastjson">fastjson<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.cnblogs.com/JerryWang1991/" target="_blank" title="博客园博客">博客园博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.isming.me/" target="_blank" title="码农明明桑">码农明明桑</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.baizihan.cn/" target="_blank" title="梓涵的博客">梓涵的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m  yywang. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wangyan9110" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wangyan9110" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:wangyan9110@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yywang.info/about" target="_blank" title="yywang">yywang</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yywang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

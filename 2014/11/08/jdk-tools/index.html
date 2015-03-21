@@ -1,0 +1,654 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>JDK那些有用的工具 | yywang&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="yywang">
+    
+
+    
+    <meta name="description" content="在jdk中，无论是刚开始学习java的学生还是在职场叱咤多年的java程序员，肯定都知道bin目录里的java.exe以及javac.exe这两个命令行工具。但是有没有发现在bin目录除了这两个命令还有不少其他的命令。它们有什么作用呢？今天主要介绍这里面的一些工具。
+jps虚拟机进程状态工具
+功能：可以列出正在运行的虚拟机进程，并显示虚拟机执行主类名称以及这些进程的本地虚拟机唯一ID.
+命令格式：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK那些有用的工具">
+<meta property="og:url" content="http://yywang.info/2014/11/08/jdk-tools/index.html">
+<meta property="og:site_name" content="yywang's blog">
+<meta property="og:description" content="在jdk中，无论是刚开始学习java的学生还是在职场叱咤多年的java程序员，肯定都知道bin目录里的java.exe以及javac.exe这两个命令行工具。但是有没有发现在bin目录除了这两个命令还有不少其他的命令。它们有什么作用呢？今天主要介绍这里面的一些工具。
+jps虚拟机进程状态工具
+功能：可以列出正在运行的虚拟机进程，并显示虚拟机执行主类名称以及这些进程的本地虚拟机唯一ID.
+命令格式：">
+<meta property="og:image" content="http://yywang.qiniudn.com/tools-jps.png">
+<meta property="og:image" content="http://yywang.qiniudn.com/tools-jstat.png">
+<meta property="og:image" content="http://yywang.qiniudn.com/tools-jmap.png">
+<meta property="og:image" content="http://yywang.qiniudn.com/JConsole.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JDK那些有用的工具">
+<meta name="twitter:description" content="在jdk中，无论是刚开始学习java的学生还是在职场叱咤多年的java程序员，肯定都知道bin目录里的java.exe以及javac.exe这两个命令行工具。但是有没有发现在bin目录除了这两个命令还有不少其他的命令。它们有什么作用呢？今天主要介绍这里面的一些工具。
+jps虚拟机进程状态工具
+功能：可以列出正在运行的虚拟机进程，并显示虚拟机执行主类名称以及这些进程的本地虚拟机唯一ID.
+命令格式：">
+
+    
+    <link rel="alternative" href="/atom.xml" title="yywang&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="yywang&#39;s blog" title="yywang&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="yywang&#39;s blog">yywang&#39;s blog</a></h1>
+				<h2 class="blog-motto">记录成长的点点滴滴</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yywang.info">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/11/08/jdk-tools/" title="JDK那些有用的工具" itemprop="url">JDK那些有用的工具</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yywang.info/about" title="yywang" target="_blank" itemprop="author">yywang</a>
+		
+  <p class="article-time">
+    <time datetime="2014-11-08T15:41:31.000Z" itemprop="datePublished"> 發表於 2014-11-08</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#jps虚拟机进程状态工具"><span class="toc-number">1.</span> <span class="toc-text">jps虚拟机进程状态工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jstat虚拟机统计信息监控工具"><span class="toc-number">2.</span> <span class="toc-text">jstat虚拟机统计信息监控工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jmap：java内存映射工具"><span class="toc-number">3.</span> <span class="toc-text">jmap：java内存映射工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jhat：虚拟机堆转存储快照分析工具"><span class="toc-number">4.</span> <span class="toc-text">jhat：虚拟机堆转存储快照分析工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jstack：java堆栈跟踪工具"><span class="toc-number">5.</span> <span class="toc-text">jstack：java堆栈跟踪工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JConsole虚拟机监控工具"><span class="toc-number">6.</span> <span class="toc-text">JConsole虚拟机监控工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#更强大的VisualVM"><span class="toc-number">7.</span> <span class="toc-text">更强大的VisualVM</span></a></li></ol>
+		
+		</div>
+		
+		<p>在jdk中，无论是刚开始学习java的学生还是在职场叱咤多年的java程序员，肯定都知道bin目录里的java.exe以及javac.exe这两个命令行工具。但是有没有发现在bin目录除了这两个命令还有不少其他的命令。它们有什么作用呢？今天主要介绍这里面的一些工具。</p>
+<h5 id="jps虚拟机进程状态工具">jps虚拟机进程状态工具</h5><ul>
+<li>功能：可以列出正在运行的虚拟机进程，并显示虚拟机执行主类名称以及这些进程的本地虚拟机唯一ID.</li>
+<li>命令格式：jps [options] [hostid]</li>
+<li>参数：-l 输出主类全名，如果进程执行的是jar包，输出jar路径  -v 输出虚拟机进程启动时jvm参数</li>
+</ul>
+<p><img src="http://yywang.qiniudn.com/tools-jps.png" alt="jps"><a id="more"></a></p>
+<h5 id="jstat虚拟机统计信息监控工具">jstat虚拟机统计信息监控工具</h5><ul>
+<li>功能：用于监视虚拟机各种运行状态信息的命令行工具。它可以显示本地或者远程虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。它是运行期间定位虚拟机性能问题的首选工具。</li>
+<li>命令格式：jstat [option vmid [interval[s|ms] [count]]]</li>
+<li>参数<br>-class 监视装载、卸载数量、总空间以及类装载所耗费的时间。<br>-gc 监视java堆状况，包括Eden区、两个survivor区、老年代、永久代等容量、已用空间、以及gc时间合计等信息<br>-gcutil 主要关注已使用和总空间的百分比。<br>-gccapacity 主要关注各个区域使用的最大、最小空间。<br>-gccause 能够输出上次gc产生的原因。<br>另外查看新生代的相关信息使用 -gcnew<em> 查看老生代信息使用-gcold</em></li>
+</ul>
+<p><img src="http://yywang.qiniudn.com/tools-jstat.png" alt="jstat"><br>以上红框部分，gcutil输出信息解释<br>新生代：s0表示survivor0区、s1表示survivor1区、E表示Enden区占28.86%<br>老生代以及永久代码：O表示老生代占50.52% 永久代占90.34%<br>YGC（Young GC）共发生17次，YGCT 耗时1.102秒 Full GC共5次，Full GC耗时0.876s,GC总耗时：1.978s</p>
+<h5 id="jmap：java内存映射工具">jmap：java内存映射工具</h5><ul>
+<li>功能：可以生成堆的转储快照。</li>
+<li>命令格式：jmap [option] vmid</li>
+<li>参数：-dump 生成java堆转存快照，格式如：jmap -dump:format=b,file=test 7236<pre><code><span class="deletion">-heap 显示java堆详细信息，如哪种回收器、参数配置、分代情况等。</span>
+</code></pre></li>
+</ul>
+<p><img src="http://yywang.qiniudn.com/tools-jmap.png" alt="jmap"></p>
+<h5 id="jhat：虚拟机堆转存储快照分析工具">jhat：虚拟机堆转存储快照分析工具</h5><ul>
+<li>功能：和jmap搭配使用，分析虚拟机堆转存储快照分析工具，内置了微型http服务器，生成的分析结果后使用浏览器查看。功能比较简陋，尽量使用其他替代品。</li>
+</ul>
+<h5 id="jstack：java堆栈跟踪工具">jstack：java堆栈跟踪工具</h5><ul>
+<li>功能：用于生成虚拟机当前时刻的线程快照。主要用来定位线程长时间停顿的原因，比如线程死锁、死循环、请求外部资源导致长时间等待等常见原因</li>
+<li>命令格式：jstack [option] vmid</li>
+<li>参数：<br>-F 当正常输出的请求不被响应时，强制输出线程堆栈。<br>-l 除堆栈外，显示关于锁的附加信息<br>-m 如果调用本地方法的话，可以显示c/c++的堆栈。</li>
+</ul>
+<h5 id="JConsole虚拟机监控工具">JConsole虚拟机监控工具</h5><p>在cmd中输入jconsole 就可以启动JConsole工具<br><img src="http://yywang.qiniudn.com/JConsole.png" alt="jconsole"><br>有概要、内存、线程、类、vm概要这几个tab,<br>概要tab：主要显示堆内存使用量、线程、类加载数、CPU利用率等。<br>内存tab：可以显示各个分区的占用情况，以及详细情况。<br>线程tab：详细显示线程数情况。<br>类tab: 详细显示已加载的类。</p>
+<h5 id="更强大的VisualVM">更强大的VisualVM</h5><p>在上面都是用命令形式查看，jvm在运行期间的各项参数，上面的所有命令查询的信息都可以通过VisualVM来查看。还支持链接远程的JVM。</p>
+<p>详细的使用方法，在以后的学习中继续总结。</p>
+<p>排查线上性能问题，我们就需要以上的工具，今天主要是简单了解一些其功能，在出现问题时，能够想到使用这些工具来分析，详细使用方法，后面继续学习。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yywang.info/2014/11/08/jdk-tools/" data-title="JDK那些有用的工具 | yywang&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/12/19/flyweight/" title="设计模式学习--Flyweight">
+  <strong>上一篇：</strong><br/>
+  <span>
+  设计模式学习--Flyweight</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/10/22/jvm-garbage-collector/"  title="JVM垃圾收集器">
+ <strong>下一篇：</strong><br/> 
+ <span>JVM垃圾收集器
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2014/11/08/jdk-tools/" data-title="JDK那些有用的工具" data-url="http://yywang.info/2014/11/08/jdk-tools/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#jps虚拟机进程状态工具"><span class="toc-number">1.</span> <span class="toc-text">jps虚拟机进程状态工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jstat虚拟机统计信息监控工具"><span class="toc-number">2.</span> <span class="toc-text">jstat虚拟机统计信息监控工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jmap：java内存映射工具"><span class="toc-number">3.</span> <span class="toc-text">jmap：java内存映射工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jhat：虚拟机堆转存储快照分析工具"><span class="toc-number">4.</span> <span class="toc-text">jhat：虚拟机堆转存储快照分析工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jstack：java堆栈跟踪工具"><span class="toc-number">5.</span> <span class="toc-text">jstack：java堆栈跟踪工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JConsole虚拟机监控工具"><span class="toc-number">6.</span> <span class="toc-text">JConsole虚拟机监控工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#更强大的VisualVM"><span class="toc-number">7.</span> <span class="toc-text">更强大的VisualVM</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Design-pattern/" title="Design pattern">Design pattern<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Maven/" title="Maven">Maven<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/" title="c#">c#<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/java/" title="java">java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/spring/" title="spring">spring<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/c/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>27</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-pattern/" title="Design pattern">Design pattern<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/maven/" title="maven">maven<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/c/" title="c#">c#<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/wpf/" title="wpf">wpf<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/in-action/" title="in action">in action<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/quartz/" title="quartz">quartz<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Thread-pool/" title="Thread pool">Thread pool<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/fastjson/" title="fastjson">fastjson<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.cnblogs.com/JerryWang1991/" target="_blank" title="博客园博客">博客园博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.isming.me/" target="_blank" title="码农明明桑">码农明明桑</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.baizihan.cn/" target="_blank" title="梓涵的博客">梓涵的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m  yywang. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wangyan9110" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wangyan9110" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:wangyan9110@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yywang.info/about" target="_blank" title="yywang">yywang</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yywang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
