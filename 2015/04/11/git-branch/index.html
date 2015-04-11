@@ -12,17 +12,17 @@
 
     
     <meta name="description" content="在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。
-为什么要使用分支管理假设在一个">
+为什么要使用分支管理在一个项目">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git分支管理">
 <meta property="og:url" content="http://yywang.info/2015/04/11/git-branch/index.html">
 <meta property="og:site_name" content="yywang's blog">
 <meta property="og:description" content="在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。
-为什么要使用分支管理假设在一个">
+为什么要使用分支管理在一个项目">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git分支管理">
 <meta name="twitter:description" content="在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。
-为什么要使用分支管理假设在一个">
+为什么要使用分支管理在一个项目">
 
     
     <link rel="alternative" href="/atom.xml" title="yywang&#39;s blog" type="application/atom+xml">
@@ -102,7 +102,7 @@
 		</div>
 		
 		<p>在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。</p>
-<h4 id="为什么要使用分支管理">为什么要使用分支管理</h4><p>假设在一个项目开发周期，假设有一个任务，你需要两周完成，但是你在第一周的时候提交了你的50%的代码，因为代码还没写完，导致当前代码库里的代码是编译不能通过的状态，这时就影响了别人的开发。或者其他已开发好的模块希望尽快上线，这时也不能上线了。如果自己建立一个分支，自己编写的代码只提交到自己的分支，和主分支分离，这样就不会相互影响了。<a id="more"></a></p>
+<h4 id="为什么要使用分支管理">为什么要使用分支管理</h4><p>在一个项目开发周期，假设有一个任务，你需要两周完成，但是你在第一周的时候提交了你的50%的代码，因为代码还没写完，导致当前代码库里的代码是编译不能通过的状态，这时就影响了别人的开发。或者其他已开发好的模块希望尽快上线，这时也不能上线了。如果自己建立一个分支，自己编写的代码只提交到自己的分支，和主分支分离，这样就不会相互影响了。<a id="more"></a></p>
 <h4 id="Git分支管理实践">Git分支管理实践</h4><h5 id="基本命令">基本命令</h5><p>以GitHub中的一个Project为例：<br>首先我们看下该项目的当前有几个分支：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git branch</span><br><span class="line">* master</span><br></pre></td></tr></table></figure></p>
 <p>可以看出当前只有一个master分支。下面我们建立一个dev分支<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git branch dev</span><br><span class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git branch</span><br><span class="line">  dev</span><br><span class="line">* master</span><br></pre></td></tr></table></figure></p>
 <p>以上我们新建了一个dev分支，但是目前仍然选中的时master分支，我们切换到dev分支<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git checkout dev</span><br><span class="line">Switched to branch <span class="string">'dev'</span></span><br><span class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git branch</span><br><span class="line">* dev</span><br><span class="line">  master</span><br></pre></td></tr></table></figure></p>
