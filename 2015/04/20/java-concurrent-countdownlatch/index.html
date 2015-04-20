@@ -4,22 +4,22 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>FastJson 自定义Serialize、Parser | yywang&#39;s blog</title>
+    <title>Java并发编程学习之CountDownLatch | yywang&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="yywang">
     
 
     
-    <meta name="description" content="今天在处理Json反序列化时，在C#传过来的JSON字符串中枚举类型为int类型，FastJson对于枚举的处理有两种类型，一种是字符串一种是int类型，但是它自带的解析int是按照枚举的顺序来解析的，但是有时候值不一定和顺序相对应，所以使用自定义解析器方式进行解决。在网上找解决方案，没找到比较完整的方法。通过查看源代码得出解决方案。">
+    <meta name="description" content="在多线程编程时，常常需要解决线程同步问题，在上一节讲得BlockQueue的take和put方法，是通过阻塞来控制生产者和消费者执行流程，它其实也是在解决线程同步问题。另外在线程同步问题还可以通过很多方式解决比如信号量，栅栏，闭锁。今天所说的CountDownLatch就是一种闭锁同步类，它的作用就像一扇门，在达到结束状态之前门是关闭的，并且没有任何线程可以通过这扇门，当达到了结束状态，门打开，所">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FastJson 自定义Serialize、Parser">
-<meta property="og:url" content="http://yywang.info/2014/07/02/fastjson-define-serialize-parser/index.html">
+<meta property="og:title" content="Java并发编程学习之CountDownLatch">
+<meta property="og:url" content="http://yywang.info/2015/04/20/java-concurrent-countdownlatch/index.html">
 <meta property="og:site_name" content="yywang's blog">
-<meta property="og:description" content="今天在处理Json反序列化时，在C#传过来的JSON字符串中枚举类型为int类型，FastJson对于枚举的处理有两种类型，一种是字符串一种是int类型，但是它自带的解析int是按照枚举的顺序来解析的，但是有时候值不一定和顺序相对应，所以使用自定义解析器方式进行解决。在网上找解决方案，没找到比较完整的方法。通过查看源代码得出解决方案。">
+<meta property="og:description" content="在多线程编程时，常常需要解决线程同步问题，在上一节讲得BlockQueue的take和put方法，是通过阻塞来控制生产者和消费者执行流程，它其实也是在解决线程同步问题。另外在线程同步问题还可以通过很多方式解决比如信号量，栅栏，闭锁。今天所说的CountDownLatch就是一种闭锁同步类，它的作用就像一扇门，在达到结束状态之前门是关闭的，并且没有任何线程可以通过这扇门，当达到了结束状态，门打开，所">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FastJson 自定义Serialize、Parser">
-<meta name="twitter:description" content="今天在处理Json反序列化时，在C#传过来的JSON字符串中枚举类型为int类型，FastJson对于枚举的处理有两种类型，一种是字符串一种是int类型，但是它自带的解析int是按照枚举的顺序来解析的，但是有时候值不一定和顺序相对应，所以使用自定义解析器方式进行解决。在网上找解决方案，没找到比较完整的方法。通过查看源代码得出解决方案。">
+<meta name="twitter:title" content="Java并发编程学习之CountDownLatch">
+<meta name="twitter:description" content="在多线程编程时，常常需要解决线程同步问题，在上一节讲得BlockQueue的take和put方法，是通过阻塞来控制生产者和消费者执行流程，它其实也是在解决线程同步问题。另外在线程同步问题还可以通过很多方式解决比如信号量，栅栏，闭锁。今天所说的CountDownLatch就是一种闭锁同步类，它的作用就像一扇门，在达到结束状态之前门是关闭的，并且没有任何线程可以通过这扇门，当达到了结束状态，门打开，所">
 
     
     <link rel="alternative" href="/atom.xml" title="yywang&#39;s blog" type="application/atom+xml">
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/07/02/fastjson-define-serialize-parser/" title="FastJson 自定义Serialize、Parser" itemprop="url">FastJson 自定义Serialize、Parser</a>
+      <a href="/2015/04/20/java-concurrent-countdownlatch/" title="Java并发编程学习之CountDownLatch" itemprop="url">Java并发编程学习之CountDownLatch</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://yywang.info/about" title="yywang" target="_blank" itemprop="author">yywang</a>
 		
   <p class="article-time">
-    <time datetime="2014-07-02T12:32:11.000Z" itemprop="datePublished"> 发表于 2014-07-02</time>
+    <time datetime="2015-04-20T13:12:23.000Z" itemprop="datePublished"> 发表于 2015-04-20</time>
     
   </p>
 </header>
@@ -94,16 +94,14 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CountDownLatch简介"><span class="toc-number">1.</span> <span class="toc-text">CountDownLatch简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码以及使用场景示例"><span class="toc-number">2.</span> <span class="toc-text">代码以及使用场景示例</span></a></li></ol>
 		
 		</div>
 		
-		<p>今天在处理Json反序列化时，在C#传过来的JSON字符串中枚举类型为int类型，FastJson对于枚举的处理有两种类型，一种是字符串一种是int类型，但是它自带的解析int是按照枚举的顺序来解析的，但是有时候值不一定和顺序相对应，所以使用自定义解析器方式进行解决。在网上找解决方案，没找到比较完整的方法。通过查看源代码得出解决方案。<a id="more"></a><br>以解析如下枚举为例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Status &#123;</span><br><span class="line"></span><br><span class="line">	Ready(<span class="number">10</span>),</span><br><span class="line"></span><br><span class="line">	Completed(<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Status</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.value = value;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Status <span class="title">create</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">switch</span> (value) &#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">			<span class="keyword">return</span> Status.Ready;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">20</span>:</span><br><span class="line">			<span class="keyword">return</span> Status.Completed;</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"code error"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">value</span><span class="params">(Status status)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> status.value;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>反序列化过程实现objectDeserializer接口，以上枚举代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StatusDeserializer</span> <span class="keyword">implements</span> <span class="title">ObjectDeserializer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">deserialze</span><span class="params">(DefaultJSONParser parser, Type type,</span><br><span class="line">			Object fieldName)</span> </span>&#123;</span><br><span class="line">		JSONLexer lexer = parser.getLexer();</span><br><span class="line">		<span class="keyword">int</span> value = lexer.intValue();</span><br><span class="line">		<span class="keyword">return</span> (T) Status.create(value);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getFastMatchToken</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>序列化过程实现ObjectSerializer接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StatusSerializer</span> <span class="keyword">implements</span> <span class="title">ObjectSerializer</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(JSONSerializer serializer, Object object,</span><br><span class="line">			Object fieldName, Type fieldType)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		SerializeWriter out = serializer.getWriter();</span><br><span class="line">		 <span class="keyword">if</span> (object == <span class="keyword">null</span>) &#123;</span><br><span class="line">	            serializer.getWriter().writeNull();</span><br><span class="line">	            <span class="keyword">return</span>;</span><br><span class="line">	        &#125;</span><br><span class="line">		 out.write(Status.value((Status)object));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用自定义的序列化和反序列化的方法如下：<br>序列化过程<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   SerializeConfig config=<span class="keyword">new</span> SerializeConfig();</span><br><span class="line">config.put(Status.class, <span class="keyword">new</span> StatusSerializer());</span><br><span class="line">String jsonStr=JSON.toJSONString(test,config);</span><br></pre></td></tr></table></figure></p>
-<p>反序列化过程<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   ParserConfig.getGlobalInstance().putDeserializer(Status.class, <span class="keyword">new</span> StatusDeserializer());</span><br><span class="line">Test test1=JSON.parseObject(jsonStr,Test.class);</span><br></pre></td></tr></table></figure></p>
-<p>除了处理枚举类型时，有时需要自定义序列化、反序列化方法外，在处理日期、时间等类型时也经常需要自己实现。</p>
+		<p>在多线程编程时，常常需要解决线程同步问题，在上一节讲得BlockQueue的take和put方法，是通过阻塞来控制生产者和消费者执行流程，它其实也是在解决线程同步问题。另外在线程同步问题还可以通过很多方式解决比如信号量，栅栏，闭锁。今天所说的CountDownLatch就是一种闭锁同步类，它的作用就像一扇门，在达到结束状态之前门是关闭的，并且没有任何线程可以通过这扇门，当达到了结束状态，门打开，所有的线程可以通过。并且结束后，不会再关闭。<a id="more"></a></p>
+<h3 id="CountDownLatch简介">CountDownLatch简介</h3><p>CountDownLatch是一种闭锁的实现，它通过一个计数器来实现。<br>1、在初始化时，指定等待线程的数量。<br>2、每个线程结束时，调用countDown将等待数量减1<br>3、它会有一个await方法，来等待线程全部执行结束。</p>
+<h3 id="代码以及使用场景示例">代码以及使用场景示例</h3><p>假设如下场景：在一个批处理程序中，一次从一个远程接口中，拉取数据需要耗时非常长的时间，这时考虑到使用多线程去拉，可以减少线程等待的时间。这时就可以使用CountDownLatch来做线程同步，来保证每个线程都执行完成来继续下面的流程。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountDownLatchDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ExecutorService executor= Executors.newFixedThreadPool(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        CountDownLatch countDownLatch=<span class="keyword">new</span> CountDownLatch(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> index=<span class="number">0</span>;index&lt;<span class="number">10</span>;index++) &#123;</span><br><span class="line">            executor.execute(<span class="keyword">new</span> Task(index*<span class="number">10</span>,(index+<span class="number">1</span>)*<span class="number">10</span>,countDownLatch));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"开始等待线程执行..."</span>);</span><br><span class="line">            countDownLatch.await();</span><br><span class="line">            System.out.println(<span class="string">"全部线程执行完毕"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> startIndex;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> CountDownLatch countDownLatch;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Task</span><span class="params">(<span class="keyword">int</span> startIndex, <span class="keyword">int</span> count,CountDownLatch countDownLatch)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.startIndex = startIndex;</span><br><span class="line">            <span class="keyword">this</span>.count = count;</span><br><span class="line">            <span class="keyword">this</span>.countDownLatch=countDownLatch;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep((<span class="keyword">long</span>) (<span class="number">1000</span> * Math.random()));</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getId()+<span class="string">"执行完成。"</span>);</span><br><span class="line">            countDownLatch.countDown();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码模拟了上述假设中得场景。其中使用了线程池来做线程管理，这些对象也将在后续介绍。<br>输出结果如下：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">开始等待线程执行...</span><br><span class="line"><span class="number">12</span>执行完成。</span><br><span class="line"><span class="number">11</span>执行完成。</span><br><span class="line"><span class="number">12</span>执行完成。</span><br><span class="line"><span class="number">11</span>执行完成。</span><br><span class="line"><span class="number">13</span>执行完成。</span><br><span class="line"><span class="number">13</span>执行完成。</span><br><span class="line"><span class="number">9</span>执行完成。</span><br><span class="line"><span class="number">10</span>执行完成。</span><br><span class="line"><span class="number">12</span>执行完成。</span><br><span class="line"><span class="number">11</span>执行完成。</span><br><span class="line">全部线程执行完毕</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -117,7 +115,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/fastjson/">fastjson</a><a href="/tags/in-action/">in action</a><a href="/tags/java/">java</a>
+  <span></span> <a href="/tags/concurrent/">concurrent</a><a href="/tags/java/">java</a>
   </div>
 
 </div>
@@ -126,7 +124,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yywang.info/2014/07/02/fastjson-define-serialize-parser/" data-title="FastJson 自定义Serialize、Parser | yywang&#39;s blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yywang.info/2015/04/20/java-concurrent-countdownlatch/" data-title="Java并发编程学习之CountDownLatch | yywang&#39;s blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -139,19 +137,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/07/05/spring-quartz-in-action/" title="Quartz任务调度实践">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Quartz任务调度实践</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/06/28/factory-method/"  title="设计模式学习--Factory Method">
+<a href="/2015/04/13/java-concurrent-blockingqueue/"  title="Java并发编程学习之BlockingQueue">
  <strong>下一篇：</strong><br/> 
- <span>设计模式学习--Factory Method
+ <span>Java并发编程学习之BlockingQueue
 </span>
 </a>
 </div>
@@ -160,7 +150,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2014/07/02/fastjson-define-serialize-parser/" data-title="FastJson 自定义Serialize、Parser" data-url="http://yywang.info/2014/07/02/fastjson-define-serialize-parser/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/20/java-concurrent-countdownlatch/" data-title="Java并发编程学习之CountDownLatch" data-url="http://yywang.info/2015/04/20/java-concurrent-countdownlatch/"></div>
 </section>
 
 
@@ -170,7 +160,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CountDownLatch简介"><span class="toc-number">1.</span> <span class="toc-text">CountDownLatch简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码以及使用场景示例"><span class="toc-number">2.</span> <span class="toc-text">代码以及使用场景示例</span></a></li></ol>
  
   </div>
 
