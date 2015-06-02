@@ -4,31 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>【翻译】线程池 | yywang&#39;s blog</title>
+    <title>谈谈微服务 | yywang&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="yywang">
     
 
     
-    <meta name="description" content="原文
-地址：http://en.wikipedia.org/wiki/Thread_pool_pattern
-
-译文：在计算机程序中，线程池模式是指创建多个线程来执行一些任务，这些任务通常放在一个队列中。执行任务的结果可能也放在一个队列或者任务也可能没有返回值。通常情况下，任务数量要比线程要多。一个线程完成了一个任务，还会从队列中请求下一个任务直到任务队列的所有任务全部完成。然后线程可以终止或者s">
+    <meta name="description" content="自从去年在一次上厕所的时候，翻开手机，看到微服务这一个概念，就认为这种架构的模式非常看好，自那以后，一直关注微服务相关的内容。目前微服务已经是一个非常火的概念，在Infoq几乎每条都有关于微服务的文章或者新闻。可见微服务已经像我们靠近。
+微服务的“微”：有一些观点体现在微服务的微在体现在代码量上，微服务的代码行数一定非常少。关于这个观点，个人并不认同，我觉得使用代码行数来衡量微服务的话，就像使用代">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【翻译】线程池">
-<meta property="og:url" content="http://yywang.info/2015/01/17/thread-pool-pattern/index.html">
+<meta property="og:title" content="谈谈微服务">
+<meta property="og:url" content="http://yywang.info/2015/06/02/char-microservice/index.html">
 <meta property="og:site_name" content="yywang's blog">
-<meta property="og:description" content="原文
-地址：http://en.wikipedia.org/wiki/Thread_pool_pattern
-
-译文：在计算机程序中，线程池模式是指创建多个线程来执行一些任务，这些任务通常放在一个队列中。执行任务的结果可能也放在一个队列或者任务也可能没有返回值。通常情况下，任务数量要比线程要多。一个线程完成了一个任务，还会从队列中请求下一个任务直到任务队列的所有任务全部完成。然后线程可以终止或者s">
+<meta property="og:description" content="自从去年在一次上厕所的时候，翻开手机，看到微服务这一个概念，就认为这种架构的模式非常看好，自那以后，一直关注微服务相关的内容。目前微服务已经是一个非常火的概念，在Infoq几乎每条都有关于微服务的文章或者新闻。可见微服务已经像我们靠近。
+微服务的“微”：有一些观点体现在微服务的微在体现在代码量上，微服务的代码行数一定非常少。关于这个观点，个人并不认同，我觉得使用代码行数来衡量微服务的话，就像使用代">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【翻译】线程池">
-<meta name="twitter:description" content="原文
-地址：http://en.wikipedia.org/wiki/Thread_pool_pattern
-
-译文：在计算机程序中，线程池模式是指创建多个线程来执行一些任务，这些任务通常放在一个队列中。执行任务的结果可能也放在一个队列或者任务也可能没有返回值。通常情况下，任务数量要比线程要多。一个线程完成了一个任务，还会从队列中请求下一个任务直到任务队列的所有任务全部完成。然后线程可以终止或者s">
+<meta name="twitter:title" content="谈谈微服务">
+<meta name="twitter:description" content="自从去年在一次上厕所的时候，翻开手机，看到微服务这一个概念，就认为这种架构的模式非常看好，自那以后，一直关注微服务相关的内容。目前微服务已经是一个非常火的概念，在Infoq几乎每条都有关于微服务的文章或者新闻。可见微服务已经像我们靠近。
+微服务的“微”：有一些观点体现在微服务的微在体现在代码量上，微服务的代码行数一定非常少。关于这个观点，个人并不认同，我觉得使用代码行数来衡量微服务的话，就像使用代">
 
     
     <link rel="alternative" href="/atom.xml" title="yywang&#39;s blog" type="application/atom+xml">
@@ -87,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/17/thread-pool-pattern/" title="【翻译】线程池" itemprop="url">【翻译】线程池</a>
+      <a href="/2015/06/02/char-microservice/" title="谈谈微服务" itemprop="url">谈谈微服务</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://yywang.info/about" title="yywang" target="_blank" itemprop="author">yywang</a>
 		
   <p class="article-time">
-    <time datetime="2015-01-17T06:56:09.000Z" itemprop="datePublished"> Published 2015-01-17</time>
+    <time datetime="2015-06-02T13:00:11.000Z" itemprop="datePublished"> Published 2015-06-02</time>
     
   </p>
 </header>
@@ -103,22 +97,17 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#原文"><span class="toc-number">1.</span> <span class="toc-text">原文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#译文："><span class="toc-number">2.</span> <span class="toc-text">译文：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#译后感："><span class="toc-number">3.</span> <span class="toc-text">译后感：</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务的“微”："><span class="toc-number">1.</span> <span class="toc-text">微服务的“微”：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务的好处"><span class="toc-number">2.</span> <span class="toc-text">微服务的好处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务的挑战"><span class="toc-number">3.</span> <span class="toc-text">微服务的挑战</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务与云计算2-0"><span class="toc-number">4.</span> <span class="toc-text">微服务与云计算2.0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#期待成熟的微服务案例"><span class="toc-number">5.</span> <span class="toc-text">期待成熟的微服务案例</span></a></li></ol>
 		
 		</div>
 		
-		<h4 id="原文">原文</h4><blockquote>
-<p>地址：<a href="http://en.wikipedia.org/wiki/Thread_pool_pattern" target="_blank" rel="external">http://en.wikipedia.org/wiki/Thread_pool_pattern</a></p>
-</blockquote>
-<h4 id="译文：">译文：</h4><p>在计算机程序中，线程池模式是指创建多个线程来执行一些任务，这些任务通常放在一个队列中。执行任务的结果可能也放在一个队列或者任务也可能没有返回值。通常情况下，任务数量要比线程要多。一个线程完成了一个任务，还会从队列中请求下一个任务直到任务队列的所有任务全部完成。然后线程可以终止或者sleep，直到有新的任务需要执行。<br>线程的数量可以被调整的，以提高性能参数。也就是说，线程的数量可以根据等待的任务数量来调整。例如：一个web服务器，如果有很多页面请求时创建线程，并且在这些请求结束删除这些线程。线程池越大，消耗的资源也会增加。下面是何时创建线程何时销毁线程对性能影响：</p>
-<ul>
-<li>创建太多的线程，创建未使用的线程会造成资源浪费和时间的浪费</li>
-<li>销毁太多的线程，会花费很多的时间再一次创建它。</li>
-<li>创建线程太慢，会造成客户端体验不佳。</li>
-<li>销毁线程太慢，占用太多资源，影响其他进程。</li>
-</ul>
-<p>该算法的选择，需要根据所解决的问题和实际的应用场景。<a id="more"></a><br>如果任务数量比较大，为每个任务创建一个线程是不实际的。<br>另外一个优势，使用线程池，比为每个任务创建一个线程并任务完成后销毁，是能够获得更好的性能和系统稳定性。创建和销毁线程以及相关的资源在时间上一个非常昂贵的过程。过量的线程，会造成内存的浪费，同时可运行线程的上下文切换也会降低性能。例如，一个socket连接到另一台机器，可能需要成千上万个线程周期性的销毁和重建。可以通过一个线程轮询，线程关联处理的线程。<br>在实现这个模式时，程序员需要考虑线程安全的队列。在java中，可以在相关的方法中使用sychronized关键字，它可以把变成一个同步的原子区域，任何使用相关资源的线程会等待没有其他线程使用该资源时再使用。这种方法的缺陷，同步是非常昂贵的。你也可以创建一个对象来管理所有的工作在一个队列中，这个对象需要是单例的。<br>通常情况下，一个线程池执行在一台机器上。然而线程池的概念涉及服务器集群，一个主进程来处理线程池本身，任务的执行分配在不同的机器上进行，来提高它的吞吐量。 Embarrassingly parallel 问题比较适合这个方法。</p>
-<h4 id="译后感：">译后感：</h4><p>作为翻译的第一篇文章，特意挑选了一个比较短的而且对该技术已经有所了解的文章翻译，以便降低翻译难度。部分句子自己能够理解但是还是不知道如何翻译。在本文中，是主要介绍一个线程池技术的概念，以及线程池解决的问题。最有一段是一点实现的建议。</p>
+		<p>自从去年在一次上厕所的时候，翻开手机，看到微服务这一个概念，就认为这种架构的模式非常看好，自那以后，一直关注微服务相关的内容。目前微服务已经是一个非常火的概念，在Infoq几乎每条都有关于微服务的文章或者新闻。可见微服务已经像我们靠近。</p>
+<h4 id="微服务的“微”：">微服务的“微”：</h4><p>有一些观点体现在微服务的微在体现在代码量上，微服务的代码行数一定非常少。关于这个观点，个人并不认同，我觉得使用代码行数来衡量微服务的话，就像使用代码量来衡量一个软件开发工程师一样，都是不科学。<br>微服务的微体现在职责的单一上，这个个人非常认同，微服务就是职责单一的服务。就像面向对象设计中的单一职责一样，没有绝对的单一，职责的单一完全取决于对于业务的分析和理解。微服务可以设计像Unix那样简洁。服务前端开发者可以像写Unix Shell脚本一样开发应用。</p>
+<h4 id="微服务的好处">微服务的好处</h4><p>微服务的好处是显然意见的，微服务可以能够实现真正的敏捷，能够快速部署上线、能够具有很好的伸缩性、能够具有很好的扩展性。微服务还更容易形成积木，能够在产品的开发中，越跑越快。</p>
+<h4 id="微服务的挑战">微服务的挑战</h4><p>微服务对基础服务设施的挑战。既然微服务的职责单一，那么就将要面对一个网站可能有成千上万个微服务。那么如何管理好微服务、以及微服务之间如何实现高速的通信、如何让开发者非常方便的调用微服务。如何建立完善的发布系统，能够实现快速上线。当然这些问题，目前已经有很多框架来解决。</p>
+<p>微服务对开发者的挑战。微服务的团队一般按业务划分的，一个人负责一个服务或者一个人负责多个服务。那么微服务开发者，需要是一个全栈开发工程师，需要具备多种语言编程的能力、需要前后端的开发能力、需要运维知识、DBA知识。虽然目前技术发展非常快，而且越来越简单，但是成为一名全栈开发工程师，还是具有不少的挑战。</p>
+<h4 id="微服务与云计算2-0">微服务与云计算2.0</h4><p>目前的云计算主要是指服务器、CDN和各种数据存储的产品。未来的云计算将是一个微服务的库，这些微服务提供了很多的基础能力，比如消息队列、推送服务甚至抽象出了部分行业的基础业务服务。这也是我认为的云计算的一个发展趋势，目前也有这样的云计算公司。所以微服务也是未来云计算的一种方式。未来前端（服务前端）开发者可能就像今天写Unix的Shell脚本一样做应用开发。</p>
+<h4 id="期待成熟的微服务案例">期待成熟的微服务案例</h4><p>目前微服务已经在社区里，提的非常多，而且各种关于微服务的新闻和技术文章、技术分享也非常多，但是目前还没有成熟的微服务案例。所以微服务还在发展初期，期待一个成功的微服务案例出现！</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -126,13 +115,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Translation/">Translation</a>
+  <a class="article-category-link" href="/categories/MicroService/">MicroService</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Thread-pool/">Thread pool</a><a href="/tags/Translation/">Translation</a>
+  <span></span> <a href="/tags/MicroService/">MicroService</a>
   </div>
 
 </div>
@@ -141,7 +130,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yywang.info/2015/01/17/thread-pool-pattern/" data-title="【翻译】线程池 | yywang&#39;s blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yywang.info/2015/06/02/char-microservice/" data-title="谈谈微服务 | yywang&#39;s blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -154,19 +143,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/12/goodbye-hefei/" title="Goodbye HeFei">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Goodbye HeFei</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/03/detailed-design-summarize/"  title="如何做详细设计之总结">
+<a href="/2015/04/20/java-concurrent-countdownlatch/"  title="Java并发编程学习之CountDownLatch">
  <strong>下一篇：</strong><br/> 
- <span>如何做详细设计之总结
+ <span>Java并发编程学习之CountDownLatch
 </span>
 </a>
 </div>
@@ -175,7 +156,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/01/17/thread-pool-pattern/" data-title="【翻译】线程池" data-url="http://yywang.info/2015/01/17/thread-pool-pattern/"></div>
+	<div class="ds-thread" data-thread-key="2015/06/02/char-microservice/" data-title="谈谈微服务" data-url="http://yywang.info/2015/06/02/char-microservice/"></div>
 </section>
 
 
@@ -185,7 +166,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#原文"><span class="toc-number">1.</span> <span class="toc-text">原文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#译文："><span class="toc-number">2.</span> <span class="toc-text">译文：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#译后感："><span class="toc-number">3.</span> <span class="toc-text">译后感：</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务的“微”："><span class="toc-number">1.</span> <span class="toc-text">微服务的“微”：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务的好处"><span class="toc-number">2.</span> <span class="toc-text">微服务的好处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务的挑战"><span class="toc-number">3.</span> <span class="toc-text">微服务的挑战</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务与云计算2-0"><span class="toc-number">4.</span> <span class="toc-text">微服务与云计算2.0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#期待成熟的微服务案例"><span class="toc-number">5.</span> <span class="toc-text">期待成熟的微服务案例</span></a></li></ol>
  
   </div>
 
