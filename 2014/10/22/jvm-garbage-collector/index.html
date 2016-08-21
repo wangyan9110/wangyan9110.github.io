@@ -55,7 +55,7 @@
 				<h1 class="site-name"><a href="/" title="wangyan9110&#39;s blog">wangyan9110&#39;s blog</a></h1>
 				<h2 class="blog-motto">做技术与业务的最好的结合</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -71,7 +71,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:yywang.info">
 					</form>
 					
@@ -94,14 +94,14 @@
 		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
 		
   <p class="article-time">
-    <time datetime="2014-10-22T15:14:04.000Z" itemprop="datePublished"> 發表於 2014-10-22</time>
+    <time datetime="2014-10-22T15:14:04.000Z" itemprop="datePublished"> Published 2014-10-22</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象已死？"><span class="toc-number">1.</span> <span class="toc-text">对象已死？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#引用计数算法"><span class="toc-number">1.0.1.</span> <span class="toc-text">引用计数算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#可达性分析算法"><span class="toc-number">1.0.2.</span> <span class="toc-text">可达性分析算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#死还是不死"><span class="toc-number">1.0.3.</span> <span class="toc-text">死还是不死</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾回收算法"><span class="toc-number">2.</span> <span class="toc-text">垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#标记-清除算法"><span class="toc-number">2.0.1.</span> <span class="toc-text">标记-清除算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#复制算法"><span class="toc-number">2.0.2.</span> <span class="toc-text">复制算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#标记-整理算法"><span class="toc-number">2.0.3.</span> <span class="toc-text">标记-整理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#分代收集算法"><span class="toc-number">2.0.4.</span> <span class="toc-text">分代收集算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存分配和回收策略"><span class="toc-number">3.</span> <span class="toc-text">内存分配和回收策略</span></a></li></ol>
 		
@@ -205,22 +205,22 @@
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目錄</strong>
+  <strong class="toc-title">Contents</strong>
  
  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象已死？"><span class="toc-number">1.</span> <span class="toc-text">对象已死？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#引用计数算法"><span class="toc-number">1.0.1.</span> <span class="toc-text">引用计数算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#可达性分析算法"><span class="toc-number">1.0.2.</span> <span class="toc-text">可达性分析算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#死还是不死"><span class="toc-number">1.0.3.</span> <span class="toc-text">死还是不死</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾回收算法"><span class="toc-number">2.</span> <span class="toc-text">垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#标记-清除算法"><span class="toc-number">2.0.1.</span> <span class="toc-text">标记-清除算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#复制算法"><span class="toc-number">2.0.2.</span> <span class="toc-text">复制算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#标记-整理算法"><span class="toc-number">2.0.3.</span> <span class="toc-text">标记-整理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#分代收集算法"><span class="toc-number">2.0.4.</span> <span class="toc-text">分代收集算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存分配和回收策略"><span class="toc-number">3.</span> <span class="toc-text">内存分配和回收策略</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 		  
@@ -273,7 +273,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -361,7 +361,7 @@
 
 
   <div class="linkslist">
-  <p class="asidetitle">友情鏈接</p>
+  <p class="asidetitle">Links</p>
     <ul>
         
           <li>
@@ -389,7 +389,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -597,7 +597,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
