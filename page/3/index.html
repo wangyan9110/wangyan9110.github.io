@@ -80,6 +80,73 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2014/10/22/jvm-garbage-collector/" title="JVM垃圾收集器" itemprop="url">JVM垃圾收集器</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
+		
+  <p class="article-time">
+    <time datetime="2014-10-22T15:14:04.000Z" itemprop="datePublished"> Published 2014-10-22</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="对象已死？"><strong>对象已死？</strong></h3><h5 id="引用计数算法">引用计数算法</h5><ul>
+<li>概念：给对象添加一个引用计数器，每当有地方引用它时，计数器就加1，当引用失效时，计数器就减，任何时刻计数器为0的对象就是不可能再被使用的。</li>
+<li>优点：简单、高效</li>
+<li>缺点：循环引用无法回收，如objA.instance=objB,ObjB.ins=objA
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2014/10/22/jvm-garbage-collector/#more">Read More</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/jvm/">jvm</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2014/10/22/jvm-garbage-collector/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/10/22/jvm-garbage-collector/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2014/10/19/facade/" title="设计模式学习--Facade" itemprop="url">设计模式学习--Facade</a>
   </h1>
   <p class="article-author">By
@@ -664,71 +731,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/07/12/prototype/" title="设计模式学习--Prototype" itemprop="url">设计模式学习--Prototype</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2014-07-12T08:14:53.000Z" itemprop="datePublished"> Published 2014-07-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="What"><strong>What</strong></h3><blockquote>
-<p>Prototype：用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2014/07/12/prototype/#more">Read More</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Design-pattern/">Design pattern</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Design-pattern/">Design pattern</a><a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/07/12/prototype/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/07/12/prototype/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -745,6 +747,10 @@
 <div class="categorieslist">
 	<p class="asidetitle">Categories</p>
 		<ul>
+		
+		  
+			<li><a href="/categories/API/" title="API">API<sup>1</sup></a></li>
+		  
 		
 		  
 			<li><a href="/categories/Archive/" title="Archive">Archive<sup>1</sup></a></li>
@@ -800,7 +806,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/java/" title="java">java<sup>30</sup></a></li>
+				<li><a href="/tags/java/" title="java">java<sup>31</sup></a></li>
 			
 		
 			

@@ -1,0 +1,609 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>移动APP服务端开发你需要了解什么 | wangyan9110&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wangyan9110">
+    
+
+    
+    <meta name="description" content="移动APP服务端开发你需要了解什么按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动APP服务端开发你需要了解什么">
+<meta property="og:url" content="http://yywang.info/2016/08/24/api/index.html">
+<meta property="og:site_name" content="wangyan9110's blog">
+<meta property="og:description" content="移动APP服务端开发你需要了解什么按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动APP服务端开发你需要了解什么">
+<meta name="twitter:description" content="移动APP服务端开发你需要了解什么按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="wangyan9110&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="wangyan9110&#39;s blog" title="wangyan9110&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="wangyan9110&#39;s blog">wangyan9110&#39;s blog</a></h1>
+				<h2 class="blog-motto">做技术与业务的最好的结合</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yywang.info">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/24/api/" title="移动APP服务端开发你需要了解什么" itemprop="url">移动APP服务端开发你需要了解什么</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-24T07:48:46.000Z" itemprop="datePublished"> Published 2016-08-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#移动APP服务端开发你需要了解什么"><span class="toc-number">1.</span> <span class="toc-text">移动APP服务端开发你需要了解什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口设计"><span class="toc-number">1.1.</span> <span class="toc-text">接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#restful从使用到放弃"><span class="toc-number">1.1.1.</span> <span class="toc-text">restful从使用到放弃</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定义统一的返回格式"><span class="toc-number">1.1.2.</span> <span class="toc-text">定义统一的返回格式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全设计"><span class="toc-number">1.2.</span> <span class="toc-text">安全设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创业公司的取舍之道"><span class="toc-number">1.3.</span> <span class="toc-text">创业公司的取舍之道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#打点统计使用开源产品"><span class="toc-number">1.3.1.</span> <span class="toc-text">打点统计使用开源产品</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#图片服务使用第三方平台"><span class="toc-number">1.3.2.</span> <span class="toc-text">图片服务使用第三方平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器端能实现的功能尽量不要留给客户端"><span class="toc-number">1.3.3.</span> <span class="toc-text">服务器端能实现的功能尽量不要留给客户端</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="移动APP服务端开发你需要了解什么">移动APP服务端开发你需要了解什么</h3><p>按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。<br>我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。<a id="more"></a></p>
+<h4 id="接口设计">接口设计</h4><p>接口是前端后端交互的桥梁，所以在API开发的时候需要考虑接口的设计规范。</p>
+<h5 id="restful从使用到放弃">restful从使用到放弃</h5><p>网上有很多方法实践restful的api设计，在我们设计的时候也参考了很多的设计风格，参考微博的开发平台api设计，我们在真正的实施过程中发现了很问题</p>
+<ul>
+<li>对于处理一些复杂的业务接口，开发人员不知道应该怎么命名</li>
+<li>客户端开发人员抱怨返回格式不统一，他们不好处理</li>
+<li>使用http的code码，在国内由于运营商会拦截，返回不了</li>
+</ul>
+<p>在第一条和第二条的时候，我们一直帮助开发人员处理中间遇到的问题，在1.0开发阶段也基本都解决了，但是在我们进行外网测试的时候，发现了第三个问题，其实也是可以解决的，比如自己预埋服务器地址，这也是做大型app的通用做法。但是觉得我们现在没必要做这个事情，所以我们放弃了使用restful的这种实践。</p>
+<h5 id="定义统一的返回格式">定义统一的返回格式</h5><p>不能使用http的code作为统一返回码，我们定义了统一的返回格式，返回格式如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiResult</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String INFO = <span class="string">"SUCCESS"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * the code</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> String code;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * list data</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;T&gt; datas;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * data</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> T data;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 消息</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> String msg;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * api信息构造器</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> data 返回信息</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ApiResult</span><span class="params">(String code, T data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * api信息构造器</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> datas 返回信息</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ApiResult</span><span class="params">(String code, List&lt;T&gt; datas)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.datas = datas;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     *<span class="javadoctag"> @param</span> code</span><br><span class="line">     *<span class="javadoctag"> @param</span> msg</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ApiResult</span><span class="params">(String code, String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 成功的返回值</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> data</span><br><span class="line">     *<span class="javadoctag"> @return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">ApiResult <span class="title">success</span><span class="params">(T data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiResult(ApiResult.INFO, data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 成功的返回值</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> datas</span><br><span class="line">     *<span class="javadoctag"> @return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">ApiResult <span class="title">success</span><span class="params">(List&lt;T&gt; datas)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiResult(ApiResult.INFO, datas);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 返回失败消息</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> code</span><br><span class="line">     *<span class="javadoctag"> @param</span> msg</span><br><span class="line">     *<span class="javadoctag"> @return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ApiResult <span class="title">error</span><span class="params">(String code, String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiResult(code, msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 返回正常消息</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> msg</span><br><span class="line">     *<span class="javadoctag"> @return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ApiResult <span class="title">info</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiResult(INFO, msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<p>以上定义了我们统一的返回格式，那么落实在具体的业务的接口设计上需要注意哪些东西呢？</p>
+<ul>
+<li>需要维护一套统一的接口规范（可以自己手工维护wiki也可以通过一些框架生成比如swagger）</li>
+<li>接口参数提供默认值</li>
+<li>返回值尽量少嵌套</li>
+<li>注释null的使用，如果为空，使用空字符替代</li>
+<li>对于异常，定义一个code对应一种异常，方便客户端根据code显示友好的提示</li>
+<li>版本维护，在进行api迭代的使用，需要时刻注意不要对接口进行修改，尽量使用增加接口的方式迭代</li>
+<li>和客户端的接口，需要和后端服务层的接口分离。为API接口建立是适配层。<h4 id="安全设计">安全设计</h4>接口的安全性，在app的开发时候非常重要，如果没有安全性的验证，可以通过fiddler等抓包工具拿到数据，进行篡改、提交、大规模批量调用从而好紧服务器资源，导致服务端无法使用。解决这些问题，业内最常见的做法就是使用签名进行验证。<br>对于一个请求来说，它有URL、参数、请求头。通过一定的规则进行MD5加密，从而生成token。<br>我们的加密规则如下：<br>URL+参数+times+whid+盐,中间使用_分割</li>
+<li>URL 即请求路径，比如 /v1/users/login</li>
+<li>参数：即请求中的参数，按照key进行字母升序排列，参数之间使用&amp;</li>
+<li>times：时间戳</li>
+<li>whid：我们自己内部的一个设备id</li>
+<li>盐：盐和版本有关，app在发布一次版本的时候，盐都会需要改变。</li>
+</ul>
+<p>我们的验证逻辑如下</p>
+<ul>
+<li>请求时间是否在3分钟之内，否则验证失败</li>
+<li>sign是否不重复，否则验证失败</li>
+<li>sign是否正确，否则验证失败</li>
+</ul>
+<p>其中我们APP应用中的时间，是和服务器端的时间同步的。我们的做法如下，客户端会从服务端获取服务器时间，然后记录下服务器和客户端的时间的差值，客户端在获取时间的时候，需要把差值加上去。来保证客户端和服务端同步。</p>
+<h4 id="创业公司的取舍之道">创业公司的取舍之道</h4><p>在任何应用的设计时，都有很多的设计方案，不同的阶段也有不同的设计方案，通常对于一个应用来说，现阶段，最合适的永远是最好的。下面是我们在做我们的APP过程中做的一些取舍。</p>
+<h5 id="打点统计使用开源产品">打点统计使用开源产品</h5><p>对于APP来说，打点是监测我们应用的用户使用情况的一个重要功能，我们当时有一下几个方案</p>
+<ul>
+<li>自己开发</li>
+<li>使用第三方打点平台友盟等产品</li>
+<li>使用开源产品自己部署（cobub razor）</li>
+</ul>
+<p>自己开发：这无疑是成本最大的方案，但是比较灵活，可以自己定制各种功能，但是如果开发出一套比较完整的打点系统需要很大的投入。<br>使用第三方平台：这样友盟可以非常容易的看到我们的数据，对于我们公司的隐私保护不理。<br>使用开源产品自己部署：这既保护了我们公司的机密，又可以快速的搭建出一套自己的统计分析系统，这无疑在现阶段最好的方案，我们经过评估后，就决定使用的这个方案。</p>
+<h5 id="图片服务使用第三方平台">图片服务使用第三方平台</h5><p>我们图片存储以及CDN分发都使用的第三方存储平台，这样可以既减少了我们的开发工作量，又能提高用户体验。</p>
+<h5 id="服务器端能实现的功能尽量不要留给客户端">服务器端能实现的功能尽量不要留给客户端</h5><p>服务端可以随时的发布版本，如果客户端出现问题，需要版本迭代以及审核，把客户端尽量做的轻并且可配置</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/API/">API</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/AI/">AI</a><a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yywang.info/2016/08/24/api/" data-title="移动APP服务端开发你需要了解什么 | wangyan9110&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/08/21/mine/"  title="我在创业公司这八个月">
+ <strong>下一篇：</strong><br/> 
+ <span>我在创业公司这八个月
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/08/24/api/" data-title="移动APP服务端开发你需要了解什么" data-url="http://yywang.info/2016/08/24/api/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#移动APP服务端开发你需要了解什么"><span class="toc-number">1.</span> <span class="toc-text">移动APP服务端开发你需要了解什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口设计"><span class="toc-number">1.1.</span> <span class="toc-text">接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#restful从使用到放弃"><span class="toc-number">1.1.1.</span> <span class="toc-text">restful从使用到放弃</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定义统一的返回格式"><span class="toc-number">1.1.2.</span> <span class="toc-text">定义统一的返回格式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全设计"><span class="toc-number">1.2.</span> <span class="toc-text">安全设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创业公司的取舍之道"><span class="toc-number">1.3.</span> <span class="toc-text">创业公司的取舍之道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#打点统计使用开源产品"><span class="toc-number">1.3.1.</span> <span class="toc-text">打点统计使用开源产品</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#图片服务使用第三方平台"><span class="toc-number">1.3.2.</span> <span class="toc-text">图片服务使用第三方平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器端能实现的功能尽量不要留给客户端"><span class="toc-number">1.3.3.</span> <span class="toc-text">服务器端能实现的功能尽量不要留给客户端</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/API/" title="API">API<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Archive/" title="Archive">Archive<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/" title="Design pattern">Design pattern<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Git/" title="Git">Git<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Maven/" title="Maven">Maven<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/MicroService/" title="MicroService">MicroService<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>31</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-pattern/" title="Design pattern">Design pattern<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/concurrent/" title="concurrent">concurrent<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/in-action/" title="in action">in action<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/maven/" title="maven">maven<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/c/" title="c#">c#<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Archive/" title="Archive">Archive<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Thread-pool/" title="Thread pool">Thread pool<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/fastjson/" title="fastjson">fastjson<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/quartz/" title="quartz">quartz<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MicroService/" title="MicroService">MicroService<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.cnblogs.com/JerryWang1991/" target="_blank" title="博客园博客">博客园博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.isming.me/" target="_blank" title="码农明明桑">码农明明桑</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.baizihan.cn/" target="_blank" title="梓涵的博客">梓涵的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m  yywang. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wangyan9110" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wangyan9110" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:wangyan9110@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="http://yywang.info/about" target="_blank" title="wangyan9110">wangyan9110</a>
+		
+		</p>
+</div>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
+
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yywang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
