@@ -11,15 +11,15 @@
     
 
     
-    <meta name="description" content="移动APP服务端开发你需要了解什么按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。">
+    <meta name="description" content="按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="移动APP服务端开发你需要了解什么">
 <meta property="og:url" content="http://yywang.info/2016/08/24/api/index.html">
 <meta property="og:site_name" content="wangyan9110's blog">
-<meta property="og:description" content="移动APP服务端开发你需要了解什么按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。">
+<meta property="og:description" content="按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="移动APP服务端开发你需要了解什么">
-<meta name="twitter:description" content="移动APP服务端开发你需要了解什么按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。">
+<meta name="twitter:description" content="按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。">
 
     
     <link rel="alternative" href="/atom.xml" title="wangyan9110&#39;s blog" type="application/atom+xml">
@@ -46,7 +46,7 @@
 				<h1 class="site-name"><a href="/" title="wangyan9110&#39;s blog">wangyan9110&#39;s blog</a></h1>
 				<h2 class="blog-motto">做技术与业务的最好的结合</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -62,7 +62,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yywang.info">
 					</form>
 					
@@ -85,20 +85,20 @@
 		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
 		
   <p class="article-time">
-    <time datetime="2016-08-24T07:48:46.000Z" itemprop="datePublished"> Published 2016-08-24</time>
+    <time datetime="2016-08-24T07:48:46.000Z" itemprop="datePublished"> 發表於 2016-08-24</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#移动APP服务端开发你需要了解什么"><span class="toc-number">1.</span> <span class="toc-text">移动APP服务端开发你需要了解什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口设计"><span class="toc-number">1.1.</span> <span class="toc-text">接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#restful从使用到放弃"><span class="toc-number">1.1.1.</span> <span class="toc-text">restful从使用到放弃</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定义统一的返回格式"><span class="toc-number">1.1.2.</span> <span class="toc-text">定义统一的返回格式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全设计"><span class="toc-number">1.2.</span> <span class="toc-text">安全设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创业公司的取舍之道"><span class="toc-number">1.3.</span> <span class="toc-text">创业公司的取舍之道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#打点统计使用开源产品"><span class="toc-number">1.3.1.</span> <span class="toc-text">打点统计使用开源产品</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#图片服务使用第三方平台"><span class="toc-number">1.3.2.</span> <span class="toc-text">图片服务使用第三方平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器端能实现的功能尽量不要留给客户端"><span class="toc-number">1.3.3.</span> <span class="toc-text">服务器端能实现的功能尽量不要留给客户端</span></a></li></ol></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口设计"><span class="toc-number">1.</span> <span class="toc-text">接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#restful从使用到放弃"><span class="toc-number">1.1.</span> <span class="toc-text">restful从使用到放弃</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定义统一的返回格式"><span class="toc-number">1.2.</span> <span class="toc-text">定义统一的返回格式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全设计"><span class="toc-number">2.</span> <span class="toc-text">安全设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创业公司的取舍之道"><span class="toc-number">3.</span> <span class="toc-text">创业公司的取舍之道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#打点统计使用开源产品"><span class="toc-number">3.1.</span> <span class="toc-text">打点统计使用开源产品</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#图片服务使用第三方平台"><span class="toc-number">3.2.</span> <span class="toc-text">图片服务使用第三方平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器端能实现的功能尽量不要留给客户端"><span class="toc-number">3.3.</span> <span class="toc-text">服务器端能实现的功能尽量不要留给客户端</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h3 id="移动APP服务端开发你需要了解什么">移动APP服务端开发你需要了解什么</h3><p>按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。<br>我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。<a id="more"></a></p>
+		<p>按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。<br>我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。<a id="more"></a></p>
 <h4 id="接口设计">接口设计</h4><p>接口是前端后端交互的桥梁，所以在API开发的时候需要考虑接口的设计规范。</p>
 <h5 id="restful从使用到放弃">restful从使用到放弃</h5><p>网上有很多方法实践restful的api设计，在我们设计的时候也参考了很多的设计风格，参考微博的开发平台api设计，我们在真正的实施过程中发现了很问题</p>
 <ul>
@@ -193,22 +193,22 @@
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目錄</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#移动APP服务端开发你需要了解什么"><span class="toc-number">1.</span> <span class="toc-text">移动APP服务端开发你需要了解什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口设计"><span class="toc-number">1.1.</span> <span class="toc-text">接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#restful从使用到放弃"><span class="toc-number">1.1.1.</span> <span class="toc-text">restful从使用到放弃</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定义统一的返回格式"><span class="toc-number">1.1.2.</span> <span class="toc-text">定义统一的返回格式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全设计"><span class="toc-number">1.2.</span> <span class="toc-text">安全设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创业公司的取舍之道"><span class="toc-number">1.3.</span> <span class="toc-text">创业公司的取舍之道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#打点统计使用开源产品"><span class="toc-number">1.3.1.</span> <span class="toc-text">打点统计使用开源产品</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#图片服务使用第三方平台"><span class="toc-number">1.3.2.</span> <span class="toc-text">图片服务使用第三方平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器端能实现的功能尽量不要留给客户端"><span class="toc-number">1.3.3.</span> <span class="toc-text">服务器端能实现的功能尽量不要留给客户端</span></a></li></ol></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口设计"><span class="toc-number">1.</span> <span class="toc-text">接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#restful从使用到放弃"><span class="toc-number">1.1.</span> <span class="toc-text">restful从使用到放弃</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定义统一的返回格式"><span class="toc-number">1.2.</span> <span class="toc-text">定义统一的返回格式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全设计"><span class="toc-number">2.</span> <span class="toc-text">安全设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创业公司的取舍之道"><span class="toc-number">3.</span> <span class="toc-text">创业公司的取舍之道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#打点统计使用开源产品"><span class="toc-number">3.1.</span> <span class="toc-text">打点统计使用开源产品</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#图片服务使用第三方平台"><span class="toc-number">3.2.</span> <span class="toc-text">图片服务使用第三方平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器端能实现的功能尽量不要留给客户端"><span class="toc-number">3.3.</span> <span class="toc-text">服务器端能实现的功能尽量不要留给客户端</span></a></li></ol></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 		  
@@ -265,7 +265,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -353,7 +353,7 @@
 
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情鏈接</p>
     <ul>
         
           <li>
@@ -381,7 +381,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
 </aside>
@@ -589,7 +589,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
