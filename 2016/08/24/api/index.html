@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做技术与业务的最好的结合">
+    <meta name="keyword"  content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
+    <link rel="shortcut icon" href="/img/coffee.png">
+    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
+
+    <title>
+        
+          移动APP服务端开发你需要了解什么｜null
+        
+    </title>
+
+    <link rel="canonical" href="http://yywang.info/2016/08/24/api/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css" type="text/css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<style>
+
+    header.intro-header{
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <span class="brand-logo">
+                    wangyan9110
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+                        
+                    
+                        
+                    
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!--only post-->
+
+    
+        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+    
+
+<style>
+
+    header.intro-header{
+        background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
+    }
+
+</style>
+
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>移动APP服务端开发你需要了解什么</h1>
+                    
+                    <span class="meta">
+                         作者 wangyan9110
+                         <span>
+                          日期 2016-08-24
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#AI" title="AI">AI</a>
+                        
+                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            移动APP服务端开发你需要了解什么
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+                <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+
+                <p>按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。<br>我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。<a id="more"></a></p>
+<h4 id="接口设计">接口设计</h4><p>接口是前端后端交互的桥梁，所以在API开发的时候需要考虑接口的设计规范。</p>
+<h5 id="restful从使用到放弃">restful从使用到放弃</h5><p>网上有很多方法实践restful的api设计，在我们设计的时候也参考了很多的设计风格，参考微博的开发平台api设计，我们在真正的实施过程中发现了很问题</p>
+<ul>
+<li>对于处理一些复杂的业务接口，开发人员不知道应该怎么命名</li>
+<li>客户端开发人员抱怨返回格式不统一，他们不好处理</li>
+<li>使用http的code码，在国内由于运营商会拦截，返回不了</li>
+</ul>
+<p>在第一条和第二条的时候，我们一直帮助开发人员处理中间遇到的问题，在1.0开发阶段也基本都解决了，但是在我们进行外网测试的时候，发现了第三个问题，其实也是可以解决的，比如自己预埋服务器地址，这也是做大型app的通用做法。但是觉得我们现在没必要做这个事情，所以我们放弃了使用restful的这种实践。</p>
+<h5 id="定义统一的返回格式">定义统一的返回格式</h5><p>不能使用http的code作为统一返回码，我们定义了统一的返回格式，返回格式如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiResult</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String INFO = <span class="string">"SUCCESS"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * the code</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> String code;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * list data</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;T&gt; datas;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * data</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> T data;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 消息</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> String msg;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * api信息构造器</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> data 返回信息</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ApiResult</span><span class="params">(String code, T data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * api信息构造器</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> datas 返回信息</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ApiResult</span><span class="params">(String code, List&lt;T&gt; datas)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.datas = datas;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     *<span class="javadoctag"> @param</span> code</span><br><span class="line">     *<span class="javadoctag"> @param</span> msg</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ApiResult</span><span class="params">(String code, String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 成功的返回值</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> data</span><br><span class="line">     *<span class="javadoctag"> @return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">ApiResult <span class="title">success</span><span class="params">(T data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiResult(ApiResult.INFO, data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 成功的返回值</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> datas</span><br><span class="line">     *<span class="javadoctag"> @return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">ApiResult <span class="title">success</span><span class="params">(List&lt;T&gt; datas)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiResult(ApiResult.INFO, datas);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 返回失败消息</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> code</span><br><span class="line">     *<span class="javadoctag"> @param</span> msg</span><br><span class="line">     *<span class="javadoctag"> @return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ApiResult <span class="title">error</span><span class="params">(String code, String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiResult(code, msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     * 返回正常消息</span><br><span class="line">     *</span><br><span class="line">     *<span class="javadoctag"> @param</span> msg</span><br><span class="line">     *<span class="javadoctag"> @return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ApiResult <span class="title">info</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiResult(INFO, msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<p>以上定义了我们统一的返回格式，那么落实在具体的业务的接口设计上需要注意哪些东西呢？</p>
+<ul>
+<li>需要维护一套统一的接口规范（可以自己手工维护wiki也可以通过一些框架生成比如swagger）</li>
+<li>接口参数提供默认值</li>
+<li>返回值尽量少嵌套</li>
+<li>注释null的使用，如果为空，使用空字符替代</li>
+<li>对于异常，定义一个code对应一种异常，方便客户端根据code显示友好的提示</li>
+<li>版本维护，在进行api迭代的使用，需要时刻注意不要对接口进行修改，尽量使用增加接口的方式迭代</li>
+<li>和客户端的接口，需要和后端服务层的接口分离。为API接口建立是适配层。<h4 id="安全设计">安全设计</h4>接口的安全性，在app的开发时候非常重要，如果没有安全性的验证，可以通过fiddler等抓包工具拿到数据，进行篡改、提交、大规模批量调用从而好紧服务器资源，导致服务端无法使用。解决这些问题，业内最常见的做法就是使用签名进行验证。<br>对于一个请求来说，它有URL、参数、请求头。通过一定的规则进行MD5加密，从而生成token。<br>我们的加密规则如下：<br>URL+参数+times+whid+盐,中间使用_分割</li>
+<li>URL 即请求路径，比如 /v1/users/login</li>
+<li>参数：即请求中的参数，按照key进行字母升序排列，参数之间使用&amp;</li>
+<li>times：时间戳</li>
+<li>whid：我们自己内部的一个设备id</li>
+<li>盐：盐和版本有关，app在发布一次版本的时候，盐都会需要改变。</li>
+</ul>
+<p>我们的验证逻辑如下</p>
+<ul>
+<li>请求时间是否在3分钟之内，否则验证失败</li>
+<li>sign是否不重复，否则验证失败</li>
+<li>sign是否正确，否则验证失败</li>
+</ul>
+<p>其中我们APP应用中的时间，是和服务器端的时间同步的。我们的做法如下，客户端会从服务端获取服务器时间，然后记录下服务器和客户端的时间的差值，客户端在获取时间的时候，需要把差值加上去。来保证客户端和服务端同步。</p>
+<h4 id="创业公司的取舍之道">创业公司的取舍之道</h4><p>在任何应用的设计时，都有很多的设计方案，不同的阶段也有不同的设计方案，通常对于一个应用来说，现阶段，最合适的永远是最好的。下面是我们在做我们的APP过程中做的一些取舍。</p>
+<h5 id="打点统计使用开源产品">打点统计使用开源产品</h5><p>对于APP来说，打点是监测我们应用的用户使用情况的一个重要功能，我们当时有一下几个方案</p>
+<ul>
+<li>自己开发</li>
+<li>使用第三方打点平台友盟等产品</li>
+<li>使用开源产品自己部署（cobub razor）</li>
+</ul>
+<p>自己开发：这无疑是成本最大的方案，但是比较灵活，可以自己定制各种功能，但是如果开发出一套比较完整的打点系统需要很大的投入。<br>使用第三方平台：这样友盟可以非常容易的看到我们的数据，对于我们公司的隐私保护不理。<br>使用开源产品自己部署：这既保护了我们公司的机密，又可以快速的搭建出一套自己的统计分析系统，这无疑在现阶段最好的方案，我们经过评估后，就决定使用的这个方案。</p>
+<h5 id="图片服务使用第三方平台">图片服务使用第三方平台</h5><p>我们图片存储以及CDN分发都使用的第三方存储平台，这样可以既减少了我们的开发工作量，又能提高用户体验。</p>
+<h5 id="服务器端能实现的功能尽量不要留给客户端">服务器端能实现的功能尽量不要留给客户端</h5><p>服务端可以随时的发布版本，如果客户端出现问题，需要版本迭代以及审核，把客户端尽量做的轻并且可配置</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/08/21/mine/" data-toggle="tooltip" data-placement="top" title="我在创业公司这八个月">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="2016/08/24/api/"
+                        data-title="移动APP服务端开发你需要了解什么"
+                        data-url="http://yywang.info/2016/08/24/api/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col" >
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口设计"><span class="toc-text">接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#restful从使用到放弃"><span class="toc-text">restful从使用到放弃</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定义统一的返回格式"><span class="toc-text">定义统一的返回格式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全设计"><span class="toc-text">安全设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创业公司的取舍之道"><span class="toc-text">创业公司的取舍之道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#打点统计使用开源产品"><span class="toc-text">打点统计使用开源产品</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#图片服务使用第三方平台"><span class="toc-text">图片服务使用第三方平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器端能实现的功能尽量不要留给客户端"><span class="toc-text">服务器端能实现的功能尽量不要留给客户端</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'yywang';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; wangyan9110 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js" type="text/javascript"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yywang.info/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <!--wechat title img-->
+    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+</body>
+
+</html>

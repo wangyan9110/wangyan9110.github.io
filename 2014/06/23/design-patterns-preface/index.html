@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做技术与业务的最好的结合">
+    <meta name="keyword"  content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
+    <link rel="shortcut icon" href="/img/coffee.png">
+    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
+
+    <title>
+        
+          设计模式学习-序｜null
+        
+    </title>
+
+    <link rel="canonical" href="http://yywang.info/2014/06/23/design-patterns-preface/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css" type="text/css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<style>
+
+    header.intro-header{
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <span class="brand-logo">
+                    wangyan9110
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+                        
+                    
+                        
+                    
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!--only post-->
+
+    
+        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+    
+
+<style>
+
+    header.intro-header{
+        background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
+    }
+
+</style>
+
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>设计模式学习-序</h1>
+                    
+                    <span class="meta">
+                         作者 wangyan9110
+                         <span>
+                          日期 2014-06-23
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Design pattern" title="Design pattern">Design pattern</a>
+                        
+                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            设计模式学习-序
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+                <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+
+                <p>学习面向对象已经很长时间了，刚开始是从学习C++语言的时候，知道面向对象这个名词，后来又学习了多种面向对象语言，c#，java等，大概在刚开始学习c#不久，在10年左右，就开始知道面向对象设计，可能是没有足够的代码量，一直敬而远之。虽然也经常在写代码时注意面向对象设计，甚至有时用得上一种设计模式就感觉比较有成就感。没有系统的学习思考过，如何做面向对象设计。<a id="more"></a>本系列主要记录学习设计模式中的思考，以及一些示例，目前使用Java语言比较多，所以示例全部以Java为编程语言实现。</p>
+<h3 id="What_Design_patterns"><strong>What Design patterns</strong></h3><blockquote>
+<p>每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题解决方案的核心。这样你就能一次又一次地使用该方案而不必做重复劳动。</p>
+</blockquote>
+<p>以上来自GOF的设计模式中引用的一句话，其实设计模式就是对一些常见问题的经验总结，有了这些经验我们可以减少复用我们的代码，减少我们的重复劳动。既然是经验总结，学习设计模式就需要了解What,Why,How(本篇只有What Design patterns，Why、How将在这结束时在总结)才能真正了解一种设计模式，本系列的学习也主要采用者几点的方式。</p>
+<h3 id="Design_patterns"><strong>Design patterns</strong></h3><p>以下列举了各种设计模式名字以及定义以及学习总结的地址。<br><a href="http://yywang.info/2014/06/23/abstract-factory/" target="_blank" rel="external">Abstract Factory</a>: 提供一个创建一系列相关或相互依赖的接口，而无需指定它们具体的类。<br><a href="http://yywang.info/2014/07/26/adapter/" target="_blank" rel="external">Adapter</a>：将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本接口不兼容。而不能一起工作的类，可以一起工作。<br>Bridge：将抽象部分与它实现部分分类，使它们可以独立的变化。<br><a href="http://yywang.info/2014/06/24/builder/" target="_blank" rel="external">Builder</a>：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。<br>Chain of Responsibility：为解除请求的发送者与接受者的耦合，而使多个对象都有机会处理这个请求，将这些对象连成链，并沿着链传递该请求直到有一个对象处理它。<br>Command：将一个清秀封装为一个对象，从而使你可用不同请求的客户进行参数化，对请求排队或者记录请求日志，以支持可取消操作。Composite：将对象组合成树形接口以表示“部分-整体”的层次结构。Composite使得客户对单个对象和复合对象的一致性。<br>Decorator：动态给对象增加一些额外的职责。<br>Facade：为子系统的一些接口提供一致的界面。<br><a href="http://yywang.info/2014/06/28/factory-method/" target="_blank" rel="external">Factory Method</a>：定义一个创建对象的接口，让子类来决定使用一个类来创建对象。<br>Flyweight：运用共享技术有效的支持大量细粒度的对象。<br>Interpreter：给定一个语言，定义它的文法的一种表示。并定义一个解释器，使用该解释器来解释语言中的句子。<br>Iterator：使用一个方法顺序的访问一个集合中的每一个元素，又不暴露该对象的内部表示。<br>Mediator：用一个中介对象来封装一系列的对象交互。<br>Memento：在不破坏封装的前提下捕捉一个对象的内部状态，并在对象之外保存这个状态。<br>Observer：定义对象之间的一种一对多的依赖关系，以便当一个对象发送改变时，所有依赖它的对象都得到通知并自动更新。<br><a href="http://yywang.info/2014/07/12/prototype/" target="_blank" rel="external">Prototype</a>：用原型实例指定创建对象的种类，并通过拷贝这个原型来创建新的对象。<br>Proxy：为其他对象提供一个代理以控制这个对象的访问。<br><a href="http://yywang.info/2014/07/12/singleton/" target="_blank" rel="external">Singleton</a>：保证一个类仅有一个实例，并且提供它的全局访问点。<br>State：允许一个对象在其内部状态改变时改变它的行为。<br>Strategy：定义一系列软法，把他们一个个封装起来，并且使他们可相互替换。<br>Template Method：定义操作中的算法骨架，将这些子类延迟到子类中。<br>Visitor：表示一个作用于某个对象结构中的各个元素的操作。它使你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。</p>
+<h3 id="Source"><strong>Source</strong></h3><p>学习中示例代码：<br><a href="https://github.com/wangyan9110/Designpatterns.git" target="_blank" rel="external">https://github.com/wangyan9110/Designpatterns.git</a></p>
+<h3 id="Reference"><strong>Reference</strong></h3><p>设计模式—可复用面向对象软件的基础<br>大话设计模式</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2014/06/23/abstract-factory/" data-toggle="tooltip" data-placement="top" title="设计模式学习--Abstarct Factory">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2014/06/01/wpf-canvas-var-rectangle/" data-toggle="tooltip" data-placement="top" title="WPF使用Canvas绘制可变矩形">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="2014/06/23/design-patterns-preface/"
+                        data-title="设计模式学习-序"
+                        data-url="http://yywang.info/2014/06/23/design-patterns-preface/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col" >
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What_Design_patterns"><span class="toc-text">What Design patterns</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Design_patterns"><span class="toc-text">Design patterns</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Source"><span class="toc-text">Source</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'yywang';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; wangyan9110 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js" type="text/javascript"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yywang.info/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <!--wechat title img-->
+    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+</body>
+
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做技术与业务的最好的结合">
+    <meta name="keyword"  content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
+    <link rel="shortcut icon" href="/img/coffee.png">
+    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
+
+    <title>
+        
+          如何做详细设计之设计原则｜null
+        
+    </title>
+
+    <link rel="canonical" href="http://yywang.info/2014/12/29/detailed-design-principle/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css" type="text/css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<style>
+
+    header.intro-header{
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <span class="brand-logo">
+                    wangyan9110
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+                        
+                    
+                        
+                    
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!--only post-->
+
+    
+        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+    
+
+<style>
+
+    header.intro-header{
+        background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
+    }
+
+</style>
+
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>如何做详细设计之设计原则</h1>
+                    
+                    <span class="meta">
+                         作者 wangyan9110
+                         <span>
+                          日期 2014-12-29
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Design pattern" title="Design pattern">Design pattern</a>
+                        
+                        <a class="tag" href="/tags/#detailed design" title="detailed design">detailed design</a>
+                        
+                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            如何做详细设计之设计原则
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+                <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+
+                <p>今天我们来讨论一下设计原则，在详细设计的过程中，需要遵守一些设计原则，本篇的设计原则都是我自己经常思考总结，有可能有些不全，如果你已经能够很好的掌握和利用面向对象的程序设计原则，你可以不看本文。本文主要是在自己工作中的实践与体会，不讲六大原则。当然面向对象程序设计的六大原则，是我们在详细设计中要努力达到的目标。但是又有多少人望而兴叹呢。</p>
+<h4 id="单一职责">单一职责</h4><p>可能有人看到这个时，感觉我开头的话在忽悠，单一职责不就是面向对象程序设计的六大原则之一吗？是的，单一职责是六大原则之一，但是我还是要讲，我们这里分开讲，类的单一职责，方法的单一职责。</p>
+<ol>
+<li>类的单一职责：类的单一职责，就是讲一个类专注于做某一件事。我还拿我们做的web业务系统说事，比如我们有一个接口类UserArchiveService，从名字看是一个用户档案业务类，但是哪天来了一个“简单”的需求。需要获取一个用户的班级信息，显然不是属于UserArchiveService类的需求，但是我们当时没有类似的类，想就这一个临时小接口，加在UserArchiveService算了，那么问题就来了，你违反了类的单一职责的原则。这样发展下去，别人也看不懂这个类到底是干嘛的了。<br>那么，怎么才能是职责单一了呢？<a id="more"></a><br>当然这需要看场景，比如上面的UserArchiveService如果你正是一个面向用户的系统，里面会有很多的方法或者实现比较复杂，都属于UserArchiveService，这个类也会特别臃肿，即使都是为UserArchiveService服务也不能说这个类也就职责单一了。<br>需要再次拆分。如何拆分呢？<br>当然需要根据业务场景拆分（我又在说废话了），需要根据自己的业务特点思考。我举个我遇到的例子，前篇我说过一个阅卷模块，阅卷模块有个阅卷的业务，这个业务是这个模块的核心，如果划分为一个MarkingService，接口方法较多，而且部分方法实现叫复杂，这个时候一个MarkingService肯定不行了，这时候我们就需要更加详细的设计，把阅卷模块的业务再次拆分，我们当时的设计为,MarkingService作为门面接口，然后把阅卷拆分为阅卷任务、阅卷会话、阅卷历史、阅卷池等类，做到职责单一。<br>当然类的职责单一是相对的，不是绝对的，需要看设计者对业务的理解和把控，有时也不好控制。作为一个经验丰富的设计者，可能这方面做的较好，当然如果对于像我这样的菜鸟，如何做到把控好职责单一呢？后面我们有重构以及理解业务的本质来解决这个问题。这也是我把重构放在这个系列的原因。</li>
+<li>方法的单一职责：方法的单一职责，就是讲一个方法专注于实现一个功能业务。<br>方法职责的单一，如何衡量方法职责的单一呢？很简单，用一句话说明白你的方法用意。在也很好发现，如果你是一个对自己严格要求的设计者，在你写注释的时候就会发现。当然即使你在刚开始设计的时候方法职责做到了单一，但是你如何保证在需求变更时，在修复缺陷时，保证方法的职责单一呢？当然还是要靠自己对方法的严格把控，比如方法设计出来之后，除非特殊情况，不允许变更参数。</li>
+</ol>
+<h4 id="让使用者用着“爽”">让使用者用着“爽”</h4><p>这个原则在面向对象设计的六大原则中没有。现在在做互联网产品中，用户体验是我们经常提到的，就是让用户用着爽，我们作为设计者，使用者就是我们的用户，我们也要强调用户体验。当然我们实际工作中，使用者能够一次调通，不抛异常已经很高兴了。我把这个作为一个设计原则，因为我认为这个是非常重要的。是我们努力的方向。那么如何让用户用着爽呢？首先，基础是规范，这个可以参考上一篇如何做详细设计之规范。做到了规范，然后才有下文。</p>
+<ol>
+<li>考虑类的使用方法，比如你在设计一个类，调用者在80%的时候只需要传其中的三个参数设值，那么你为什么不增加一个构造器呢，让使用者一句话就可以完成对象的创建呢。</li>
+<li>善用重载，这不但是让接口用着爽的一种方法，也是我们在设计时非常值得利用的一种方法。比如我们同一个业务，有时某个值为null，是一种处理方式，不为null为另一种方式，这时我们需要考虑使用重载，而且是尽量使用重载。</li>
+<li>麻烦留给自己，比如某些业务方法是一个原子，而且调用顺序都是一致的，这时我们就可以封装一个门面来做这个事，调用者只需调用一个方法就可以解决，这也是在业务比较复杂的时候，需要考虑使用门面设计模式的原因。</li>
+<li>减少使用者的学习成本，当然这是一个愿景，我们以上做的很多事，都在为减小使用者的学习成本而努力。我们在设计时，需要也是需要考虑的一件事。</li>
+</ol>
+<p>下面一个原则是针对具有数据持久层的系统。而且不是以数据库设计为驱动设计的系统。如果以数据库为驱动设计的系统，以下原则不适合。</p>
+<h4 id="轻量的数据持久层">轻量的数据持久层</h4><p>在不是以数据库设计为驱动的设计的系统中，数据持久层就可以把它看做一个数据访问的通道，没有任何的业务逻辑，数据持久层的接口完全可以屏蔽使用什么数据库，几乎所有的接口方法就是对数据的增删改查。在实现时，如果为关系型数据库，sql非常简单。没有复杂的表的连接或者子查询。做到轻量级的持久化层做到如下几点：</p>
+<ol>
+<li>实现足够简单，几乎没有if else,for等逻辑判断(包括sql中)</li>
+<li>几乎所有sql或者查询对象中的参数都是由调用者提供。</li>
+<li>没有复杂的数据组合，比如没有复杂的sql表的连接或者子查询，最好是单表操作，控制多表连接的数量。<br>如果以上三点做不到，可以从数据库设计或者详细设计中找下原因。</li>
+</ol>
+<ul>
+<li>轻量的数据持久层好处：</li>
+</ul>
+<ol>
+<li>灵活便于接口复用。</li>
+<li>对于后期性能优化有利。越简单越容易优化。</li>
+<li>便于数据库迁移。</li>
+<li>方便以后做分库分表。<br>….</li>
+</ol>
+<ul>
+<li>轻量的数据持久层坏处：</li>
+</ul>
+<ol>
+<li>多次查询造成担心性能问题</li>
+<li>业务层代码量增加<br>解决方式：对于第一个可以在数据库设计时的反范式中做些处理，另外还可以综合利用缓存等手段解决。第二个问题，只能用敲键盘解决。</li>
+</ol>
+<h4 id="理论和实践">理论和实践</h4><p>本篇中的原则，没有写明从如何使类的灵活的角度去考虑，设计原则，其实这些是保持类的灵活的基石，如果以上做不好，类可能做到灵活。也没有从类的六大设计原则上入手，类的六大设计原则是理论指导我们的设计，本篇主要是从实践的总结，本篇的一些做法，也都能从类的设计原则中寻到理论依据。详细设计就是需要不断的思考，没有错与对，只有合适和不合适。而且到底合不合适需要经过时间的检验。</p>
+<p>本篇内容是在平常工作中的实践思考与总结。如有不妥之处，欢迎讨论。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2014/12/31/detailed-design-professional/" data-toggle="tooltip" data-placement="top" title="如何做详细设计之理解业务本质">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2014/12/23/detailed-design-standard/" data-toggle="tooltip" data-placement="top" title="如何做详细设计之规范">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="2014/12/29/detailed-design-principle/"
+                        data-title="如何做详细设计之设计原则"
+                        data-url="http://yywang.info/2014/12/29/detailed-design-principle/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col" >
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#单一职责"><span class="toc-text">单一职责</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#让使用者用着“爽”"><span class="toc-text">让使用者用着“爽”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#轻量的数据持久层"><span class="toc-text">轻量的数据持久层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#理论和实践"><span class="toc-text">理论和实践</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'yywang';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; wangyan9110 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js" type="text/javascript"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yywang.info/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <!--wechat title img-->
+    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+</body>
+
+</html>

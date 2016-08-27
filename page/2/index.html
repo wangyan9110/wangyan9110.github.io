@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做技术与业务的最好的结合">
+    <meta name="keyword"  content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
+    <link rel="shortcut icon" href="/img/coffee.png">
+    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
+
+    <title>
+        
+          null
+        
+    </title>
+
+    <link rel="canonical" href="http://yywang.info/page/2/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css" type="text/css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<style>
+
+    header.intro-header{
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+" data-ishome = "true" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <span class="brand-logo">
+                    wangyan9110
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+                        
+                    
+                        
+                    
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+    <!-- Main Content -->
+    
+
+    <style>
+
+        .custom-haojen-container .post-preview:nth-of-type(1),
+        .custom-haojen-container .post-preview-poetry:nth-of-type(1){
+            text-align: center;
+            background-repeat: no-repeat;
+            border-radius: 3px;
+            background-size: cover;
+            padding:0;
+            height: 300px;
+            display: table;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.16);
+        }
+        /*去掉诗歌的背景图片*/
+        .custom-haojen-container .post-preview-poetry:nth-of-type(1){
+            background-image: none!important;
+            background-color: rgba(255, 248, 220, 0.5);
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) h2,
+        .custom-haojen-container .post-preview:nth-child(1) .post-meta,
+        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+            text-shadow: 0 0 40px rgba(0, 0, 0, 1);
+            letter-spacing: 1px;
+            color: #fff;
+            font-family: unset;
+            font-weight: 500;
+            margin-top: 0;
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) .post-meta{
+            font-size: .9em;
+            font-weight: 300;
+            margin-top: 0;
+        }
+        .custom-haojen-container .post-preview-poetry:nth-child(1) .post-subtitle{
+            letter-spacing: 6px;
+            font-size: 18px;
+            font-family: unset;
+            font-weight: 400;
+            color: rgba(0,0,0,.75)
+        }
+        /*不显示摘要*/
+        .custom-haojen-container .post-preview:nth-child(1) .post-content-preview{display: none}
+        /*只第一个显示背景图片*/
+        .custom-haojen-container .post-preview:not(:nth-child(1)){
+            background-image: none!important;
+        }
+        /*第一个分界线去掉*/
+        .custom-haojen-container hr:nth-of-type(1){
+            display: none;
+        }
+        /*主题*/
+        .custom-haojen-container .post-preview:nth-of-type(1)>a{
+            display: table-cell;
+            vertical-align: middle;
+        }
+        /*诗词标题*/
+        .custom-haojen-container .post-preview-poetry:nth-child(1) h2{
+            font-size: 35px;
+            font-family:  STKaiti;
+            color: rgba(0,0,0,.8);
+        }
+        .custom-haojen-container .post-preview-poetry:nth-of-type(1) .post-meta{
+            color: #0e2231;
+        }
+        @media (max-width: 768px)  {
+            .custom-haojen-container .post-preview:nth-child(1) {
+                height: 240px;
+            }
+            .custom-haojen-container .post-preview-poetry:nth-child(1) h2{
+                font-size: 28px!important;
+                margin-top: 0;
+            }
+            .custom-haojen-container .post-preview:nth-child(1) .post-subtitle{
+                font-size: 18px;
+                font-weight:400;
+                padding-left: 0;padding-right: 0;
+            }
+            .custom-haojen-container .post-preview:nth-of-type(1) > a{padding: 20px}
+        }
+
+        /*手机屏幕*/
+        @media (max-width: 400px){
+            .custom-haojen-container .post-preview:nth-child(1){
+                height: 195px;
+            }
+            .custom-haojen-container .post-preview-poetry:nth-child(1) h2{
+                font-size: 20px!important;
+            }
+            .custom-haojen-container .post-preview:nth-child(1) .post-subtitle{
+                font-size: 16px;
+            }
+            .custom-haojen-container .post-preview:nth-child(1) a{
+                padding: 30px 20px;
+            }
+        }
+    </style>
+
+<!-- Page Header -->
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
+    <div class="row">
+        <header class="intro-header">
+            <div class="container">
+                <div class="site-heading text-center">
+                    <div class="about-me">
+                        <!--移动端头部显示-->
+                        <img src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460" />
+                        <h5><a href="/about/">wangyan9110</a></h5>
+                        <p>做技术与业务的最好的结合</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+    </div>
+<!-- Main Content -->
+<div class="container custom-haojen-container">
+    <!-- Post Container -->
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
+            <!-- Main Content -->
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2015/01/03/detailed-design-summarize/">
+        <h2 class="post-title">
+            如何做详细设计之总结
+        </h2>
+        <p class="post-meta">
+            2015-01-03
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                如何做详细设计系列经过“两年”的时间终于写完了，今天主要为这个系列做下简单的总结。
+详细设计没有“公式”我们每个人从事的行业，负责的功能模块都不尽相同，不同的业务场景不同的项目特点都会产生不同的设计。可能有人会问，设计模式不是解决特定场景下的“公式”吗？设计模式是前人在具体的实践中，总结出来的...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2015/01/02/detailed-design-pattern/">
+        <h2 class="post-title">
+            如何做详细设计之设计模式
+        </h2>
+        <p class="post-meta">
+            2015-01-02
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天来讨论详细设计的最后一个内容设计模式。在我们了解一些开源源代码时，经常可以看到这些开源源代码使用了大量的设计模式，有些用的还比较灵活和巧妙。比如Sping中的bean管理部分，就大量使用了工厂模式，juint中在不多的源代码中灵活的使用了工厂方法模式、模板方法模式、观察者模式，策略模式等等...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2015/01/01/detailed-design-reconsitution/">
+        <h2 class="post-title">
+            如何做详细设计之重构
+        </h2>
+        <p class="post-meta">
+            2015-01-01
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天是2015年1月1日，又是一个新的开始。今天我们来讨论如何做详细设计中的重构。作为一名软件开发工程师，可能大部分都知道重构这个概念，相信也有很多人有看过Martin Flower的重构这本书，了解一些重构技巧。很多人理解的重构，就是代码结构基本上要重新设计，大部分代码需要重写，所以在实际的...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/31/detailed-design-professional/">
+        <h2 class="post-title">
+            如何做详细设计之理解业务本质
+        </h2>
+        <p class="post-meta">
+            2014-12-31
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天来讨论详细设计中的一个重要的能力，理解业务的本质。在本系列第一篇，我们提到详细设计人员需要具备的三种能力中，其中有一条就是理解业务的本质。在做业务系统的开发中，业务是我们的核心，不管我们使用什么技术、什么设计目的只有一个为我们的业务服务。所以光有技术不行，没有业务分析能力，还是成为不了一名...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/29/detailed-design-principle/">
+        <h2 class="post-title">
+            如何做详细设计之设计原则
+        </h2>
+        <p class="post-meta">
+            2014-12-29
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天我们来讨论一下设计原则，在详细设计的过程中，需要遵守一些设计原则，本篇的设计原则都是我自己经常思考总结，有可能有些不全，如果你已经能够很好的掌握和利用面向对象的程序设计原则，你可以不看本文。本文主要是在自己工作中的实践与体会，不讲六大原则。当然面向对象程序设计的六大原则，是我们在详细设计中...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/23/detailed-design-standard/">
+        <h2 class="post-title">
+            如何做详细设计之规范
+        </h2>
+        <p class="post-meta">
+            2014-12-23
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/21/detailed-design-coding/">
+        <h2 class="post-title">
+            如何做详细设计之设计即编码
+        </h2>
+        <p class="post-meta">
+            2014-12-21
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天来讨论如何做详细设计的第一个内容，设计即编码。我在上篇序中开头讲到，”你只要在用心写代码，在思考如何定义方法，如何定义类，你都在做着详细设计“，其实设计本身也是在编码。当然表达设计的方式也有很多种。我比较喜欢编码这种方式。
+如何表达自己的设计？1、UML，可能大部分人谈到软件设计，想到的是...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/20/detailed-design-preface/">
+        <h2 class="post-title">
+            如何做详细设计之序
+        </h2>
+        <p class="post-meta">
+            2014-12-20
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                详细设计是软件开发中非常重要的环节，无论你是工作几年的技术大牛，还是只有一两年工作经验的小菜。可能你看到设计两个字，就觉得非常高大上，然而你只要在用心写代码，在思考如何定义方法，如何定义类，你都在做着详细设计。至于做的怎么样，那就另说了。
+详细设计涉及哪些内容？首先详细设计不同于架构设计，架构...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/19/flyweight/">
+        <h2 class="post-title">
+            设计模式学习--Flyweight
+        </h2>
+        <p class="post-meta">
+            2014-12-19
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+运用共享技术有效地支持大量细粒度的对象。
+
+Why在创建大量对象时，如果每个小对象都创建一个对象都是非常消耗内存的。在古代我们的先人已经发现了，重复工作带来的成本消耗，我国古代四大发明之一活字印刷术，就是解决的这类问题。我们把每个字看做一个细粒度的对象的话，印刷一本书，就会有成千上万...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+    
+        <div class="post-preview " style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/11/08/jdk-tools/">
+        <h2 class="post-title">
+            JDK那些有用的工具
+        </h2>
+        <p class="post-meta">
+            2014-11-08
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                在jdk中，无论是刚开始学习java的学生还是在职场叱咤多年的java程序员，肯定都知道bin目录里的java.exe以及javac.exe这两个命令行工具。但是有没有发现在bin目录除了这两个命令还有不少其他的命令。它们有什么作用呢？今天主要介绍这里面的一些工具。
+jps虚拟机进程状态工具
+...
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+
+<!-- 翻页 pager -->
+
+<ul class="pager">
+    
+        <li class="previous">
+            <a href="/">&larr; Newer Posts</a>
+        </li>
+    
+    
+        <li class="next">
+            <a href="/page/3/">Older Posts &rarr;</a>
+        </li>
+    
+</ul>
+
+
+        </div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+
+                <!-- About Me -->
+                <section class="visible-md visible-lg" style="padding: 0 18px">
+                    <div class="short-about">
+                        <!--侧边栏头像-->
+                        
+                            <img src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460" />
+                        
+                        <h5><a href="/about/">wangyan9110</a></h5>
+                        
+                            <p>做技术与业务的最好的结合</p>
+                        
+                        <hr>
+                        <!-- SNS Link 社交 -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+
+                            
+                                <li>
+                                    <a target="_blank" href="http://weibo.com/wangyan9110">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+
+                            
+
+                            
+                                <li>
+                                    <a target="_blank"  href="https://github.com/wangyan9110">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+
+
+                            
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Featured Tags  标签 -->
+                
+
+                
+
+            </div>
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; wangyan9110 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js" type="text/javascript"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yywang.info/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <!--wechat title img-->
+    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+</body>
+
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="做技术与业务的最好的结合">
+    <meta name="keyword"  content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
+    <link rel="shortcut icon" href="/img/coffee.png">
+    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
+
+    <title>
+        
+          如何做详细设计之规范｜null
+        
+    </title>
+
+    <link rel="canonical" href="http://yywang.info/2014/12/23/detailed-design-standard/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css" type="text/css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<style>
+
+    header.intro-header{
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <span class="brand-logo">
+                    wangyan9110
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                        
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+                        
+                    
+                        
+                    
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!--only post-->
+
+    
+        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+    
+
+<style>
+
+    header.intro-header{
+        background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
+    }
+
+</style>
+
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>如何做详细设计之规范</h1>
+                    
+                    <span class="meta">
+                         作者 wangyan9110
+                         <span>
+                          日期 2014-12-23
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Design pattern" title="Design pattern">Design pattern</a>
+                        
+                        <a class="tag" href="/tags/#detailed design" title="detailed design">detailed design</a>
+                        
+                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            如何做详细设计之规范
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+                <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+
+                <p>在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、接口调用者才能更好的理解接口。</p>
+<h4 id="起名难吗？">起名难吗？</h4><p>如果你认真的为一个方法名或者一个类名思考过或者纠结过，说明我们都在为起一个好名字而努力。以下是个人就一些场景起名的一个看法。</p>
+<ol>
+<li>业务领域类，或者叫实体类，首先类名需要能够准确表达领域类的意图，比如我们一个领域类，School类，我们不可能拿它来表示班级。这是最简单的情况。<ul>
+<li>具备共性的领域类，使用相同的结尾或者开头，比如Archive类，档案类，另外我们根据学生、班级、学校各有一个档案的领域类，这就是一个档案类的族，我们叫UserArchive、ClassArchive、SchoolArchive等。<a id="more"></a></li>
+<li>具有对应关系的领域类，使用相同的开头，比如Order类，订单类，通常订单类还需要一个订单详情类，我们叫OrderDetail类。</li>
+</ul>
+</li>
+<li>业务接口名<ul>
+<li>业务接口类，和详细设计者的抽象设计有关，不过一般业务接口类都有一个门面，门面类名字需要和具体的业务模块用例相关。比如阅卷门面接口类，我们就可以叫MarkingService。当然也有些不一定和业务用例有关，是设计者为实现某个用例，抽象出来的接口，比如以上的阅卷业务类，部分业务接口比较复杂，需要继续抽象。我们抽象出来一个阅卷任务类，我们就可以叫MarkingTask，当然MarkingTask不能被外部调用。需要通过门面接口类MarkingService对外提供服务。</li>
+<li>业务接口方法，业务接口方法和业务用例相关。比如我们有个业务用例是生成档案，我们就叫generateArchive，这个名字和业务相关。</li>
+</ul>
+</li>
+<li>数据持久层接口名<ul>
+<li>一般持久层接口设计比较轻，这个具体的接口设计原则，会在下次讲到。接口方法设计，一般几个固定开头就够用了，比如：insert,update,delete,find开头就够用。比如查询一条用户档案就叫findUserArchive。</li>
+</ul>
+</li>
+</ol>
+<h4 id="顺序重要吗？">顺序重要吗？</h4><p>不知大家有没有思考过，类中字段顺序、接口方法顺序的问题。我个人思考过这个问题，但是我自己在工作中，也做的不好。</p>
+<ol>
+<li>属性的顺序，比如两个类有几个相同的属性（不考虑是否需要抽离到一个Base的抽象类中），在一个类中，把它们放在开头，另一个类中放在后面，当自己的调试一些问题，或者别人阅读时总是不方便，不好找。建议表达相近的属性放在一块，并保持顺序一致，比如表达个人信息的基础信息（userId,userCode,userName）放在连续顺序。所以字段顺序保持一致性也是非常好的习惯。</li>
+<li>方法的顺序，和字段同样的问题，比如两个重载方法，方法名一致，参数列表不同，如果把一个放在开头，另一个放在结尾。看着肯定累。<br>建议，表达相近业务的方法放在连续，并保持顺序一致。比如获取档案列表接口getUserArchive() getUserArchivesByClassId,getUserArchivesBySchoolId就可以保持连续。</li>
+<li>参数列表一致性,定义接口时参数列表的顺序不知道大家有没有注意过，比如两个接口，一个接口方法A(String userId,String classId)，接口方法B(String classId,String userId)，两个相同的接口，参数列表不同，首先我们从调用者的角度考虑，非常容易把参数写反，造成不必要的问题。另外查看我们的接口列表也会非常奇怪。<br>所以在参数相近的接口，一定需要注意参数列表的顺序。</li>
+</ol>
+<h4 id="善用注释">善用注释</h4><p>在设计接口时，特别是业务接口方法时，通常不能通过简单的英文单词就能表达接口的意思。这时我们需要考虑两点，第一这个接口职责单一吗？第二如何起个好名字?当然第一种情况就是需要检查接口是否合理，第二种情况就需要我们在方法名和注释和权衡。<br>比如有这样一个接口，获取某个学生每个学科最近一次的考试分数以及排名。如果我们完全按照字面意思来写方法名如下：getStudentEverySubjectsRecentlyScoreAndRank(),显然这不是个好名字.<br>遇到以上情况，我们需要思考如下：<br>1、业务接口方法解决的主要问题是干什么？<br>2、可不可以通过方法参数列表或者返回值来更好的表达？<br>以上需求最主要表达是获取学生成绩。我们在来看用户分以及排名应该是个DTO，我们叫UserScoreDTO，所以DTO可以用类表示用户的成绩。我们在看传入参数，应该为一个userId表示学生，所以通过以上我们可以变成如下接口List<userscoredto> getEverySubjectsRecently(String userId);<br>以上名字依然不好，可能看到这个接口之后，更晕了，还不通顺。这时候注释就派上了用场。以上的EverySubjectsRecently可以通过注释类描述。我们接口就变成List<userscoredto> get(String userId)或者叫List<userscoredto> getUserScores(String userId);这个接口最终如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line"> * 获取某个学生每个学科最近一次的考试成绩。</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> *     仅返回有答题记录的用户的学科。</span><br><span class="line"> * &lt;/p&gt;</span><br><span class="line"> *<span class="javadoctag"> @param</span> userId 用户id</span><br><span class="line"> *<span class="javadoctag"> @return</span> 用户成绩</span><br><span class="line"> */</span></span><br><span class="line"><span class="function">List&lt;UserScoreDTO&gt; <span class="title">getUserScores</span><span class="params">(String userId)</span></span>;</span><br></pre></td></tr></table></figure></userscoredto></userscoredto></userscoredto></p>
+<h4 id="其他">其他</h4><ol>
+<li>尽量不要使用缩写，除非团队规定</li>
+<li>开启代码检查工具，比如java的checkstyle，避免手误。</li>
+</ol>
+<p>本篇内容是在平常工作中的实践思考与总结。如有不妥之处，欢迎讨论。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2014/12/29/detailed-design-principle/" data-toggle="tooltip" data-placement="top" title="如何做详细设计之设计原则">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2014/12/21/detailed-design-coding/" data-toggle="tooltip" data-placement="top" title="如何做详细设计之设计即编码">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="2014/12/23/detailed-design-standard/"
+                        data-title="如何做详细设计之规范"
+                        data-url="http://yywang.info/2014/12/23/detailed-design-standard/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col" >
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#起名难吗？"><span class="toc-text">起名难吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#顺序重要吗？"><span class="toc-text">顺序重要吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#善用注释"><span class="toc-text">善用注释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'yywang';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; wangyan9110 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js" type="text/javascript"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yywang.info/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <!--wechat title img-->
+    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+</body>
+
+</html>
