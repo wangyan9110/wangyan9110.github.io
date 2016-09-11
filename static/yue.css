@@ -9,7 +9,7 @@
 
 
 .yue {
-  font: 400 18px/1.62 "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
+  font: 400 16px/1.62 "Georgia", "Xin Gothic", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
   color: #444443;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .yue h1 {
-  font-size: 1.8em;
+  font-size: 1.6em;
   margin: 0.67em 0;
 }
 
@@ -47,12 +47,12 @@
 }
 
 .yue h2 {
-  font-size: 1.5em;
+  font-size: 1.2em;
   margin: 0.83em 0;
 }
 
 .yue h3 {
-  font-size: 1.17em;
+  font-size: 1.0em;
   margin: 1em 0;
 }
 
