@@ -161,7 +161,7 @@
 
 .yue ul,
 .yue ol {
-  margin: 0 0 24px 6px;
+  margin: 0 0 24px 3px;
   padding-left: 16px;
 }
 
@@ -174,7 +174,7 @@
 }
 
 .yue li {
-  margin-bottom: 0.2em;
+  margin-bottom: 0em;
 }
 
 .yue li ul,
