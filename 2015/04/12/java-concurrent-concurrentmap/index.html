@@ -27,13 +27,13 @@
     <link rel="canonical" href="http://yywang.info/2015/04/12/java-concurrent-concurrentmap/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/blog-style.css">
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css" type="text/css">
+    <link rel="stylesheet" href="/css/syntax.css">
 
     <!-- Custom Fonts -->
     <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -94,14 +94,6 @@
 
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
                     
                         
                         <li>
@@ -109,6 +101,14 @@
                         </li>
                         
                     
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
                         
                     
 
@@ -172,16 +172,16 @@
                     <h1>Java并发编程学习之ConcurrentMap</h1>
                     
                     <span class="meta">
-                         作者 wangyan9110(圣国)
+                         作者 wangyan9110
                          <span>
                           日期 2015-04-12
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#concurrent" title="concurrent">concurrent</a>
-                        
                         <a class="tag" href="/tags/#java" title="java">java</a>
+                        
+                        <a class="tag" href="/tags/#concurrent" title="concurrent">concurrent</a>
                         
                     </div>
                 </div>
@@ -202,13 +202,13 @@
                 <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
 
-                <p>最近在学习java并发编程，学习java并发编程实战这本书，前几章都在介绍基础知识非常重要，但是总是感觉还没完全透彻的理解，所以先从基本应用入手，最后在对基础知识进行回顾。今天主要学习并发容器的ConcurrentMap类以及解决的问题。<br>在早期的jdk中，就提供了一些同步容器类，比如Hashtable,Vector，还有一个Collections.synchronizedXXX可以把非线程安全的容器转为线程安全的容器。这些同步容器的实现都是基于synchronzied来实现的，可以打开Hashtable的实现可以看到它实现Map的接口，然后看下它的put方法：<a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> synchronzied <span class="keyword">void</span> <span class="title">put</span><span class="params">()</span></span>&#123;...&#125;</span><br></pre></td></tr></table></figure></p>
+                <p>最近在学习java并发编程，学习java并发编程实战这本书，前几章都在介绍基础知识非常重要，但是总是感觉还没完全透彻的理解，所以先从基本应用入手，最后在对基础知识进行回顾。今天主要学习并发容器的ConcurrentMap类以及解决的问题。<br>在早期的jdk中，就提供了一些同步容器类，比如Hashtable,Vector，还有一个Collections.synchronizedXXX可以把非线程安全的容器转为线程安全的容器。这些同步容器的实现都是基于synchronzied来实现的，可以打开Hashtable的实现可以看到它实现Map的接口，然后看下它的put方法：<a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> synchronzied <span class="keyword">void</span> <span class="title">put</span><span class="params">()</span></span>&#123;...&#125;</div></pre></td></tr></table></figure></p>
 <p>可见就是通过在方法块中使用synchronzied来实现的。也没有相关复合操作的相关接口。</p>
-<h4 id="基础知识">基础知识</h4><p>ConcurrentMap继承自Map，在Map相关接口上增加了如下接口：<br>V putIfAbsent(K key,V value):如果当前key已存在则返回当前key的值，否则增加到容器中。这个接口如果用Map的接口相当于：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!map.containsKey(key))&#123;</span><br><span class="line">   <span class="keyword">return</span> map.put(key,value)</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> map.get(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>之所以ConcurrentMap中增加这个接口是因为在多线程情况下，在业务代码中实现以上代码是有风险的，除非在这个判断写在同步块中，但是如果写在同步块中，又会影响系统吞吐量。在ConcurrentMap的实现中对锁进行了更加细粒度的控制，来减少对吞吐量的影响。在深入的原理我们后面在探讨。<br>boolean remove(Key key,V value):如果当前key已存在并且当前的值等于容器中得值，则删除这条值。如果使用map中得接口如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(map.containsKey(key)&amp;&amp;map.get(key).equals(value))&#123;</span><br><span class="line">    map.remove(key);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="基础知识">基础知识</h4><p>ConcurrentMap继承自Map，在Map相关接口上增加了如下接口：<br>V putIfAbsent(K key,V value):如果当前key已存在则返回当前key的值，否则增加到容器中。这个接口如果用Map的接口相当于：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(!map.containsKey(key))&#123;</div><div class="line">   <span class="keyword">return</span> map.put(key,value)</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">   <span class="keyword">return</span> map.get(key);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>之所以ConcurrentMap中增加这个接口是因为在多线程情况下，在业务代码中实现以上代码是有风险的，除非在这个判断写在同步块中，但是如果写在同步块中，又会影响系统吞吐量。在ConcurrentMap的实现中对锁进行了更加细粒度的控制，来减少对吞吐量的影响。在深入的原理我们后面在探讨。<br>boolean remove(Key key,V value):如果当前key已存在并且当前的值等于容器中得值，则删除这条值。如果使用map中得接口如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(map.containsKey(key)&amp;&amp;map.get(key).equals(value))&#123;</div><div class="line">    map.remove(key);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">   <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>增加这个方法的原因和上一个方法一样。也是一个复合操作。<br>还有两个方法：<br>boolean replace(Key key,V oldValue,V newValue)：如果存在并且等于oldValue则替换；<br>boolean replace(Key key,V value)；:如果存在则替换。<br>以上相同的特点都是原子性的复合操作。</p>
-<h4 id="示例">示例</h4><p>下面是一个ConcurrentMap简单的小例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ConcurrentMap&lt;Integer, String&gt; map = <span class="keyword">new</span> ConcurrentHashMap&lt;Integer, String&gt;();</span><br><span class="line">        CountDownLatch countDownLatch=<span class="keyword">new</span> CountDownLatch(<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">new</span> Test(map,countDownLatch).start();</span><br><span class="line">        <span class="keyword">new</span> Test(map,countDownLatch).start();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            countDownLatch.await();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        Iterator iter=map.keySet().iterator();</span><br><span class="line">        <span class="keyword">while</span>(iter.hasNext())&#123;</span><br><span class="line">            Integer key=(Integer)iter.next();</span><br><span class="line">            System.out.println(map.get(key));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> ConcurrentMap&lt;Integer, String&gt; map;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> CountDownLatch countDownLatch;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Test</span><span class="params">(ConcurrentMap&lt;Integer, String&gt; map,CountDownLatch countDownLatch)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.map = map;</span><br><span class="line">            <span class="keyword">this</span>.countDownLatch=countDownLatch;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">1</span>; index &lt; <span class="number">10</span>; index++) &#123;</span><br><span class="line">                map.putIfAbsent(index, Thread.currentThread().getId()+<span class="string">"当前值："</span> + index);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(<span class="number">100</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            countDownLatch.countDown();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>以上示例简单的使用了putIfAbsent得用法，在一个线程已经put进去了一个index,另一个线程就不会put相同的index了。以上示例中使用了CountDownLatch后面也会专门提到。可以看做是一个线程计数器。执行完成一个线程就减1，await方法就是要等待所有线程执行完成才会继续执行下面的操作。<br>输出结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span>当前值：<span class="number">6</span></span><br><span class="line"><span class="number">10</span>当前值：<span class="number">5</span></span><br><span class="line"><span class="number">10</span>当前值：<span class="number">7</span></span><br><span class="line"><span class="number">9</span>当前值：<span class="number">8</span></span><br><span class="line"><span class="number">10</span>当前值：<span class="number">2</span></span><br><span class="line"><span class="number">9</span>当前值：<span class="number">9</span></span><br><span class="line"><span class="number">9</span>当前值：<span class="number">1</span></span><br><span class="line"><span class="number">10</span>当前值：<span class="number">3</span></span><br><span class="line"><span class="number">10</span>当前值：<span class="number">4</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="示例">示例</h4><p>下面是一个ConcurrentMap简单的小例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        ConcurrentMap&lt;Integer, String&gt; map = <span class="keyword">new</span> ConcurrentHashMap&lt;Integer, String&gt;();</div><div class="line">        CountDownLatch countDownLatch=<span class="keyword">new</span> CountDownLatch(<span class="number">2</span>);</div><div class="line">        <span class="keyword">new</span> Test(map,countDownLatch).start();</div><div class="line">        <span class="keyword">new</span> Test(map,countDownLatch).start();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            countDownLatch.await();</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        Iterator iter=map.keySet().iterator();</div><div class="line">        <span class="keyword">while</span>(iter.hasNext())&#123;</div><div class="line">            Integer key=(Integer)iter.next();</div><div class="line">            System.out.println(map.get(key));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> ConcurrentMap&lt;Integer, String&gt; map;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> CountDownLatch countDownLatch;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Test</span><span class="params">(ConcurrentMap&lt;Integer, String&gt; map,CountDownLatch countDownLatch)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.map = map;</div><div class="line">            <span class="keyword">this</span>.countDownLatch=countDownLatch;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">1</span>; index &lt; <span class="number">10</span>; index++) &#123;</div><div class="line">                map.putIfAbsent(index, Thread.currentThread().getId()+<span class="string">"当前值："</span> + index);</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    Thread.sleep(<span class="number">100</span>);</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            countDownLatch.countDown();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>以上示例简单的使用了putIfAbsent得用法，在一个线程已经put进去了一个index,另一个线程就不会put相同的index了。以上示例中使用了CountDownLatch后面也会专门提到。可以看做是一个线程计数器。执行完成一个线程就减1，await方法就是要等待所有线程执行完成才会继续执行下面的操作。<br>输出结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="number">10</span>当前值：<span class="number">6</span></div><div class="line"><span class="number">10</span>当前值：<span class="number">5</span></div><div class="line"><span class="number">10</span>当前值：<span class="number">7</span></div><div class="line"><span class="number">9</span>当前值：<span class="number">8</span></div><div class="line"><span class="number">10</span>当前值：<span class="number">2</span></div><div class="line"><span class="number">9</span>当前值：<span class="number">9</span></div><div class="line"><span class="number">9</span>当前值：<span class="number">1</span></div><div class="line"><span class="number">10</span>当前值：<span class="number">3</span></div><div class="line"><span class="number">10</span>当前值：<span class="number">4</span></div></pre></td></tr></table></figure></p>
 
 
                 <hr>
@@ -336,7 +336,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; wangyan9110 2016
+                    Copyright &copy; wangyan9110 2017
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -349,13 +349,13 @@
 </footer>
 
 <!-- jQuery -->
-<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/blog.js" type="text/javascript"></script>
+<script src="/js/blog.js"></script>
 
 
 <!-- async load function -->

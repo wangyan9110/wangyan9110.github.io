@@ -27,13 +27,13 @@
     <link rel="canonical" href="http://yywang.info/2014/06/01/wpf-canvas-var-rectangle/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/blog-style.css">
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css" type="text/css">
+    <link rel="stylesheet" href="/css/syntax.css">
 
     <!-- Custom Fonts -->
     <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -94,14 +94,6 @@
 
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
                     
                         
                         <li>
@@ -109,6 +101,14 @@
                         </li>
                         
                     
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
                         
                     
 
@@ -172,7 +172,7 @@
                     <h1>WPF使用Canvas绘制可变矩形</h1>
                     
                     <span class="meta">
-                         作者 wangyan9110(圣国)
+                         作者 wangyan9110
                          <span>
                           日期 2014-06-01
                          </span>
@@ -181,9 +181,9 @@
                         
                         <a class="tag" href="/tags/#c#" title="c#">c#</a>
                         
-                        <a class="tag" href="/tags/#canvas" title="canvas">canvas</a>
-                        
                         <a class="tag" href="/tags/#wpf" title="wpf">wpf</a>
+                        
+                        <a class="tag" href="/tags/#canvas" title="canvas">canvas</a>
                         
                     </div>
                 </div>
@@ -213,24 +213,24 @@
 </ol>
 <p><img src="http://yywang.qiniudn.com/AnchorPointClass.png" alt="定位点类图"></p>
 <p>定位点主要是定位点的一些基本属性和基本方法，主要包括绘制方法，移动方法。<br>其中：AnchorPointType为定位点的类型;</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public enum AnchorPointType&#10;&#123;&#10;    /// &#60;summary&#62;&#10;    /// &#19978;&#19979;&#10;    /// &#60;/summary&#62;&#10;    NS,&#10;    /// &#60;summary&#62;&#10;    /// &#24038;&#21491;&#10;    /// &#60;/summary&#62;&#10;    WE,&#10;    /// &#60;summary&#62;&#10;    /// &#21491;&#19978;&#10;    /// &#60;/summary&#62;&#10;    NE,&#10;    /// &#60;summary&#62;&#10;    /// &#24038;&#19979;&#10;    /// &#60;/summary&#62;&#10;    SW,&#10;    /// &#60;summary&#62;&#10;    /// &#21491;&#19979;&#10;    /// &#60;/summary&#62;&#10;    NW,&#10;    /// &#60;summary&#62;&#10;    /// &#24038;&#19978;&#10;    /// &#60;/summary&#62;&#10;    SE&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public enum AnchorPointType</div><div class="line">&#123;</div><div class="line">    /// &lt;summary&gt;</div><div class="line">    /// 上下</div><div class="line">    /// &lt;/summary&gt;</div><div class="line">    NS,</div><div class="line">    /// &lt;summary&gt;</div><div class="line">    /// 左右</div><div class="line">    /// &lt;/summary&gt;</div><div class="line">    WE,</div><div class="line">    /// &lt;summary&gt;</div><div class="line">    /// 右上</div><div class="line">    /// &lt;/summary&gt;</div><div class="line">    NE,</div><div class="line">    /// &lt;summary&gt;</div><div class="line">    /// 左下</div><div class="line">    /// &lt;/summary&gt;</div><div class="line">    SW,</div><div class="line">    /// &lt;summary&gt;</div><div class="line">    /// 右下</div><div class="line">    /// &lt;/summary&gt;</div><div class="line">    NW,</div><div class="line">    /// &lt;summary&gt;</div><div class="line">    /// 左上</div><div class="line">    /// &lt;/summary&gt;</div><div class="line">    SE</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>draw()方法用于绘制矩形：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public Rectangle Draw() &#10;&#123;&#10;    double offset = this.Width / 2;&#10;    Rectangle retc = new Rectangle()&#10;    &#123;&#10;        Margin = new Thickness(this.X - offset, this.Y - offset, 0, 0),&#10;        Width = this.Width,&#10;        Height = this.Height,&#10;        Fill = Brushes.LightGoldenrodYellow,&#10;        Stroke = Brushes.Black,&#10;        StrokeThickness = 1,&#10;        DataContext = this.Key&#10;    &#125;;&#10;    this.retc = retc;&#10;    return retc;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>move()方法用户改变定位点位置<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void Move(double x,double y)&#10;&#123;&#10;    double offset = this.Width / 2;&#10;    this.retc.Margin = new Thickness(x-offset,y-offset,0,0);&#10;    this.X = x;&#10;    this.Y = y;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public Rectangle Draw() </div><div class="line">&#123;</div><div class="line">    double offset = this.Width / 2;</div><div class="line">    Rectangle retc = new Rectangle()</div><div class="line">    &#123;</div><div class="line">        Margin = new Thickness(this.X - offset, this.Y - offset, 0, 0),</div><div class="line">        Width = this.Width,</div><div class="line">        Height = this.Height,</div><div class="line">        Fill = Brushes.LightGoldenrodYellow,</div><div class="line">        Stroke = Brushes.Black,</div><div class="line">        StrokeThickness = 1,</div><div class="line">        DataContext = this.Key</div><div class="line">    &#125;;</div><div class="line">    this.retc = retc;</div><div class="line">    return retc;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>move()方法用户改变定位点位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void Move(double x,double y)</div><div class="line">&#123;</div><div class="line">    double offset = this.Width / 2;</div><div class="line">    this.retc.Margin = new Thickness(x-offset,y-offset,0,0);</div><div class="line">    this.X = x;</div><div class="line">    this.Y = y;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <ol>
-<li>可变矩形<br>这部分主要实现绘制矩形功能，主要代码如下：<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void Init()&#10; &#123;&#10;     //&#25353;x&#36724;&#20998;&#31867;&#10;     IEnumerable&#60;IGrouping&#60;double, Point&#62;&#62; pointXs = points.GroupBy(o =&#62; o.X);&#10;     //&#25353;y&#21608;&#20998;&#31867;&#10;     IEnumerable&#60;IGrouping&#60;double, Point&#62;&#62; pointYs = points.GroupBy(o =&#62; o.Y);&#10;     //&#32472;&#21046;&#31446;&#32447;&#10;     DrawXLine(pointXs);&#10;     //&#32472;&#21046;&#27178;&#32447;&#10;     DrawYLine(pointYs);&#10;     //&#35774;&#32622;&#23450;&#20301;&#28857;&#10;     AddAnchorPoints();&#10;     //&#32472;&#21046;&#23450;&#20301;&#28857;&#24182;&#19988;&#28155;&#21152;&#20107;&#20214;&#10;     foreach (AnchorPoint anchorPoint in anchorPoints)&#10;     &#123;&#10;         Rectangle rec=anchorPoint.Draw();&#10;         rec.MouseLeftButtonDown += new MouseButtonEventHandler(rec_MouseLeftButtonDown);&#10;         rec.MouseMove += new MouseEventHandler(rec_MouseMove);&#10;         canvas.Children.Add(rec);&#10;     &#125;&#10;     //canvas&#28155;&#21152;&#20107;&#20214;&#10;     canvas.MouseLeftButtonUp += new MouseButtonEventHandler(canvas_MouseLeftButtonUp);&#10;     canvas.MouseMove += new MouseEventHandler(canvas_MouseMove);&#10;     canvas.MouseLeave += new MouseEventHandler(canvas_MouseLeave);&#10; &#125;</span><br></pre></td></tr></table></figure>
+<li>可变矩形<br>这部分主要实现绘制矩形功能，主要代码如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public void Init()</div><div class="line"> &#123;</div><div class="line">     //按x轴分类</div><div class="line">     IEnumerable&lt;IGrouping&lt;double, Point&gt;&gt; pointXs = points.GroupBy(o =&gt; o.X);</div><div class="line">     //按y周分类</div><div class="line">     IEnumerable&lt;IGrouping&lt;double, Point&gt;&gt; pointYs = points.GroupBy(o =&gt; o.Y);</div><div class="line">     //绘制竖线</div><div class="line">     DrawXLine(pointXs);</div><div class="line">     //绘制横线</div><div class="line">     DrawYLine(pointYs);</div><div class="line">     //设置定位点</div><div class="line">     AddAnchorPoints();</div><div class="line">     //绘制定位点并且添加事件</div><div class="line">     foreach (AnchorPoint anchorPoint in anchorPoints)</div><div class="line">     &#123;</div><div class="line">         Rectangle rec=anchorPoint.Draw();</div><div class="line">         rec.MouseLeftButtonDown += new MouseButtonEventHandler(rec_MouseLeftButtonDown);</div><div class="line">         rec.MouseMove += new MouseEventHandler(rec_MouseMove);</div><div class="line">         canvas.Children.Add(rec);</div><div class="line">     &#125;</div><div class="line">     //canvas添加事件</div><div class="line">     canvas.MouseLeftButtonUp += new MouseButtonEventHandler(canvas_MouseLeftButtonUp);</div><div class="line">     canvas.MouseMove += new MouseEventHandler(canvas_MouseMove);</div><div class="line">     canvas.MouseLeave += new MouseEventHandler(canvas_MouseLeave);</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>如上代码：<br>    如上代码：<br>    1、按x轴，y轴分类<br>    2、绘制竖线，横线<br>    3、设置定位点<br>    4、绘制定位点并且添加事件监听<br>    5、给canvas添加事件<br>给每个定位点添加鼠标MouseMove和MouseLeftButtonDown事件，给canvas添加MouseMove,MouseLeave,MouseLeftButtonUp事件。<br>具体代码不在粘贴了，如果需要代码，可以去下载源代码</p>
 <ol>
 <li><p>矩形线联动<br>矩形线联动，主要是以点带线，通过判断线是否和动点相关联，联动相关的线。主要代码如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private void MoveLines(double x, double y)&#10;&#123;&#10;    List&#60;Line&#62; moveLines = new List&#60;Line&#62;();&#10;    moveLines = lines.Where(o =&#62; o.Y1 == curAnchorPoint.Y&#10;        || o.Y2 == curAnchorPoint.Y&#10;        || o.X1 == curAnchorPoint.X&#10;        || o.X2 == curAnchorPoint.X).ToList();&#10;    foreach (Line line in moveLines)&#10;    &#123;&#10;        if (line.Y1 == curAnchorPoint.Y)&#10;        &#123;&#10;            line.Y1 = y;&#10;        &#125;&#10;        if (line.Y2 == curAnchorPoint.Y)&#10;        &#123;&#10;            line.Y2 = y;&#10;        &#125;&#10;        if (line.X1 == curAnchorPoint.X)&#10;        &#123;&#10;            line.X1 = x;&#10;        &#125;&#10;        if (line.X2 == curAnchorPoint.X)&#10;        &#123;&#10;            line.X2 = x;&#10;        &#125;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">private void MoveLines(double x, double y)</div><div class="line">&#123;</div><div class="line">    List&lt;Line&gt; moveLines = new List&lt;Line&gt;();</div><div class="line">    moveLines = lines.Where(o =&gt; o.Y1 == curAnchorPoint.Y</div><div class="line">        || o.Y2 == curAnchorPoint.Y</div><div class="line">        || o.X1 == curAnchorPoint.X</div><div class="line">        || o.X2 == curAnchorPoint.X).ToList();</div><div class="line">    foreach (Line line in moveLines)</div><div class="line">    &#123;</div><div class="line">        if (line.Y1 == curAnchorPoint.Y)</div><div class="line">        &#123;</div><div class="line">            line.Y1 = y;</div><div class="line">        &#125;</div><div class="line">        if (line.Y2 == curAnchorPoint.Y)</div><div class="line">        &#123;</div><div class="line">            line.Y2 = y;</div><div class="line">        &#125;</div><div class="line">        if (line.X1 == curAnchorPoint.X)</div><div class="line">        &#123;</div><div class="line">            line.X1 = x;</div><div class="line">        &#125;</div><div class="line">        if (line.X2 == curAnchorPoint.X)</div><div class="line">        &#123;</div><div class="line">            line.X2 = x;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>定位点联动</p>
 </li>
 </ol>
 <p>点的联动，和线的联动方法类似，但是点的联动要比线的联动复杂，主要在以下三个方面：1、点的移动需要联动中点的联动。2、在矩形的四个顶点变动时，需要联动其他两个相邻的顶点，和相邻两条线的中点的联动。3、不同的方向点的联动，不一样，会有很多if else。<br>由于代码较长，就不粘贴了，需要源代码可以去获取源代码。<br>线中点联动：线的中点联动需要考虑，移动的点是否关联到计算这个中点的两个点或者一个点，关联到中点的这两个点如果有改变，则这个中点就需要改变。主要代码如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private void MoveRefAnchorPoint(double x, double y,AnchorPoint movedAnchorPoint)&#10;&#123;&#10;    foreach (AnchorPoint anchorPoint in anchorPoints)&#10;    &#123;&#10;        if (anchorPoint.RefPoint.Length == 2)&#10;        &#123;&#10;            if (anchorPoint.RefPoint[0].X == x &#38;&#38; anchorPoint.RefPoint[0].Y == y)&#10;            &#123;&#10;                anchorPoint.RefPoint[0].X = movedAnchorPoint.X;&#10;                anchorPoint.RefPoint[0].Y = movedAnchorPoint.Y;&#10;            &#125;&#10;            else if (anchorPoint.RefPoint[1].X == x &#38;&#38; anchorPoint.RefPoint[1].Y == y)&#10;            &#123;&#10;                anchorPoint.RefPoint[1].X = movedAnchorPoint.X;&#10;                anchorPoint.RefPoint[1].Y = movedAnchorPoint.Y;&#10;            &#125;&#10;            anchorPoint.X = (anchorPoint.RefPoint[0].X + anchorPoint.RefPoint[1].X) / 2;&#10;            anchorPoint.Y = (anchorPoint.RefPoint[0].Y + anchorPoint.RefPoint[1].Y) / 2;&#10;            anchorPoint.Move();&#10;        &#125;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">private void MoveRefAnchorPoint(double x, double y,AnchorPoint movedAnchorPoint)</div><div class="line">&#123;</div><div class="line">    foreach (AnchorPoint anchorPoint in anchorPoints)</div><div class="line">    &#123;</div><div class="line">        if (anchorPoint.RefPoint.Length == 2)</div><div class="line">        &#123;</div><div class="line">            if (anchorPoint.RefPoint[0].X == x &amp;&amp; anchorPoint.RefPoint[0].Y == y)</div><div class="line">            &#123;</div><div class="line">                anchorPoint.RefPoint[0].X = movedAnchorPoint.X;</div><div class="line">                anchorPoint.RefPoint[0].Y = movedAnchorPoint.Y;</div><div class="line">            &#125;</div><div class="line">            else if (anchorPoint.RefPoint[1].X == x &amp;&amp; anchorPoint.RefPoint[1].Y == y)</div><div class="line">            &#123;</div><div class="line">                anchorPoint.RefPoint[1].X = movedAnchorPoint.X;</div><div class="line">                anchorPoint.RefPoint[1].Y = movedAnchorPoint.Y;</div><div class="line">            &#125;</div><div class="line">            anchorPoint.X = (anchorPoint.RefPoint[0].X + anchorPoint.RefPoint[1].X) / 2;</div><div class="line">            anchorPoint.Y = (anchorPoint.RefPoint[0].Y + anchorPoint.RefPoint[1].Y) / 2;</div><div class="line">            anchorPoint.Move();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>以上为单个关联点改变的情况的代码，两个关联点都变动的代码和这个类似。</p>
 <h4 id="4、获取源代码">4、获取源代码</h4><p>由于文字表达能力有限，另外说清点和线的关系，特别是点和线的联动，确实有点困难，如果感兴趣的话，强烈建议下载代码进行调试阅读。<br><a href="https://github.com/wangyan9110/ProjectDemos/tree/master/WPFCanvasDemo" target="_blank" rel="external">https://github.com/wangyan9110/ProjectDemos/tree/master/WPFCanvasDemo</a></p>
 
@@ -360,7 +360,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; wangyan9110 2016
+                    Copyright &copy; wangyan9110 2017
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -373,13 +373,13 @@
 </footer>
 
 <!-- jQuery -->
-<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/blog.js" type="text/javascript"></script>
+<script src="/js/blog.js"></script>
 
 
 <!-- async load function -->

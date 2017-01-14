@@ -27,13 +27,13 @@
     <link rel="canonical" href="http://yywang.info/2014/07/12/singleton/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/blog-style.css">
 
     <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css" type="text/css">
+    <link rel="stylesheet" href="/css/syntax.css">
 
     <!-- Custom Fonts -->
     <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -94,14 +94,6 @@
 
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
                     
                         
                         <li>
@@ -109,6 +101,14 @@
                         </li>
                         
                     
+                        
+                    
+                        
+                    
+                        
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
                         
                     
 
@@ -172,7 +172,7 @@
                     <h1>设计模式学习--Singleton</h1>
                     
                     <span class="meta">
-                         作者 wangyan9110(圣国)
+                         作者 wangyan9110
                          <span>
                           日期 2014-07-12
                          </span>
@@ -206,15 +206,15 @@
 <p>Singleton：保证一个类仅有一个实例，并提供一个访问它的全局访问点。<a id="more"></a></p>
 </blockquote>
 <h3 id="Why"><strong>Why</strong></h3><p>Singletion是我比较熟悉的设计模式之一，在平常的开发过程中，也曾几次用到，它主要适用于如下场景：<br>1、当类只能有一个实例而且客户可以从一个众所周知的访问点访问它时。<br>2、当这个唯一实例应该是通过子类可扩展的，并且客户应该无需更改代码就能使用一个扩展的实例时。<br>在系统设计中，在涉及系统资源的管理时，往往会被设计成Singletion模式，比如缓存、日志对象、线程池、对话框等等。</p>
-<h3 id="How"><strong>How</strong></h3><p>假设如下场景：一个简单的线程池，需要实现增加线程以及获取单个线程的功能。显然这个线程池对象是一个Singletion对象。<br>简单的实现代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;Runnable&gt; threads=<span class="keyword">new</span> ArrayList&lt;Runnable&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadPool threadPool=<span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ThreadPool</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadPool <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(threadPool==<span class="keyword">null</span>)&#123;</span><br><span class="line">            threadPool=<span class="keyword">new</span> ThreadPool();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> threadPool;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Runnable thread)</span></span>&#123;</span><br><span class="line">        System.out.append(<span class="string">"add a thread!"</span>);</span><br><span class="line">        threads.add(thread);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>客户端调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ThreadPool threadPool=ThreadPool.getInstance();</span><br><span class="line">threadPool.add(<span class="keyword">new</span> Thread());</span><br></pre></td></tr></table></figure></p>
+<h3 id="How"><strong>How</strong></h3><p>假设如下场景：一个简单的线程池，需要实现增加线程以及获取单个线程的功能。显然这个线程池对象是一个Singletion对象。<br>简单的实现代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> List&lt;Runnable&gt; threads=<span class="keyword">new</span> ArrayList&lt;Runnable&gt;();</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadPool threadPool=<span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ThreadPool</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadPool <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(threadPool==<span class="keyword">null</span>)&#123;</div><div class="line">            threadPool=<span class="keyword">new</span> ThreadPool();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> threadPool;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Runnable thread)</span></span>&#123;</div><div class="line">        System.out.append(<span class="string">"add a thread!"</span>);</div><div class="line">        threads.add(thread);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>客户端调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ThreadPool threadPool=ThreadPool.getInstance();</div><div class="line">threadPool.add(<span class="keyword">new</span> Thread());</div></pre></td></tr></table></figure></p>
 <p>以上代码类图如下：<br><img src="http://yywang.qiniudn.com/singleton.png" alt="singleton"></p>
-<h3 id="Discuss"><strong>Discuss</strong></h3><h4 id="线程安全的Singleton实现"><strong>线程安全的Singleton实现</strong></h4><p>以上代码，实现的是一个学习意义上的版本，在实际生产中，在一些情况下会出现问题，在多线程情况下，如下代码会出现什么问题?<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadPool <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(threadPool==<span class="keyword">null</span>)&#123;</span><br><span class="line">        threadPool=<span class="keyword">new</span> ThreadPool();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> threadPool;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在多线程条件下，当一个线程执行到new ThreadPool()但是还没返回给threadPool，这时thread=null,另一个线程也会进入if代码片段，这样就创建了两个threadPool，造成这个的原因就是这段代码是线程非安全的。<br>经过优化形成如下版本：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadPool <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">synchronized</span> (ThreadPool.class) &#123;</span><br><span class="line">            <span class="keyword">if</span> (threadPool == <span class="keyword">null</span>) &#123;</span><br><span class="line">                threadPool = <span class="keyword">new</span> ThreadPool();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> threadPool;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>这个版本可以很好的解决上个版本的问题，在一个线程进入了synchronized代码块，另一个线程就会等待。但是仔细想想，如果对象已经创建，线程还是需要等待进入synchronized代码块才会知道threadPool!=null，这样会造成比较严重性能问题，再来一个版本<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadPool <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (threadPool == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (ThreadPool.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (threadPool == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    threadPool = <span class="keyword">new</span> ThreadPool();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> threadPool;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Discuss"><strong>Discuss</strong></h3><h4 id="线程安全的Singleton实现"><strong>线程安全的Singleton实现</strong></h4><p>以上代码，实现的是一个学习意义上的版本，在实际生产中，在一些情况下会出现问题，在多线程情况下，如下代码会出现什么问题?<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadPool <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(threadPool==<span class="keyword">null</span>)&#123;</div><div class="line">        threadPool=<span class="keyword">new</span> ThreadPool();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> threadPool;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在多线程条件下，当一个线程执行到new ThreadPool()但是还没返回给threadPool，这时thread=null,另一个线程也会进入if代码片段，这样就创建了两个threadPool，造成这个的原因就是这段代码是线程非安全的。<br>经过优化形成如下版本：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadPool <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        </div><div class="line">        <span class="keyword">synchronized</span> (ThreadPool.class) &#123;</div><div class="line">            <span class="keyword">if</span> (threadPool == <span class="keyword">null</span>) &#123;</div><div class="line">                threadPool = <span class="keyword">new</span> ThreadPool();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> threadPool;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这个版本可以很好的解决上个版本的问题，在一个线程进入了synchronized代码块，另一个线程就会等待。但是仔细想想，如果对象已经创建，线程还是需要等待进入synchronized代码块才会知道threadPool!=null，这样会造成比较严重性能问题，再来一个版本<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadPool <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (threadPool == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (ThreadPool.class) &#123;</div><div class="line">                <span class="keyword">if</span> (threadPool == <span class="keyword">null</span>) &#123;</div><div class="line">                    threadPool = <span class="keyword">new</span> ThreadPool();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> threadPool;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
 <p>ok,这个版本看上去完美了，可以在生产中使用了。这是线程安全的实现。<br>以上代码还是可以通过一些办法在一个JVM中创建多个ThreadPool实例，想想是什么？对，可以通过反射的方式来，创建n多个实例，java的反射机制可以通过private的构造器创建实例。</p>
-<h4 id="使用枚举实现Singleton"><strong>使用枚举实现Singleton</strong></h4><p>Effectvie java的作者Joshua Bloch提出了一个可以绝对防止多次实例化，而且无偿的提供了序列化机制的方法，使用枚举实现Singleton，当然java版本需要在1.5以上，下面是以上示例的使用枚举的实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ThreadPool &#123;</span><br><span class="line"></span><br><span class="line">    Instance;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;Runnable&gt; threads=<span class="keyword">new</span> ArrayList&lt;Runnable&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Runnable thread)</span></span>&#123;</span><br><span class="line">        System.out.append(<span class="string">"add a thread!"</span>);</span><br><span class="line">        threads.add(thread);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>客户端调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ThreadPool.Instance.add(<span class="keyword">new</span> Thread());</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用枚举实现Singleton"><strong>使用枚举实现Singleton</strong></h4><p>Effectvie java的作者Joshua Bloch提出了一个可以绝对防止多次实例化，而且无偿的提供了序列化机制的方法，使用枚举实现Singleton，当然java版本需要在1.5以上，下面是以上示例的使用枚举的实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ThreadPool &#123;</div><div class="line"></div><div class="line">    Instance;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> List&lt;Runnable&gt; threads=<span class="keyword">new</span> ArrayList&lt;Runnable&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Runnable thread)</span></span>&#123;</div><div class="line">        System.out.append(<span class="string">"add a thread!"</span>);</div><div class="line">        threads.add(thread);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>客户端调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ThreadPool.Instance.add(<span class="keyword">new</span> Thread());</div></pre></td></tr></table></figure></p>
 <p>可以看出使用枚举方式，代码比较简洁而且可以绝对防止多次实例化，是一个实现Singleton的非常好的方法。</p>
 
 
@@ -343,7 +343,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; wangyan9110 2016
+                    Copyright &copy; wangyan9110 2017
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -356,13 +356,13 @@
 </footer>
 
 <!-- jQuery -->
-<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/blog.js" type="text/javascript"></script>
+<script src="/js/blog.js"></script>
 
 
 <!-- async load function -->
