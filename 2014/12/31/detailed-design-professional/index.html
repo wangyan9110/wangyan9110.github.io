@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html>
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>如何做详细设计之理解业务本质 | wangyan9110</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天来讨论详细设计中的一个重要的能力，理解业务的本质。在本系列第一篇，我们提到详细设计人员需要具备的三种能力中，其中有一条就是理解业务的本质。在做业务系统的开发中，业务是我们的核心，不管我们使用什么技术、什么设计目的只有一个为我们的业务服务。所以光有技术不行，没有业务分析能力，还是成为不了一名好的软件开发工程师。写到这里我思考了很长时间，如何来介绍本篇的内容。经过思考，我决定从深入分析业务用例、抽">
+    <title>如何做详细设计之理解业务本质 | wangyan9110</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="wangyan9110">
+    
+
+    
+    <meta name="description" content="今天来讨论详细设计中的一个重要的能力，理解业务的本质。在本系列第一篇，我们提到详细设计人员需要具备的三种能力中，其中有一条就是理解业务的本质。在做业务系统的开发中，业务是我们的核心，不管我们使用什么技术、什么设计目的只有一个为我们的业务服务。所以光有技术不行，没有业务分析能力，还是成为不了一名好的软件开发工程师。写到这里我思考了很长时间，如何来介绍本篇的内容。经过思考，我决定从深入分析业务用例、抽">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何做详细设计之理解业务本质">
 <meta property="og:url" content="http://yywang.info/2014/12/31/detailed-design-professional/index.html">
@@ -15,223 +21,561 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何做详细设计之理解业务本质">
 <meta name="twitter:description" content="今天来讨论详细设计中的一个重要的能力，理解业务的本质。在本系列第一篇，我们提到详细设计人员需要具备的三种能力中，其中有一条就是理解业务的本质。在做业务系统的开发中，业务是我们的核心，不管我们使用什么技术、什么设计目的只有一个为我们的业务服务。所以光有技术不行，没有业务分析能力，还是成为不了一名好的软件开发工程师。写到这里我思考了很长时间，如何来介绍本篇的内容。经过思考，我决定从深入分析业务用例、抽">
-  
+
+    
     <link rel="alternative" href="/atom.xml" title="wangyan9110" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css">
-  
-
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">wangyan9110</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">关注微服务、业务建模、性能优化</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yywang.info"></form>
-      </div>
-    </div>
-  </div>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="wangyan9110" title="wangyan9110"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="wangyan9110">wangyan9110</a></h1>
+				<h2 class="blog-motto">关注微服务、业务建模、性能优化</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yywang.info">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/12/31/detailed-design-professional/" title="如何做详细设计之理解业务本质" itemprop="url">如何做详细设计之理解业务本质</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
+		
+  <p class="article-time">
+    <time datetime="2014-12-31T15:16:18.000Z" itemprop="datePublished"> Published 2014-12-31</time>
+    
+  </p>
 </header>
-      <div class="outer">
-        <section id="main"><article id="post-detailed-design-professional" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/12/31/detailed-design-professional/" class="article-date">
-  <time datetime="2014-12-31T15:16:18.000Z" itemprop="datePublished">2014-12-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/detailed-design/">detailed design</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      如何做详细设计之理解业务本质
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天来讨论详细设计中的一个重要的能力，理解业务的本质。在本系列第一篇，我们提到详细设计人员需要具备的三种能力中，其中有一条就是理解业务的本质。在做业务系统的开发中，业务是我们的核心，不管我们使用什么技术、什么设计目的只有一个为我们的业务服务。所以光有技术不行，没有业务分析能力，还是成为不了一名好的软件开发工程师。写到这里我思考了很长时间，如何来介绍本篇的内容。经过思考，我决定从深入分析业务用例、抽象公共业务模块两个工作中遇到过业务分析实例来讲解。</p>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#深入分析业务用例"><span class="toc-number">1.</span> <span class="toc-text">深入分析业务用例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抽象公共业务模块"><span class="toc-number">2.</span> <span class="toc-text">抽象公共业务模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#理解业务的本质"><span class="toc-number">3.</span> <span class="toc-text">理解业务的本质</span></a></li></ol>
+		
+		</div>
+		
+		<p>今天来讨论详细设计中的一个重要的能力，理解业务的本质。在本系列第一篇，我们提到详细设计人员需要具备的三种能力中，其中有一条就是理解业务的本质。在做业务系统的开发中，业务是我们的核心，不管我们使用什么技术、什么设计目的只有一个为我们的业务服务。所以光有技术不行，没有业务分析能力，还是成为不了一名好的软件开发工程师。写到这里我思考了很长时间，如何来介绍本篇的内容。经过思考，我决定从深入分析业务用例、抽象公共业务模块两个工作中遇到过业务分析实例来讲解。</p>
 <h4 id="深入分析业务用例">深入分析业务用例</h4><p>在产品研发中，通常是由产品经理画出产品原型，然后进行产品原型讲解，或者出一个需求列表。研发根据原型进行分析设计，当然对于简单的需求，可以直接的看出业务用例。对于复杂的模块业务用例不容易直接看出，这时就能体现出设计者的业务分析能力的时候了，在目前做的产品中，有两个功能比较复杂，需要做详细的业务分析。我们以其中一个也是前面多次提到的阅卷模块（另一个是答题卡生成工具）。<a id="more"></a>阅卷功能在我们系统中只有一个画面，有如下功能：教师进入阅卷画面后，可以加载一道该老师阅的试题，然后老师可以打分，打分完成后，并加载下一题，界面上可以显示老师已阅人数以及任务量。支持老师回评（即老师阅卷完成一份后，可以回到上一份），以及重评（即老师可以搜索自己的阅卷记录，然后直接跳到该题阅卷）功能。<br>分析：从以上描述中可以看出阅卷业务有以下业务用例：加载试题，提交分数，阅卷进度，任务量，回评，重评这几个用例。大家可以看出我刚才写的业务用例是就是在找以上需求描述中的关键词，但是这个用例的划分是有问题的。需要更加详细，大家注意着这几个，加载试题，回评，重评这三个功能，其实有着共同的特点即：加载一道题，提交分数。不管是怎么正常阅卷还是回评，重评总归有着加载试题，正常阅卷就是加载下一份未阅试题，回评中上一份，就是加载上一份试题，下一份就是加载下一份试题，重评就是加载指定一份试题。对于提交分数，不管怎么着都是提交分数所以就是一个用例。以上对于加载试卷的分析对于前后台交互接口的设计是完全没有问题的。但是对于我们关注的业务层的设计，以上分析还不够。我们再来看加载回评中的上一份试题，加载回评中的下一份试题，重评时的加载指定一份试题。我们想回评其实就是自己的阅卷历史中的一份，我们可以知道当前的试题编号，就应该指导上一份试题以及下一份试题的编号，所以就变成了加载指定一份试题的接口。所以在底层业务接口上，加载试题就两个接口，一个加载一份未阅试题，另一个是加载指定的试题。（在实际的系统中还有其他条件限制，底层有三个加载试题方法）。<br>从以上分析可以看出，业务分析需要我们一步一步的推导思考其业务的本质，增加对业务的理解以及推导。进而设计出优秀的接口。</p>
 <h4 id="抽象公共业务模块">抽象公共业务模块</h4><p>在做软件开发中，特别是在产品不断迭代中，会发现有很多需求属于同类需求，每次都要写很多类似的代码。这些代码的逻辑大致相同。这时就基本上能够感知到，这部分可以抽象成公共代码。因为这些功能在本质上有一致的功能。同样举个我做过的一个例子。在我们这边有一个档案模块，有一个功能就是显示题目的试题解析，还有一个显示答题情况。因为基础数据在变，在多次功能修改时，我发现了都要修改几个地方几乎相同的代码。由于两个功能从产品上看是两个完全不同的功能。刚开始没有发现其共性，经过思考，两个接口有一个共同特点就是需要加载一张试卷的试题解析，然后分别加载不同的统计数据组合一个对象，然后返回给前端。所以就抽象出了一个专门用于组装一张试卷的试题解析的接口。然后根据不同的需求组装相应的统计数据即可。还有一个例子由于讲清楚比较复杂，也是抽象出了一个任务模块，后来新的需求可以轻而易举的解决。<br>所以在需求分析时，需要深入的思考其业务本质，从而抽象出公用模块，从而使我们的设计更加灵活，以应对不同的需求。</p>
 <h4 id="理解业务的本质">理解业务的本质</h4><p>以上两个例子都是在我在工作中遇到的并解决的问题。在需求分析时，不能武断的下出结论，需要经过深入的思考和分析，思考业务的本质。才能做出好的详细设计。之所以把理解业务的本质作为本系列的单独的一篇来介绍，就是就是业务是我们的核心，对业务的理解直接决定了详细设计的好坏。理解分析业务是考验我们设计能力的最重要的一部分。因为其他部分基本上有规律可循，业务分析是无规律的，特别是对我们刚工作一两年的小菜，做的业务分析比较少，所以在设计时更加需要注意思考业务的本质，同时提高自己的业务分析能力。 这是本年度最后一篇，快要跨年了^_^，先到这里吧。</p>
 <p>本篇内容是在平常工作中的实践思考与总结。如有不妥之处，欢迎讨论。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yywang.info/2014/12/31/detailed-design-professional/" data-id="cixxg2z4w001edq9mulnl13y9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Design-pattern/">Design pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/detailed-design/">detailed design</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/detailed-design/">detailed design</a>
+</div>
 
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/01/01/detailed-design-reconsitution/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          如何做详细设计之重构
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2014/12/29/detailed-design-principle/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">如何做详细设计之设计原则</div>
-    </a>
-  
-</nav>
 
+  <div class="article-tags">
   
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/API/">API</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Archive/">Archive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-pattern/">Design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FTP/">FTP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MicroService/">MicroService</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Translation/">Translation</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/detailed-design/">detailed design</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wpf/">wpf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/个人生活/">个人生活</a><span class="category-list-count">1</span></li></ul>
-    </div>
+  <span></span> <a href="/tags/Design-pattern/">Design pattern</a><a href="/tags/java/">java</a><a href="/tags/detailed-design/">detailed design</a>
   </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Archive/">Archive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Design-pattern/">Design pattern</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FTP/">FTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MicroService/">MicroService</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thread-pool/">Thread pool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Translation/">Translation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/">concurrent</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/detailed-design/">detailed design</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastjson/">fastjson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/in-action/">in action</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quartz/">quartz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wpf/">wpf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人生活/">个人生活</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
+</div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Archive/" style="font-size: 10px;">Archive</a> <a href="/tags/Design-pattern/" style="font-size: 18px;">Design pattern</a> <a href="/tags/FTP/" style="font-size: 10px;">FTP</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/MicroService/" style="font-size: 10px;">MicroService</a> <a href="/tags/Thread-pool/" style="font-size: 10px;">Thread pool</a> <a href="/tags/Translation/" style="font-size: 10px;">Translation</a> <a href="/tags/c/" style="font-size: 10px;">c#</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/concurrent/" style="font-size: 14px;">concurrent</a> <a href="/tags/detailed-design/" style="font-size: 16px;">detailed design</a> <a href="/tags/fastjson/" style="font-size: 10px;">fastjson</a> <a href="/tags/in-action/" style="font-size: 12px;">in action</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/jvm/" style="font-size: 12px;">jvm</a> <a href="/tags/maven/" style="font-size: 12px;">maven</a> <a href="/tags/quartz/" style="font-size: 10px;">quartz</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/wpf/" style="font-size: 10px;">wpf</a> <a href="/tags/个人生活/" style="font-size: 10px;">个人生活</a>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2016/08/24/api/">移动APP服务端开发你需要了解什么</a>
-          </li>
-        
-          <li>
-            <a href="/2016/08/21/mine/">我在创业公司这八个月</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/24/version/">版本管理</a>
-          </li>
-        
-          <li>
-            <a href="/2015/06/02/char-microservice/">谈谈微服务</a>
-          </li>
-        
-          <li>
-            <a href="/2015/04/20/java-concurrent-countdownlatch/">Java并发编程学习之CountDownLatch</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yywang.info/2014/12/31/detailed-design-professional/" data-title="如何做详细设计之理解业务本质 | wangyan9110" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 wangyan9110<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/01/01/detailed-design-reconsitution/" title="如何做详细设计之重构">
+  <strong>上一篇：</strong><br/>
+  <span>
+  如何做详细设计之重构</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/12/29/detailed-design-principle/"  title="如何做详细设计之设计原则">
+ <strong>下一篇：</strong><br/> 
+ <span>如何做详细设计之设计原则
+</span>
+</a>
+</div>
+
 </nav>
-    
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2014/12/31/detailed-design-professional/" data-title="如何做详细设计之理解业务本质" data-url="http://yywang.info/2014/12/31/detailed-design-professional/"></div>
+</section>
 
 
-<script src="/js/script.js"></script>
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#深入分析业务用例"><span class="toc-number">1.</span> <span class="toc-text">深入分析业务用例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抽象公共业务模块"><span class="toc-number">2.</span> <span class="toc-text">抽象公共业务模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#理解业务的本质"><span class="toc-number">3.</span> <span class="toc-text">理解业务的本质</span></a></li></ol>
+ 
   </div>
-</body>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/API/" title="API">API<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Archive/" title="Archive">Archive<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Design-pattern/" title="Design pattern">Design pattern<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Git/" title="Git">Git<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Maven/" title="Maven">Maven<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/MicroService/" title="MicroService">MicroService<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>31</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-pattern/" title="Design pattern">Design pattern<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/concurrent/" title="concurrent">concurrent<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/maven/" title="maven">maven<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/in-action/" title="in action">in action<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FTP/" title="FTP">FTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/API/" title="API">API<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MicroService/" title="MicroService">MicroService<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/fastjson/" title="fastjson">fastjson<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/quartz/" title="quartz">quartz<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Archive/" title="Archive">Archive<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Translation/" title="Translation">Translation<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Thread-pool/" title="Thread pool">Thread pool<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/c/" title="c#">c#<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/wpf/" title="wpf">wpf<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.cnblogs.com/JerryWang1991/" target="_blank" title="博客园博客">博客园博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.isming.me/" target="_blank" title="码农明明桑">码农明明桑</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.baizihan.cn/" target="_blank" title="梓涵的博客">梓涵的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m  yywang. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/wangyan9110" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/wangyan9110" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:wangyan9110@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="http://yywang.info/about" target="_blank" title="wangyan9110">wangyan9110</a>
+		
+		</p>
+</div>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
+
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+    
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yywang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
 </html>
