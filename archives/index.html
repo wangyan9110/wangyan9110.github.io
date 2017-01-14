@@ -1,615 +1,384 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html>
 <head>
-<script type="text/javascript">
-    var _speedMark = new Date();
-</script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword" content="undefined">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        wangyan9110&#39;s Blog
-        
-    </title>
+  <meta charset="utf-8">
+  
+  <title>Archives | wangyan9110</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="关注微服务、业务建模、性能优化等">
+<meta property="og:type" content="website">
+<meta property="og:title" content="wangyan9110">
+<meta property="og:url" content="http://yywang.info/archives/index.html">
+<meta property="og:site_name" content="wangyan9110">
+<meta property="og:description" content="关注微服务、业务建模、性能优化等">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wangyan9110">
+<meta name="twitter:description" content="关注微服务、业务建模、性能优化等">
+  
+    <link rel="alternative" href="/atom.xml" title="wangyan9110" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
 
-    <link rel="canonical" href="http://yywang.info/archives/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
-
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
 </head>
-
-<style>
-
-    header.intro-header {
-        background-image: url('undefined')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
-" data-ishome = "false" >
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    wangyan9110
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-                    
-                        
-                    
-                        
-							
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-							
-						
-                    
-                        
-                    
-                        
-							
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-							
-						
-                    
-					
-					
-                </ul>
-            </div>
-        </div>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">wangyan9110</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">关注微服务、业务建模、性能优化</a>
+        </h2>
+      
     </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
-
-
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460"/>
-                        <h5><a href="/about/">wangyan9110</a></h5>
-                        <p>资深开发工程师，关注微服务、业务建模、性能优化等</p>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yywang.info"></form>
+      </div>
     </div>
-</div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2016/08/24/api/">
-        <h2 class="post-title">
-            移动APP服务端开发你需要了解什么
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-08-24
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2016/08/21/mine/">
-        <h2 class="post-title">
-            我在创业公司这八个月
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-08-21
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                去年12月份，在经过很多的思考之后，自己希望做一个从0到1的产品，离开点评，从上海来到杭州，加入一家创业公司。这也是我加入的第一家创业公司。我将从下面几个方面写下自己的心得体会：
-
-ALL IN
-技术
-产品技术
-创业认识
-
-ALL IN在来创业公司我早已做好整天加班的准备，但是没想到到了之后，加..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2016/06/24/version/">
-        <h2 class="post-title">
-            版本管理
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-06-24
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                为什么需要版本管理在多模块的项目中，版本管理是一种特别重要的环节，版本管理混乱将直接导致项目的失控。在项目发展的初期，代码是集中管理的，往往面临以下问题：
-
-业务的快速发展并且不断变化，代码也在不断的膨胀
-由于人力、时间等各个方面的原因，现阶段无法做到子系统的拆分
-团队人员在快速增加，每一次修改..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2015/06/02/char-microservice/">
-        <h2 class="post-title">
-            谈谈微服务
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-06-02
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                自从去年在一次上厕所的时候，翻开手机，看到微服务这一个概念，就认为这种架构的模式非常看好，自那以后，一直关注微服务相关的内容。目前微服务已经是一个非常火的概念，在Infoq几乎每条都有关于微服务的文章或者新闻。可见微服务已经像我们靠近。
-微服务的“微”：有一些观点体现在微服务的微在体现在代码量上..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2015/04/20/java-concurrent-countdownlatch/">
-        <h2 class="post-title">
-            Java并发编程学习之CountDownLatch
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-04-20
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                在多线程编程时，常常需要解决线程同步问题，在上一节讲得BlockQueue的take和put方法，是通过阻塞来控制生产者和消费者执行流程，它其实也是在解决线程同步问题。另外在线程同步问题还可以通过很多方式解决比如信号量，栅栏，闭锁。今天所说的CountDownLatch就是一种闭锁同步类，它的作..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2015/04/13/java-concurrent-blockingqueue/">
-        <h2 class="post-title">
-            Java并发编程学习之BlockingQueue
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-04-13
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                在并发编程中，经常会遇到如下场景，前半部分为批量操作，比如我们要到数据库中或者远程api获取一批数据，另一部分是比较耗时的计算操作。如果使用单线程的实现，就需要对批量获取的数据进行循环然后调用非常耗时的计算操作。这种实现在数据量非常大得时候可能需要数天才能完成操作。并且单线程也没用充分利用机器的..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2015/04/12/java-concurrent-concurrentmap/">
-        <h2 class="post-title">
-            Java并发编程学习之ConcurrentMap
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-04-12
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                最近在学习java并发编程，学习java并发编程实战这本书，前几章都在介绍基础知识非常重要，但是总是感觉还没完全透彻的理解，所以先从基本应用入手，最后在对基础知识进行回顾。今天主要学习并发容器的ConcurrentMap类以及解决的问题。在早期的jdk中，就提供了一些同步容器类，比如Hashta..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2015/04/11/git-branch/">
-        <h2 class="post-title">
-            Git分支管理
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-04-11
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2015/03/12/goodbye-hefei/">
-        <h2 class="post-title">
-            Goodbye HeFei
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-03-12
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                明天早上就要离开合肥了。从2009年9月到合肥以来，已经是生活了五年多的城市。虽说我对合肥还是感觉不熟悉。但是这五六年来在合肥的学习和工作使我成长了很多，收获了很多。就要离开了，感谢这里的所有帮助我的朋友同学同事。感谢这里曾经教过我的所有老师。
-下一站将要去的是魔都上海，都说大城市机会多，眼界广..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
-    <a href="/2015/01/17/thread-pool-pattern/">
-        <h2 class="post-title">
-            【翻译】线程池
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-01-17
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                原文
-地址：http://en.wikipedia.org/wiki/Thread_pool_pattern
-
-译文：在计算机程序中，线程池模式是指创建多个线程来执行一些任务，这些任务通常放在一个队列中。执行任务的结果可能也放在一个队列或者任务也可能没有返回值。通常情况下，任务数量要比线程要多。..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+  
     
     
-    <li class="next">
-        <a href="/archives/page/2/">Older Posts &rarr;</a>
-    </li>
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
     
-</ul>
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/08/24/api/" class="archive-article-date">
+  <time datetime="2016-08-24T07:48:46.000Z" itemprop="datePublished">8月 24</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/08/24/api/">移动APP服务端开发你需要了解什么</a>
+    </h1>
+  
 
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/08/21/mine/" class="archive-article-date">
+  <time datetime="2016-08-21T15:54:58.000Z" itemprop="datePublished">8月 21</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/08/21/mine/">我在创业公司这八个月</a>
+    </h1>
+  
 
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/06/24/version/" class="archive-article-date">
+  <time datetime="2016-06-24T06:48:38.000Z" itemprop="datePublished">6月 24</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/06/24/version/">版本管理</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+      
+        </div></section>
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2015" class="archive-year">2015</a>
         </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2015/06/02/char-microservice/" class="archive-article-date">
+  <time datetime="2015-06-02T13:00:11.000Z" itemprop="datePublished">6月 2</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/06/02/char-microservice/">谈谈微服务</a>
+    </h1>
+  
 
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <img src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460"/>
-                    
-                    <h5><a href="/about/">wangyan9110</a></h5>
-                    
-                    <p>资深开发工程师，关注微服务、业务建模、性能优化等</p>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2015/04/20/java-concurrent-countdownlatch/" class="archive-article-date">
+  <time datetime="2015-04-20T13:12:23.000Z" itemprop="datePublished">4月 20</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/04/20/java-concurrent-countdownlatch/">Java并发编程学习之CountDownLatch</a>
+    </h1>
+  
 
-                        
-                        <li>
-                            <a target="_blank" href="http://weibo.com/wangyan9110">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2015/04/13/java-concurrent-blockingqueue/" class="archive-article-date">
+  <time datetime="2015-04-13T13:09:40.000Z" itemprop="datePublished">4月 13</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/04/13/java-concurrent-blockingqueue/">Java并发编程学习之BlockingQueue</a>
+    </h1>
+  
 
-                        
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2015/04/12/java-concurrent-concurrentmap/" class="archive-article-date">
+  <time datetime="2015-04-12T14:28:38.000Z" itemprop="datePublished">4月 12</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/04/12/java-concurrent-concurrentmap/">Java并发编程学习之ConcurrentMap</a>
+    </h1>
+  
 
-                        
-                        <li>
-                            <a target="_blank" href="https://github.com/wangyan9110">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2015/04/11/git-branch/" class="archive-article-date">
+  <time datetime="2015-04-11T06:50:03.000Z" itemprop="datePublished">4月 11</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/04/11/git-branch/">Git分支管理</a>
+    </h1>
+  
 
-                        
-                    </ul>
-                </div>
-            </section>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2015/03/12/goodbye-hefei/" class="archive-article-date">
+  <time datetime="2015-03-12T11:32:18.000Z" itemprop="datePublished">3月 12</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/03/12/goodbye-hefei/">Goodbye HeFei</a>
+    </h1>
+  
 
-            <!-- Featured Tags  标签 -->
-            
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2015/01/17/thread-pool-pattern/" class="archive-article-date">
+  <time datetime="2015-01-17T06:56:09.000Z" itemprop="datePublished">1月 17</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/01/17/thread-pool-pattern/">【翻译】线程池</a>
+    </h1>
+  
 
-            
-
-        </div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/API/">API</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Archive/">Archive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-pattern/">Design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FTP/">FTP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MicroService/">MicroService</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Translation/">Translation</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/detailed-design/">detailed design</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wpf/">wpf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/个人生活/">个人生活</a><span class="category-list-count">1</span></li></ul>
     </div>
-</div>
+  </div>
 
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-                    <li>
-                        <a target="_blank" href="http://weibo.com/wangyan9110">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/wangyan9110">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; wangyan9110 2017
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Archive/">Archive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Design-pattern/">Design pattern</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FTP/">FTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MicroService/">MicroService</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thread-pool/">Thread pool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Translation/">Translation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/">concurrent</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/detailed-design/">detailed design</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastjson/">fastjson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/in-action/">in action</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quartz/">quartz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wpf/">wpf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人生活/">个人生活</a><span class="tag-list-count">1</span></li></ul>
     </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Archive/" style="font-size: 10px;">Archive</a> <a href="/tags/Design-pattern/" style="font-size: 18px;">Design pattern</a> <a href="/tags/FTP/" style="font-size: 10px;">FTP</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/MicroService/" style="font-size: 10px;">MicroService</a> <a href="/tags/Thread-pool/" style="font-size: 10px;">Thread pool</a> <a href="/tags/Translation/" style="font-size: 10px;">Translation</a> <a href="/tags/c/" style="font-size: 10px;">c#</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/concurrent/" style="font-size: 14px;">concurrent</a> <a href="/tags/detailed-design/" style="font-size: 16px;">detailed design</a> <a href="/tags/fastjson/" style="font-size: 10px;">fastjson</a> <a href="/tags/in-action/" style="font-size: 12px;">in action</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/jvm/" style="font-size: 12px;">jvm</a> <a href="/tags/maven/" style="font-size: 12px;">maven</a> <a href="/tags/quartz/" style="font-size: 10px;">quartz</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/wpf/" style="font-size: 10px;">wpf</a> <a href="/tags/个人生活/" style="font-size: 10px;">个人生活</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/08/24/api/">移动APP服务端开发你需要了解什么</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/21/mine/">我在创业公司这八个月</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/24/version/">版本管理</a>
+          </li>
+        
+          <li>
+            <a href="/2015/06/02/char-microservice/">谈谈微服务</a>
+          </li>
+        
+          <li>
+            <a href="/2015/04/20/java-concurrent-countdownlatch/">Java并发编程学习之CountDownLatch</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 wangyan9110<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yywang.info/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-<!-- Google Analytics -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-<!-- Baidu Tongji -->
 
+<script src="/js/script.js"></script>
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','undefined','2.0.0');
-</script>
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!--wechat title img-->
-<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+  </div>
 </body>
-
 </html>

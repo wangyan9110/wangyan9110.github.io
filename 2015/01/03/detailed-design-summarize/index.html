@@ -1,205 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html>
 <head>
-<script type="text/javascript">
-    var _speedMark = new Date();
-</script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword" content="undefined">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        如何做详细设计之总结｜wangyan9110&#39;s Blog
-        
-    </title>
+  <meta charset="utf-8">
+  
+  <title>如何做详细设计之总结 | wangyan9110</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如何做详细设计系列经过“两年”的时间终于写完了，今天主要为这个系列做下简单的总结。
+详细设计没有“公式”我们每个人从事的行业，负责的功能模块都不尽相同，不同的业务场景不同的项目特点都会产生不同的设计。可能有人会问，设计模式不是解决特定场景下的“公式”吗？设计模式是前人在具体的实践中，总结出来的解决特定业务场景的一般方法。它也不是公式，仍需要你结合自己的业务场景，具体分析。所以本系列叫如何做详细设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何做详细设计之总结">
+<meta property="og:url" content="http://yywang.info/2015/01/03/detailed-design-summarize/index.html">
+<meta property="og:site_name" content="wangyan9110">
+<meta property="og:description" content="如何做详细设计系列经过“两年”的时间终于写完了，今天主要为这个系列做下简单的总结。
+详细设计没有“公式”我们每个人从事的行业，负责的功能模块都不尽相同，不同的业务场景不同的项目特点都会产生不同的设计。可能有人会问，设计模式不是解决特定场景下的“公式”吗？设计模式是前人在具体的实践中，总结出来的解决特定业务场景的一般方法。它也不是公式，仍需要你结合自己的业务场景，具体分析。所以本系列叫如何做详细设计">
+<meta property="og:updated_time" content="2015-03-21T07:45:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何做详细设计之总结">
+<meta name="twitter:description" content="如何做详细设计系列经过“两年”的时间终于写完了，今天主要为这个系列做下简单的总结。
+详细设计没有“公式”我们每个人从事的行业，负责的功能模块都不尽相同，不同的业务场景不同的项目特点都会产生不同的设计。可能有人会问，设计模式不是解决特定场景下的“公式”吗？设计模式是前人在具体的实践中，总结出来的解决特定业务场景的一般方法。它也不是公式，仍需要你结合自己的业务场景，具体分析。所以本系列叫如何做详细设计">
+  
+    <link rel="alternative" href="/atom.xml" title="wangyan9110" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
 
-    <link rel="canonical" href="http://yywang.info/2015/01/03/detailed-design-summarize/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
-
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
 </head>
-
-<style>
-
-    header.intro-header {
-        background-image: url('undefined')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
-" data-ishome = "false" >
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    wangyan9110
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-                    
-                        
-                    
-                        
-							
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-							
-						
-                    
-                        
-                    
-                        
-							
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-							
-						
-                    
-					
-					
-                </ul>
-            </div>
-        </div>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">wangyan9110</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">关注微服务、业务建模、性能优化</a>
+        </h2>
+      
     </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
-
-<!--only post-->
-
-
-<img class="wechat-title-img"
-     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-
-
-<style>
-    
-    header.intro-header {
-        background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
-    }
-
-    
-</style>
-
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>如何做详细设计之总结</h1>
-                    
-                    <span class="meta">
-                         作者 wangyan9110
-                        <span>
-                          日期 2015-01-03
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#Design pattern"
-                           title="Design pattern">Design pattern</a>
-                        
-                        <a class="tag" href="/tags/#java"
-                           title="java">java</a>
-                        
-                        <a class="tag" href="/tags/#detailed design"
-                           title="detailed design">detailed design</a>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yywang.info"></form>
+      </div>
     </div>
-    <div class="post-title-haojen">
-        <span>
-            如何做详细设计之总结
-        </span>
-    </div>
+  </div>
 </header>
+      <div class="outer">
+        <section id="main"><article id="post-detailed-design-summarize" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/03/detailed-design-summarize/" class="article-date">
+  <time datetime="2015-01-03T15:11:44.000Z" itemprop="datePublished">2015-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/detailed-design/">detailed design</a>
+  </div>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>如何做详细设计系列经过“两年”的时间终于写完了，今天主要为这个系列做下简单的总结。</p>
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何做详细设计之总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如何做详细设计系列经过“两年”的时间终于写完了，今天主要为这个系列做下简单的总结。</p>
 <h4 id="详细设计没有“公式”">详细设计没有“公式”</h4><p>我们每个人从事的行业，负责的功能模块都不尽相同，不同的业务场景不同的项目特点都会产生不同的设计。可能有人会问，设计模式不是解决特定场景下的“公式”吗？设计模式是前人在具体的实践中，总结出来的解决特定业务场景的一般方法。它也不是公式，仍需要你结合自己的业务场景，具体分析。所以本系列叫如何做详细设计，只是在过去一年中，对自己工作经验的一些总结。你在本系列中看到的所有示例，都是我去年工作中的一部分。在本系列中的观点，是我在当前阶段的对详细设计的认知。也许若干年后甚至几个月后，我也会有不同的看法。所以对如何做详细设计需要有自己的看法，自己的见解。如果你对如何做详细设计有了自己的看法，或者对本系列中的观点有些其他见解，希望能和我讨论。<a id="more"></a></p>
 <h4 id="详细设计中的“百家争鸣”">详细设计中的“百家争鸣”</h4><p>在做详细设计时，经常会遇到处理一个问题有多种详细设计方案，而且这些方案都能解决当前的问题。在我们团队中经常会出现这种情况。这也是正常现象，就和每个人写的代码可能都不一样，是一样的问题。这时我们需要分析各种详细设计方案的优缺点。当然这种分析就需要一个人的说服能力，至少需要说服团队中大于一半的人。这样看到一个好的软件工程师也需要有比较好的说服能力，^_^。当然这种说服能力也需要一定的知识贮备和设计经验。即使“争鸣”的最后没有采用你的方案也没关系，如果你的方案是正确的，随着业务的发展，也会慢慢的演变成你的方案。所以详细设计就是这么的有趣。好方案的终归是会被采用的。</p>
 <h4 id="关于本系列">关于本系列</h4><p>本系列分了六篇来讲如何做详细设计，而且每一节话题都比较大，如果想把每个话题讨论的深入并且更加详细，其实每个话题都可以做为一个系列来写。特别是后面的理解业务的本质、重构、设计模式这三个话题，理解业务的本质其实就是如何做需求分析，重构就是如何做应对需求变化重构详细设计，设计模式就是如何应用设计模式，这三个话题每个话题都是一本书。本系列中的这个三个话题，主要是从在工作中使用过的场景做些简单的应用的阐述。并没有讲具体的怎么操作。确实如何操作讲起来太难了，如何结合业务场景，结合项目情况来确定如何具体的实践。<br>如果你认真的看过本系列中的每一篇文章，希望看后能对你有一点小小的启发。本系列文章也是在抛砖引玉，如果你对详细设计也有自己的思考，欢迎和我讨论交流。共同进步才是硬道理。<br>在本系列中，我几乎每个系列都在讲需要多思考、多实践、多总结，本系列也是我一年来的思考、实践的总结。所以思考、实践、总结才是学习如何做详细设计的根本。</p>
@@ -211,207 +105,142 @@
 </ul>
 <h4 id="致谢">致谢</h4><p>本系列内容是对过去一年的工作经验的总结和思考，需要感谢znyin，每次对我们的设计check都提出很好的建议，并且给我们分析为什么要这么做。还记得第一次在团队中做详细设计时，当时Dao层的接口命名非常不好，znyin花了一晚上的时间和我一起讨论每个方法的命名，思考如何给每个方法取一个“好”名字。还有几次讨论问题，错过了晚上班车时间，还开车送我回家。正式这种对技术专注、执着、严谨的态度，深深影响了我。需要感谢团队，感谢过去一年中所有帮助我的人。同样感谢每个本系列的读者，感谢您的关注。</p>
 
-                <hr>
-                
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2015/01/17/thread-pool-pattern/" data-toggle="tooltip" data-placement="top"
-                           title="【翻译】线程池">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2015/01/02/detailed-design-pattern/" data-toggle="tooltip" data-placement="top"
-                           title="如何做详细设计之设计模式">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                         data-thread-key="2015/01/03/detailed-design-summarize/"
-                         data-title="如何做详细设计之总结"
-                         data-url="http://yywang.info/2015/01/03/detailed-design-summarize/">
-                    </div>
-                </div>
-                <!-- 多说评论框 end -->
-                
-
-                
-
-            </div>
-
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#详细设计没有“公式”"><span class="toc-text">详细设计没有“公式”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#详细设计中的“百家争鸣”"><span class="toc-text">详细设计中的“百家争鸣”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于本系列"><span class="toc-text">关于本系列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#推荐书"><span class="toc-text">推荐书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#致谢"><span class="toc-text">致谢</span></a></li></ol>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
-
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="http://yywang.info/2015/01/03/detailed-design-summarize/" data-id="cixxg2z50001idq9mhhtp9z2r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Design-pattern/">Design pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/detailed-design/">detailed design</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/01/17/thread-pool-pattern/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【翻译】线程池
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/01/02/detailed-design-pattern/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">如何做详细设计之设计模式</div>
+    </a>
+  
+</nav>
+
+  
 </article>
 
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = 'yywang';
-
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user};
-    (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
-
-
-
-
-
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-                    <li>
-                        <a target="_blank" href="http://weibo.com/wangyan9110">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/wangyan9110">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; wangyan9110 2017
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/API/">API</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Archive/">Archive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-pattern/">Design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FTP/">FTP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MicroService/">MicroService</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Translation/">Translation</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/detailed-design/">detailed design</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wpf/">wpf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/个人生活/">个人生活</a><span class="category-list-count">1</span></li></ul>
     </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Archive/">Archive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Design-pattern/">Design pattern</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FTP/">FTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MicroService/">MicroService</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thread-pool/">Thread pool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Translation/">Translation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/">concurrent</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/detailed-design/">detailed design</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastjson/">fastjson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/in-action/">in action</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quartz/">quartz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wpf/">wpf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人生活/">个人生活</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Archive/" style="font-size: 10px;">Archive</a> <a href="/tags/Design-pattern/" style="font-size: 18px;">Design pattern</a> <a href="/tags/FTP/" style="font-size: 10px;">FTP</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/MicroService/" style="font-size: 10px;">MicroService</a> <a href="/tags/Thread-pool/" style="font-size: 10px;">Thread pool</a> <a href="/tags/Translation/" style="font-size: 10px;">Translation</a> <a href="/tags/c/" style="font-size: 10px;">c#</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/concurrent/" style="font-size: 14px;">concurrent</a> <a href="/tags/detailed-design/" style="font-size: 16px;">detailed design</a> <a href="/tags/fastjson/" style="font-size: 10px;">fastjson</a> <a href="/tags/in-action/" style="font-size: 12px;">in action</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/jvm/" style="font-size: 12px;">jvm</a> <a href="/tags/maven/" style="font-size: 12px;">maven</a> <a href="/tags/quartz/" style="font-size: 10px;">quartz</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/wpf/" style="font-size: 10px;">wpf</a> <a href="/tags/个人生活/" style="font-size: 10px;">个人生活</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/08/24/api/">移动APP服务端开发你需要了解什么</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/21/mine/">我在创业公司这八个月</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/24/version/">版本管理</a>
+          </li>
+        
+          <li>
+            <a href="/2015/06/02/char-microservice/">谈谈微服务</a>
+          </li>
+        
+          <li>
+            <a href="/2015/04/20/java-concurrent-countdownlatch/">Java并发编程学习之CountDownLatch</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 wangyan9110<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yywang.info/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-<!-- Google Analytics -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-<!-- Baidu Tongji -->
 
+<script src="/js/script.js"></script>
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','undefined','2.0.0');
-</script>
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!--wechat title img-->
-<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+  </div>
 </body>
-
 </html>

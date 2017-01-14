@@ -1,411 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html>
 <head>
-<script type="text/javascript">
-    var _speedMark = new Date();
-</script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword" content="undefined">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        如何做详细设计之重构｜wangyan9110&#39;s Blog
-        
-    </title>
+  <meta charset="utf-8">
+  
+  <title>如何做详细设计之重构 | wangyan9110</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天是2015年1月1日，又是一个新的开始。今天我们来讨论如何做详细设计中的重构。作为一名软件开发工程师，可能大部分都知道重构这个概念，相信也有很多人有看过Martin Flower的重构这本书，了解一些重构技巧。很多人理解的重构，就是代码结构基本上要重新设计，大部分代码需要重写，所以在实际的工作中，看到项目中的代码总是抱怨，想着什么时候能有一段时间来重构一次就好了，其实我不认为这是重构，这叫推倒">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何做详细设计之重构">
+<meta property="og:url" content="http://yywang.info/2015/01/01/detailed-design-reconsitution/index.html">
+<meta property="og:site_name" content="wangyan9110">
+<meta property="og:description" content="今天是2015年1月1日，又是一个新的开始。今天我们来讨论如何做详细设计中的重构。作为一名软件开发工程师，可能大部分都知道重构这个概念，相信也有很多人有看过Martin Flower的重构这本书，了解一些重构技巧。很多人理解的重构，就是代码结构基本上要重新设计，大部分代码需要重写，所以在实际的工作中，看到项目中的代码总是抱怨，想着什么时候能有一段时间来重构一次就好了，其实我不认为这是重构，这叫推倒">
+<meta property="og:updated_time" content="2015-03-21T07:45:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何做详细设计之重构">
+<meta name="twitter:description" content="今天是2015年1月1日，又是一个新的开始。今天我们来讨论如何做详细设计中的重构。作为一名软件开发工程师，可能大部分都知道重构这个概念，相信也有很多人有看过Martin Flower的重构这本书，了解一些重构技巧。很多人理解的重构，就是代码结构基本上要重新设计，大部分代码需要重写，所以在实际的工作中，看到项目中的代码总是抱怨，想着什么时候能有一段时间来重构一次就好了，其实我不认为这是重构，这叫推倒">
+  
+    <link rel="alternative" href="/atom.xml" title="wangyan9110" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
 
-    <link rel="canonical" href="http://yywang.info/2015/01/01/detailed-design-reconsitution/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
-
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
 </head>
-
-<style>
-
-    header.intro-header {
-        background-image: url('undefined')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
-" data-ishome = "false" >
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    wangyan9110
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-                    
-                        
-                    
-                        
-							
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-							
-						
-                    
-                        
-                    
-                        
-							
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-							
-						
-                    
-					
-					
-                </ul>
-            </div>
-        </div>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">wangyan9110</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">关注微服务、业务建模、性能优化</a>
+        </h2>
+      
     </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
-
-<!--only post-->
-
-
-<img class="wechat-title-img"
-     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-
-
-<style>
-    
-    header.intro-header {
-        background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
-    }
-
-    
-</style>
-
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>如何做详细设计之重构</h1>
-                    
-                    <span class="meta">
-                         作者 wangyan9110
-                        <span>
-                          日期 2015-01-01
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#Design pattern"
-                           title="Design pattern">Design pattern</a>
-                        
-                        <a class="tag" href="/tags/#java"
-                           title="java">java</a>
-                        
-                        <a class="tag" href="/tags/#detailed design"
-                           title="detailed design">detailed design</a>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yywang.info"></form>
+      </div>
     </div>
-    <div class="post-title-haojen">
-        <span>
-            如何做详细设计之重构
-        </span>
-    </div>
+  </div>
 </header>
+      <div class="outer">
+        <section id="main"><article id="post-detailed-design-reconsitution" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/01/detailed-design-reconsitution/" class="article-date">
+  <time datetime="2015-01-01T14:58:51.000Z" itemprop="datePublished">2015-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/detailed-design/">detailed design</a>
+  </div>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>今天是2015年1月1日，又是一个新的开始。今天我们来讨论如何做详细设计中的重构。作为一名软件开发工程师，可能大部分都知道重构这个概念，相信也有很多人有看过Martin Flower的重构这本书，了解一些重构技巧。很多人理解的重构，就是代码结构基本上要重新设计，大部分代码需要重写，所以在实际的工作中，看到项目中的代码总是抱怨，想着什么时候能有一段时间来重构一次就好了，其实我不认为这是重构，这叫推倒重来。本文主要讲的是如何演变式的重构，每一次需求的变动重新审视目前的详细设计，并修正详细设计中的不足。从而保证代码的可持续的发展。我们将分为需求变了和如何收拾烂摊子来讨论今天的内容。本篇不涉及一些重构技巧，因为重构技巧非常多，而且不同的业务场景解决方式不尽相同。如果你想了解重构的技巧建议阅读Martin Flower大师的重构这本书。<a id="more"></a></p>
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何做详细设计之重构
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天是2015年1月1日，又是一个新的开始。今天我们来讨论如何做详细设计中的重构。作为一名软件开发工程师，可能大部分都知道重构这个概念，相信也有很多人有看过Martin Flower的重构这本书，了解一些重构技巧。很多人理解的重构，就是代码结构基本上要重新设计，大部分代码需要重写，所以在实际的工作中，看到项目中的代码总是抱怨，想着什么时候能有一段时间来重构一次就好了，其实我不认为这是重构，这叫推倒重来。本文主要讲的是如何演变式的重构，每一次需求的变动重新审视目前的详细设计，并修正详细设计中的不足。从而保证代码的可持续的发展。我们将分为需求变了和如何收拾烂摊子来讨论今天的内容。本篇不涉及一些重构技巧，因为重构技巧非常多，而且不同的业务场景解决方式不尽相同。如果你想了解重构的技巧建议阅读Martin Flower大师的重构这本书。<a id="more"></a></p>
 <h4 id="需求又变了！">需求又变了！</h4><p>在这一系列中我一直在讲只要你在写代码就在做详细设计，像我这样工作了一两年的菜鸟也能做详细设计。可能你会想经验那么少，怎么能够做出优秀的设计来应对需求的不断变化呢？当然我不能做到能够面对需求的变化并且一成不变的设计。我能做到的是在需求变化时，我及时调整我的详细设计，来适用新的业务。每次产品经理给我们提出一个需求时，我们都会讲“怎么又变了！”“昨天找你确认还是怎么怎么样的！”“邮件上不是说的是这样的嘛？”，所以对需求的“变”我们已经习以为常，产品需求不变的就是变。面对这种需求的不断变化，相信即使你是Martin Flower一样的大师，你也无法做出可以支撑你整个产品周期的详细设计。<br>那么什么时候需要重新思考我们的详细设计呢？<br>以下是我想到的三种场景：<br>1、业务增加不符合之前提出的假设时。比如我去年遇到的一个场景，当时做一个单词朗读评分的功能，当时用到了公司牛b的评测引擎。该评测引擎分为几种模式，单词评测，句子评测等。刚开始产品设计时，只需要支持单个单词的评测，当时完成了第一个版本，就是把引擎返回的数据直接显示在界面上。在第二个版本时，需要支持词组评测，词组和单词的评测引擎不同。需要两次请求评测引擎，显然之前第一个版本的设计仅支持一次请求的评测。在变成两次后，就需要对第一次返回的数据进行缓存，和第二次返回的一起显示到界面。当时就适时的进行一次设计重构增加一个结果缓存类，来统一管理引擎返回的数据。具有初始化、查询、回滚等功能（当时的需求涉及重读，异常退出等，远比只显示复杂。显示只是其中之一）。仔细思考以下自己工作的经历，这种示例比比皆是。<br>2、业务频繁修改，程序显得很被动时。可能我们经常会遇到这种情况，业务频繁修改，每次都要修改功能类似的很多地方的代码。这时就需要从详细设计上考虑当前设计是否合理。在上一篇理解业务的本质的抽象一节我举的一个例子就是属于这类情况。<br>3、业务中的某些概念发生变化。比如我们目前的做的产品中，刚开始没有考试的概念，只有试卷的概念。后来增加了考试的概念，一次考试指一个学校一个年级多个学科的概念，这时我们就需要重新考虑我们之前的所有关于试卷的详细设计是否还满足当前的需求。当然马上又要增加联考，考试的概念又发生变化，这也是我们马上要解决的问题。<br>当然可能还会有很多场景。其实每次业务的变化，都需要审视一下我们的当前详细设计是否满足新的业务变化！以上讨论的时在详细设计阶段的何时需要重构，在重构那本书里，代码的坏味道一章讲解了什么样的代码需要重构。</p>
 <h4 id="烂摊子怎么办？？">烂摊子怎么办？？</h4><p>以上一节其实讲的面对新的需求变化时，我们也要以变应变，而不是以不变应万变。本节讨论的是，在你接手了别人的工作时，遇到了烂摊子怎么办？当然你也可能接手一位非常优秀的程序员的代码，那时就可以仔细的研究一下他的设计思想，学习一下了。当然这是运气非常好的时候。因为每一位程序员都有着自己的思路，大部分程序员都是接手后不理解原作者的思路，总觉得这也不好那也不好。即使抱怨，但是事已经摊到头上了，还是要解决的，首先需要理解原作者的思路，理解系统中的每个类的意图，处理的业务是什么。采用逐步改进的方式，重构现有代码。<br>1、在新增需求时或者以前发生变更时，考虑现有设计是否满足，如果不满足，改进和新需求相关的设计。可以根据上一节的两种情况来审视详细设计。<br>2、在充分理解了系统业务，并且对现有代码理解后，经过领导同意后，进行部分代码重构。<br>总之，一般情况下，改进现有的代码经常是长期的，逐步的修改。</p>
 <h4 id="详细设计的进化">详细设计的进化</h4><p>一个软件从无到有，是一个发展过程，从有到优有是一个过程。就像大自然的生物一样，大自然的生物需要根据环境的变化以及其他因素的影响不断的进化，以适应新的变化。所以一款好的软件也是在不断的进化的。我们的详细设计也是需要根据需求的进化而不断的重构才能适应新的需求。</p>
 <p>本篇内容是在平常工作中的实践思考与总结。如有不妥之处，欢迎讨论。</p>
 
-                <hr>
-                
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2015/01/02/detailed-design-pattern/" data-toggle="tooltip" data-placement="top"
-                           title="如何做详细设计之设计模式">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2014/12/31/detailed-design-professional/" data-toggle="tooltip" data-placement="top"
-                           title="如何做详细设计之理解业务本质">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                         data-thread-key="2015/01/01/detailed-design-reconsitution/"
-                         data-title="如何做详细设计之重构"
-                         data-url="http://yywang.info/2015/01/01/detailed-design-reconsitution/">
-                    </div>
-                </div>
-                <!-- 多说评论框 end -->
-                
-
-                
-
-            </div>
-
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#需求又变了！"><span class="toc-text">需求又变了！</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#烂摊子怎么办？？"><span class="toc-text">烂摊子怎么办？？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#详细设计的进化"><span class="toc-text">详细设计的进化</span></a></li></ol>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
-
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="http://yywang.info/2015/01/01/detailed-design-reconsitution/" data-id="cixxg2z4r0016dq9mnyfg78qk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Design-pattern/">Design pattern</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/detailed-design/">detailed design</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/01/02/detailed-design-pattern/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          如何做详细设计之设计模式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/12/31/detailed-design-professional/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">如何做详细设计之理解业务本质</div>
+    </a>
+  
+</nav>
+
+  
 </article>
 
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = 'yywang';
-
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user};
-    (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
-
-
-
-
-
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-                    <li>
-                        <a target="_blank" href="http://weibo.com/wangyan9110">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/wangyan9110">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; wangyan9110 2017
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/API/">API</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Archive/">Archive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Design-pattern/">Design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FTP/">FTP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MicroService/">MicroService</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Translation/">Translation</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/detailed-design/">detailed design</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wpf/">wpf</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/个人生活/">个人生活</a><span class="category-list-count">1</span></li></ul>
     </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Archive/">Archive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Design-pattern/">Design pattern</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FTP/">FTP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MicroService/">MicroService</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thread-pool/">Thread pool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Translation/">Translation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c#</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/">canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/">concurrent</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/detailed-design/">detailed design</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastjson/">fastjson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/in-action/">in action</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/">maven</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quartz/">quartz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wpf/">wpf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/个人生活/">个人生活</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Archive/" style="font-size: 10px;">Archive</a> <a href="/tags/Design-pattern/" style="font-size: 18px;">Design pattern</a> <a href="/tags/FTP/" style="font-size: 10px;">FTP</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/MicroService/" style="font-size: 10px;">MicroService</a> <a href="/tags/Thread-pool/" style="font-size: 10px;">Thread pool</a> <a href="/tags/Translation/" style="font-size: 10px;">Translation</a> <a href="/tags/c/" style="font-size: 10px;">c#</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/concurrent/" style="font-size: 14px;">concurrent</a> <a href="/tags/detailed-design/" style="font-size: 16px;">detailed design</a> <a href="/tags/fastjson/" style="font-size: 10px;">fastjson</a> <a href="/tags/in-action/" style="font-size: 12px;">in action</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/jvm/" style="font-size: 12px;">jvm</a> <a href="/tags/maven/" style="font-size: 12px;">maven</a> <a href="/tags/quartz/" style="font-size: 10px;">quartz</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/wpf/" style="font-size: 10px;">wpf</a> <a href="/tags/个人生活/" style="font-size: 10px;">个人生活</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/08/24/api/">移动APP服务端开发你需要了解什么</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/21/mine/">我在创业公司这八个月</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/24/version/">版本管理</a>
+          </li>
+        
+          <li>
+            <a href="/2015/06/02/char-microservice/">谈谈微服务</a>
+          </li>
+        
+          <li>
+            <a href="/2015/04/20/java-concurrent-countdownlatch/">Java并发编程学习之CountDownLatch</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 wangyan9110<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yywang.info/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-<!-- Google Analytics -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-<!-- Baidu Tongji -->
 
+<script src="/js/script.js"></script>
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','undefined','2.0.0');
-</script>
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!--wechat title img-->
-<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+  </div>
 </body>
-
 </html>
