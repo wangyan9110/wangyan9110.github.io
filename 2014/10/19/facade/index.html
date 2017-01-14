@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          设计模式学习--Facade｜wangyan9110&#39;s Blog
+        设计模式学习--Facade｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,15 +166,17 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2014-10-19
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#Design pattern" title="Design pattern">Design pattern</a>
+                        <a class="tag" href="/tags/#Design pattern"
+                           title="Design pattern">Design pattern</a>
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
                     </div>
                 </div>
@@ -199,9 +194,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <h4 id="What">What</h4><blockquote>
 <p>Facade：为子系统中的一组接口提供一个一致的界面，Facade模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。</p>
 </blockquote>
@@ -219,21 +213,21 @@
 <p><img src="http://yywang.qiniudn.com/facade.png" alt="facade"></p>
 <h4 id="Discuss">Discuss</h4><p>上面我们说过Facade在编程过程中经常用到，在web应用程序开发中，有比较经典的三层架构，软件的分层思想也是Facade模式的一种，但是这种分层思想在实际的应用中又是怎样呢？<br>在web应用程序开发中，我们一般分为三层：展现层、业务层、数据层;各层各司其职，展现层，一般用于提供用户访问界面，业务层，主要实现业务接口，其实业务接口所做的事情就是把提供业务接口门面，让用户可以方便的调用我们的业务接口，复杂的业务逻辑在业务层实现。数据层，没有业务逻辑，一般用于数据库访问。<br>这样的三层架构让我们的代码大体职责更加清晰，从以上的介绍中，也可以看出来，其中业务层最难让人理解，其实也是最复杂的一部分，目前做的一个系统，我认为是我没做好的一部分，在设计的过程中，一般重点考虑domain设计，以及service接口设计（其实就是门面接口设计），可以说这些不是真正的设计，应该更加注重业务实现设计，最简单的如何重用利用代码，如何应对业务变化等方面考虑问题。其实业务实现设计，在一些简单的模块完全没必要做，但是在我负责的模块，我越来越感觉业务实现的设计重要性。其中有部分业务接口实现的代码已经超过了2000行，维护起来越来越麻烦。所以在实际的应用中，不一定就是一个接口然后对应一个接口实现类的，就是分层架构，分层的目的一是为了职责更加清新，二是隔离具体实现，让客户端方便的调用，把分层接口看做是一个门面。定义门面接口只是设计的一小部分。</p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2014/10/22/jvm-garbage-collector/" data-toggle="tooltip" data-placement="top" title="JVM垃圾收集器">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2014/10/22/jvm-garbage-collector/" data-toggle="tooltip" data-placement="top"
+                           title="JVM垃圾收集器">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2014/10/18/jvm-runtime-data-areas/" data-toggle="tooltip" data-placement="top" title="JVM运行时数据区域">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2014/10/18/jvm-runtime-data-areas/" data-toggle="tooltip" data-placement="top"
+                           title="JVM运行时数据区域">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -241,9 +235,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/10/19/facade/"
-                        data-title="设计模式学习--Facade"
-                        data-url="http://yywang.info/2014/10/19/facade/" >
+                         data-thread-key="2014/10/19/facade/"
+                         data-title="设计模式学习--Facade"
+                         data-url="http://yywang.info/2014/10/19/facade/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -253,7 +247,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#What"><span class="toc-text">What</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Why"><span class="toc-text">Why</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How"><span class="toc-text">How</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Discuss"><span class="toc-text">Discuss</span></a></li></ol>
                 </div>
@@ -286,14 +280,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -302,15 +297,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -366,7 +358,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -395,7 +386,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -421,8 +412,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

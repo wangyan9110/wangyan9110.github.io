@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          maven assembly plugin使用｜wangyan9110&#39;s Blog
+        maven assembly plugin使用｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,15 +166,17 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2014-08-17
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
-                        <a class="tag" href="/tags/#maven" title="maven">maven</a>
+                        <a class="tag" href="/tags/#maven"
+                           title="maven">maven</a>
                         
                     </div>
                 </div>
@@ -199,9 +194,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <h4 id="使用场景"><strong>使用场景</strong></h4><p>在使用maven来管理项目时，项目除了web项目，还有可能为控制台程序，一般用于开发一些后台服务的程序。最近在工作中也遇到了这种场景，使用quartz开发一个任务调度程序。程序中依赖很多jar包，项目的启动时只需要初始化spring容器即可。<a id="more"></a></p>
 <h4 id="使用方法"><strong>使用方法</strong></h4><p>使用一个简单的基于spring框架的demo来做程序示例，来介绍maven assembly插件的使用方法。<br>项目中的代码目录如下：<br><img src="http://yywang.qiniudn.com/maven-assembly-pre.png" alt="maven-assembly"><br>在以上代码目录中，assembly目录下为打包的描述文件，下面会详细介绍该文件，bin目录下为启动脚本以及readme等文件，main下为maven标准中建立的文件，java代码以及配置文件位于该目录下。<br>打包完成后压缩包目录如下：<br><img src="http://yywang.qiniudn.com/maven-assembly-after.png" alt="maven-assembly"><br>打包完成后，我们可以看到bin目录来存放启动脚本等文件，config为配置文件，lib下为运行时依赖的jar包。<br>使用maven assembly插件需要在pom文件中配置，添加这个插件<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-assembly-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>make-zip<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!-- 绑定到package生命周期阶段上 --&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></div><div class="line">                <span class="comment">&lt;!-- 绑定到package生命周期阶段上 --&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>single<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">descriptors</span>&gt;</span> <span class="comment">&lt;!--描述文件路径--&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">descriptor</span>&gt;</span>src/assembly/assembly.xml<span class="tag">&lt;/<span class="name">descriptor</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">descriptors</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>其中execution节点，我们配置了执行maven assembly插件的一些配置，descriptor节点配置指向assembly.xml的路径。<br>在assembly.xml配置了，我们打包的目录以及相应的设置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">assembly</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"</span></span></div><div class="line">          <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">          <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>distribution<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">formats</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">format</span>&gt;</span>zip<span class="tag">&lt;/<span class="name">format</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">formats</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">fileSets</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">fileSet</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>$&#123;project.basedir&#125;\src\main\resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>\<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">fileSet</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">fileSet</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>$&#123;project.basedir&#125;\src\bin<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>\bin<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">fileSet</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">fileSets</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependencySets</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependencySet</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">useProjectArtifact</span>&gt;</span>true<span class="tag">&lt;/<span class="name">useProjectArtifact</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>lib<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!-- 将scope为runtime的依赖包打包到lib目录下。 --&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependencySet</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependencySets</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">assembly</span>&gt;</span></div></pre></td></tr></table></figure></p>
@@ -210,21 +204,21 @@
 <p>下面的文章会介绍打包后的包如何做成windows服务，linux服务。</p>
 <h4 id="参考资料"><strong>参考资料</strong></h4><p><a href="http://maven.apache.org/plugins/maven-assembly-plugin/" target="_blank" rel="external">http://maven.apache.org/plugins/maven-assembly-plugin/</a></p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2014/10/17/decorator/" data-toggle="tooltip" data-placement="top" title="设计模式学习--Decorator">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2014/10/17/decorator/" data-toggle="tooltip" data-placement="top"
+                           title="设计模式学习--Decorator">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2014/08/14/composite/" data-toggle="tooltip" data-placement="top" title="设计模式学习--Composite">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2014/08/14/composite/" data-toggle="tooltip" data-placement="top"
+                           title="设计模式学习--Composite">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -232,9 +226,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/08/17/maven-assembly-plugin/"
-                        data-title="maven assembly plugin使用"
-                        data-url="http://yywang.info/2014/08/17/maven-assembly-plugin/" >
+                         data-thread-key="2014/08/17/maven-assembly-plugin/"
+                         data-title="maven assembly plugin使用"
+                         data-url="http://yywang.info/2014/08/17/maven-assembly-plugin/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -244,7 +238,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用场景"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用方法"><span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
                 </div>
@@ -277,14 +271,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -293,15 +288,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -357,7 +349,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -386,7 +377,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -412,8 +403,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

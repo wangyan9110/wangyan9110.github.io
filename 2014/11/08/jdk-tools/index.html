@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          JDK那些有用的工具｜wangyan9110&#39;s Blog
+        JDK那些有用的工具｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,13 +166,14 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2014-11-08
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
                     </div>
                 </div>
@@ -197,9 +191,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <p>在jdk中，无论是刚开始学习java的学生还是在职场叱咤多年的java程序员，肯定都知道bin目录里的java.exe以及javac.exe这两个命令行工具。但是有没有发现在bin目录除了这两个命令还有不少其他的命令。它们有什么作用呢？今天主要介绍这里面的一些工具。</p>
 <h5 id="jps虚拟机进程状态工具">jps虚拟机进程状态工具</h5><ul>
 <li>功能：可以列出正在运行的虚拟机进程，并显示虚拟机执行主类名称以及这些进程的本地虚拟机唯一ID.</li>
@@ -233,21 +226,21 @@
 <p>详细的使用方法，在以后的学习中继续总结。</p>
 <p>排查线上性能问题，我们就需要以上的工具，今天主要是简单了解一些其功能，在出现问题时，能够想到使用这些工具来分析，详细使用方法，后面继续学习。</p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2014/12/19/flyweight/" data-toggle="tooltip" data-placement="top" title="设计模式学习--Flyweight">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2014/12/19/flyweight/" data-toggle="tooltip" data-placement="top"
+                           title="设计模式学习--Flyweight">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2014/10/22/jvm-garbage-collector/" data-toggle="tooltip" data-placement="top" title="JVM垃圾收集器">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2014/10/22/jvm-garbage-collector/" data-toggle="tooltip" data-placement="top"
+                           title="JVM垃圾收集器">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -255,9 +248,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/11/08/jdk-tools/"
-                        data-title="JDK那些有用的工具"
-                        data-url="http://yywang.info/2014/11/08/jdk-tools/" >
+                         data-thread-key="2014/11/08/jdk-tools/"
+                         data-title="JDK那些有用的工具"
+                         data-url="http://yywang.info/2014/11/08/jdk-tools/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -267,7 +260,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#jps虚拟机进程状态工具"><span class="toc-text">jps虚拟机进程状态工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jstat虚拟机统计信息监控工具"><span class="toc-text">jstat虚拟机统计信息监控工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jmap：java内存映射工具"><span class="toc-text">jmap：java内存映射工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jhat：虚拟机堆转存储快照分析工具"><span class="toc-text">jhat：虚拟机堆转存储快照分析工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jstack：java堆栈跟踪工具"><span class="toc-text">jstack：java堆栈跟踪工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JConsole虚拟机监控工具"><span class="toc-text">JConsole虚拟机监控工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#更强大的VisualVM"><span class="toc-text">更强大的VisualVM</span></a></li></ol>
                 </div>
@@ -300,14 +293,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -316,15 +310,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -380,7 +371,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -409,7 +399,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -435,8 +425,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

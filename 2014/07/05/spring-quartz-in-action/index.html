@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          Quartz任务调度实践｜wangyan9110&#39;s Blog
+        Quartz任务调度实践｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,19 +166,23 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2014-07-05
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
-                        <a class="tag" href="/tags/#in action" title="in action">in action</a>
+                        <a class="tag" href="/tags/#in action"
+                           title="in action">in action</a>
                         
-                        <a class="tag" href="/tags/#quartz" title="quartz">quartz</a>
+                        <a class="tag" href="/tags/#quartz"
+                           title="quartz">quartz</a>
                         
-                        <a class="tag" href="/tags/#spring" title="spring">spring</a>
+                        <a class="tag" href="/tags/#spring"
+                           title="spring">spring</a>
                         
                     </div>
                 </div>
@@ -203,9 +200,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <p>最近在写一个任务调度程序，需要每隔几秒查询数据库，并取出数据做一些处理操作。使用到了Quartz任务调度框架。</p>
 <h4 id="**基本概念">**基本概念</h4><p>Quartz包含几个重要的对象，分别为任务（Job）,触发器（Trigger），调度器（Scheduler）</p>
 <ul>
@@ -226,21 +222,21 @@
 <h4 id="Other以上需要的Maven配置"><strong>Other以上需要的Maven配置</strong></h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">org.springframework.version</span>&gt;</span>3.2.3.RELEASE<span class="tag">&lt;/<span class="name">org.springframework.version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.quartz-scheduler<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>quartz<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context-support<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;org.springframework.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;org.springframework.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-tx<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;org.springframework.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.quartz-scheduler<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>quartz<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
 <h4 id="More"><strong>More</strong></h4><p><a href="http://www.ibm.com/developerworks/cn/java/j-quartz/index.html" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/java/j-quartz/index.html</a><br><a href="http://www.blogjava.net/baoyaer/articles/155645.html" target="_blank" rel="external">http://www.blogjava.net/baoyaer/articles/155645.html</a><br><a href="http://www.blogjava.net/supercrsky/articles/199443.html" target="_blank" rel="external">http://www.blogjava.net/supercrsky/articles/199443.html</a></p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2014/07/12/prototype/" data-toggle="tooltip" data-placement="top" title="设计模式学习--Prototype">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2014/07/12/prototype/" data-toggle="tooltip" data-placement="top"
+                           title="设计模式学习--Prototype">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2014/07/02/fastjson-define-serialize-parser/" data-toggle="tooltip" data-placement="top" title="FastJson 自定义Serialize、Parser">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2014/07/02/fastjson-define-serialize-parser/" data-toggle="tooltip" data-placement="top"
+                           title="FastJson 自定义Serialize、Parser">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -248,9 +244,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/07/05/spring-quartz-in-action/"
-                        data-title="Quartz任务调度实践"
-                        data-url="http://yywang.info/2014/07/05/spring-quartz-in-action/" >
+                         data-thread-key="2014/07/05/spring-quartz-in-action/"
+                         data-title="Quartz任务调度实践"
+                         data-url="http://yywang.info/2014/07/05/spring-quartz-in-action/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -260,7 +256,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#**基本概念"><span class="toc-text">**基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一个简单的例子"><span class="toc-text">一个简单的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于Spring的例子"><span class="toc-text">基于Spring的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cron表达式"><span class="toc-text">Cron表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Other以上需要的Maven配置"><span class="toc-text">Other以上需要的Maven配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#More"><span class="toc-text">More</span></a></li></ol>
                 </div>
@@ -293,14 +289,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -309,15 +306,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -373,7 +367,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -402,7 +395,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -428,8 +421,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

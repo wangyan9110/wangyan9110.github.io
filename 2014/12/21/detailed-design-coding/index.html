@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          如何做详细设计之设计即编码｜wangyan9110&#39;s Blog
+        如何做详细设计之设计即编码｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,17 +166,20 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2014-12-21
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#Design pattern" title="Design pattern">Design pattern</a>
+                        <a class="tag" href="/tags/#Design pattern"
+                           title="Design pattern">Design pattern</a>
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
-                        <a class="tag" href="/tags/#detailed design" title="detailed design">detailed design</a>
+                        <a class="tag" href="/tags/#detailed design"
+                           title="detailed design">detailed design</a>
                         
                     </div>
                 </div>
@@ -201,9 +197,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <p>今天来讨论如何做详细设计的第一个内容，设计即编码。我在上篇序中开头讲到，”你只要在用心写代码，在思考如何定义方法，如何定义类，你都在做着详细设计“，其实设计本身也是在编码。当然表达设计的方式也有很多种。我比较喜欢编码这种方式。</p>
 <h4 id="如何表达自己的设计？">如何表达自己的设计？</h4><p>1、UML，可能大部分人谈到软件设计，想到的是UML图，当然UML作为一种工具，可以很好的表达软件详细设计的思路。UML可以非常直观的表达出设计者的意图，作为软件开发者必备的一种设计工具，也可以拿去和大多数开发人员讨论自己的设计。这种方式可以很好的表达设计思路，但是如果作为设计成果，直接拿给实现人员编写代码，实现者首先要读懂UML图，然后把UML图转化为代码，这还需要一些时间的。当然有些工具也可以生成代码。产物：UML图<a id="more"></a><br>2、白板，这个主要是概要设计的途径，通过设计者在白板上的讲解，讨论详细设计方案，这种方法比较简单，但是主要讨论的为大致思路，不能详细的表述到每个接口。产物：白板图片<br>3、代码，这是一种简单直接的方式，设计者直接通过编写代码以及代码注释的方式，表达自己的设计思路。这种方式的好处，设计者可以把自己的思路转化为代码，实现者主要关注方法级的编程，无需根据UML转化为代码。缺点，讨论设计时不如UML图直观。产物：代码。<br>我暂时想到以上三种表达自己设计的方法，三种方法各有所长，又相互补充。不过从以上三种方式的产物可以看出，代码是最精确的最直接的表达设计的方式。</p>
 <h4 id="为什么是设计即编码？">为什么是设计即编码？</h4><p>以上是我所想到了三种表达设计的方法，我比较喜欢第三种方式。<br>1、简单直接严谨：代码当然是最直接的表达方式，因为实现需求就是通过代码来实现的。在开发人员之间沟通，代码是最严谨的方式，几乎不存在理解偏差。<br>2、快：在互联网产品中，开发周期非常短，不可能有很长时间的详细设计时间。需要在很短的时间内完成需求，通过代码的方式表达设计，在设计的同时也在写必要的代码。没有多余的工作量。<br>3、拥抱变化：这个也是我喜欢这种方式重要的因素。需求在变，设计在变，代码肯定在变。如果使用UML在需求发生变动时，UML也需要维护，另外在实际的工作中，又有多少人在更新这些设计呢？白板讨论的结果肯定也也不再适合新的需求。代码就不存在这个问题，代码永远跟着需求在变，而且是必须要变！^_^。</p>
@@ -211,21 +206,21 @@
 <h4 id="你无形之中也在做详细设计">你无形之中也在做详细设计</h4><p>作为一名软件开发工程师，写代码是这个职责的天职。代码就是你思路的表达，所以只要你在写代码，只要你在考虑如何更好的实现某个功能，你就在做详细设计。我的同事znyin，经常跟我提到，做详细设计需要有感觉，这里的感觉我认为就是不断的学习和思考，有意识的去考虑如何实现某个功能的最佳最适用的方案。然而很多时候，由于各种各样的原因，我们经常为完成任务而实现功能，为了少写几行代码，写出一些奇怪代码,没有养成良好的习惯。没从全局考虑。我认为这不是在做详细设计。</p>
 <p>本篇内容是在平常工作中的实践思考与总结。如有不妥之处，欢迎讨论。</p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2014/12/23/detailed-design-standard/" data-toggle="tooltip" data-placement="top" title="如何做详细设计之规范">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2014/12/23/detailed-design-standard/" data-toggle="tooltip" data-placement="top"
+                           title="如何做详细设计之规范">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2014/12/20/detailed-design-preface/" data-toggle="tooltip" data-placement="top" title="如何做详细设计之序">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2014/12/20/detailed-design-preface/" data-toggle="tooltip" data-placement="top"
+                           title="如何做详细设计之序">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -233,9 +228,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/12/21/detailed-design-coding/"
-                        data-title="如何做详细设计之设计即编码"
-                        data-url="http://yywang.info/2014/12/21/detailed-design-coding/" >
+                         data-thread-key="2014/12/21/detailed-design-coding/"
+                         data-title="如何做详细设计之设计即编码"
+                         data-url="http://yywang.info/2014/12/21/detailed-design-coding/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -245,7 +240,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#如何表达自己的设计？"><span class="toc-text">如何表达自己的设计？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么是设计即编码？"><span class="toc-text">为什么是设计即编码？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#白板、UML、文档也是需要的"><span class="toc-text">白板、UML、文档也是需要的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#你无形之中也在做详细设计"><span class="toc-text">你无形之中也在做详细设计</span></a></li></ol>
                 </div>
@@ -278,14 +273,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -294,15 +290,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -358,7 +351,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -387,7 +379,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -413,8 +405,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

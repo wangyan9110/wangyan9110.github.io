@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          谈谈微服务｜wangyan9110&#39;s Blog
+        谈谈微服务｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,13 +166,14 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2015-06-02
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#MicroService" title="MicroService">MicroService</a>
+                        <a class="tag" href="/tags/#MicroService"
+                           title="MicroService">MicroService</a>
                         
                     </div>
                 </div>
@@ -197,9 +191,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <p>自从去年在一次上厕所的时候，翻开手机，看到微服务这一个概念，就认为这种架构的模式非常看好，自那以后，一直关注微服务相关的内容。目前微服务已经是一个非常火的概念，在Infoq几乎每条都有关于微服务的文章或者新闻。可见微服务已经像我们靠近。</p>
 <h4 id="微服务的“微”：">微服务的“微”：</h4><p>有一些观点体现在微服务的微在体现在代码量上，微服务的代码行数一定非常少。关于这个观点，个人并不认同，我觉得使用代码行数来衡量微服务的话，就像使用代码量来衡量一个软件开发工程师一样，都是不科学。<a id="more"></a><br>微服务的微体现在职责的单一上，这个个人非常认同，微服务就是职责单一的服务。就像面向对象设计中的单一职责一样，没有绝对的单一，职责的单一完全取决于对于业务的分析和理解。微服务可以设计像Unix那样简洁。服务前端开发者可以像写Unix Shell脚本一样开发应用。</p>
 <h4 id="微服务的好处">微服务的好处</h4><p>微服务的好处是显然意见的，微服务可以能够实现真正的敏捷，能够快速部署上线、能够具有很好的伸缩性、能够具有很好的扩展性。微服务还更容易形成积木，能够在产品的开发中，越跑越快。</p>
@@ -208,21 +201,21 @@
 <h4 id="微服务与云计算2-0">微服务与云计算2.0</h4><p>目前的云计算主要是指服务器、CDN和各种数据存储的产品。未来的云计算将是一个微服务的库，这些微服务提供了很多的基础能力，比如消息队列、推送服务甚至抽象出了部分行业的基础业务服务。这也是我认为的云计算的一个发展趋势，目前也有这样的云计算公司。所以微服务也是未来云计算的一种方式。未来前端（服务前端）开发者可能就像今天写Unix的Shell脚本一样做应用开发。</p>
 <h4 id="期待成熟的微服务案例">期待成熟的微服务案例</h4><p>目前微服务已经在社区里，提的非常多，而且各种关于微服务的新闻和技术文章、技术分享也非常多，但是目前还没有成熟的微服务案例。所以微服务还在发展初期，期待一个成功的微服务案例出现！</p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2016/06/24/version/" data-toggle="tooltip" data-placement="top" title="版本管理">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2016/06/24/version/" data-toggle="tooltip" data-placement="top"
+                           title="版本管理">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2015/04/20/java-concurrent-countdownlatch/" data-toggle="tooltip" data-placement="top" title="Java并发编程学习之CountDownLatch">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2015/04/20/java-concurrent-countdownlatch/" data-toggle="tooltip" data-placement="top"
+                           title="Java并发编程学习之CountDownLatch">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -230,9 +223,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2015/06/02/char-microservice/"
-                        data-title="谈谈微服务"
-                        data-url="http://yywang.info/2015/06/02/char-microservice/" >
+                         data-thread-key="2015/06/02/char-microservice/"
+                         data-title="谈谈微服务"
+                         data-url="http://yywang.info/2015/06/02/char-microservice/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -242,7 +235,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务的“微”："><span class="toc-text">微服务的“微”：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务的好处"><span class="toc-text">微服务的好处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务的挑战"><span class="toc-text">微服务的挑战</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微服务与云计算2-0"><span class="toc-text">微服务与云计算2.0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#期待成熟的微服务案例"><span class="toc-text">期待成熟的微服务案例</span></a></li></ol>
                 </div>
@@ -275,14 +268,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -291,15 +285,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -355,7 +346,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -384,7 +374,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -410,8 +400,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

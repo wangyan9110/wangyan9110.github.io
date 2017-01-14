@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          设计模式学习--Factory Method｜wangyan9110&#39;s Blog
+        设计模式学习--Factory Method｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,15 +166,17 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2014-06-28
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#Design pattern" title="Design pattern">Design pattern</a>
+                        <a class="tag" href="/tags/#Design pattern"
+                           title="Design pattern">Design pattern</a>
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
                     </div>
                 </div>
@@ -199,9 +194,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <h3 id="What"><strong>What</strong></h3><blockquote>
 <p>Factory Method：定义一个创建对象的接口，让子类来决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。<a id="more"></a></p>
 </blockquote>
@@ -216,21 +210,21 @@
 <p>以上示例类图如下：<br><img src="http://yywang.qiniudn.com/factorymethod.png" alt="Factory Method"></p>
 <h3 id="Discuss"><strong>Discuss</strong></h3><p>Abstarct Factory VS Factory Method<br>在学习Factory Method就对Factory Method模式和Abstarct Factory很迷惑，经过反复阅读两个章节，基本上总结出了两者的一个联系，Abstarct Factory是一个特殊的Factory Method，但是两者区别在哪呢？<br>完成Factory Method的示例发现，在Abstract Factory中示例的UML和Factory Method的示例的UML是结构是一样的，于是就思考为什么？<br>两者的意图如下：<br>Factory Method：定义<strong>一个创建对象的接口</strong>，<strong>让子类来决定实例化哪一个类</strong>。Factory Method使一个类的<strong>实例化延迟到其子类</strong>。<br>Abstarct Factory：提供一个创建<strong>一系列相关或相互依赖的接口</strong>，而无需指定他们具体类。<br>从以上粗体部分就可以体现其区别的地方。<br>1.Abstarct Factory强调的是创建一系列相关相互依赖的接口，也就是Abstarct这个工厂可以生产一系列的对象，是一个一对多的关系，然后我又重新考虑了一下，Abstarct Factory的示例，并进行了完善（详情见：<a href="http://yywang.info/2014/06/23/abstract-factory/">设计模式学习—Abstarct Factory的ChangeLog</a>）。它的扩展性侧重横向扩展。比如在Abstarct Factory学习中的例子，我们又来一个RoleDao，我们是在DaoFactory中增加createRoleDao方法。<br>2.Factory Method强调的是创建一个对象接口，让子类来决定实例化哪一个类，也就是它的工厂和产品是一对一的关系。它的扩展性侧重的是垂直扩展，比如本节的示例，我们需要增加一个支持Sql语言的语法分析器，我需要增加一个SqlParsingFactory类和一个SqlParsing类。<br>关于Abstarct Factory VS Factory Method的讨论还有如下可以参考：<br><a href="http://www.cnblogs.com/happyhippy/archive/2010/09/26/1836223.html" target="_blank" rel="external">http://www.cnblogs.com/happyhippy/archive/2010/09/26/1836223.html</a><br><a href="http://www.cnblogs.com/procoder/archive/2009/04/24/1442920.html" target="_blank" rel="external">http://www.cnblogs.com/procoder/archive/2009/04/24/1442920.html</a></p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2014/07/02/fastjson-define-serialize-parser/" data-toggle="tooltip" data-placement="top" title="FastJson 自定义Serialize、Parser">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2014/07/02/fastjson-define-serialize-parser/" data-toggle="tooltip" data-placement="top"
+                           title="FastJson 自定义Serialize、Parser">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2014/06/24/builder/" data-toggle="tooltip" data-placement="top" title="设计模式学习--Builder">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2014/06/24/builder/" data-toggle="tooltip" data-placement="top"
+                           title="设计模式学习--Builder">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -238,9 +232,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/06/28/factory-method/"
-                        data-title="设计模式学习--Factory Method"
-                        data-url="http://yywang.info/2014/06/28/factory-method/" >
+                         data-thread-key="2014/06/28/factory-method/"
+                         data-title="设计模式学习--Factory Method"
+                         data-url="http://yywang.info/2014/06/28/factory-method/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -250,7 +244,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#What"><span class="toc-text">What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why"><span class="toc-text">Why</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How"><span class="toc-text">How</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Discuss"><span class="toc-text">Discuss</span></a></li></ol>
                 </div>
@@ -283,14 +277,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -299,15 +294,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -363,7 +355,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -392,7 +383,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -418,8 +409,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

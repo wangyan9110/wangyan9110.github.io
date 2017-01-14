@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          Java并发编程学习之BlockingQueue｜wangyan9110&#39;s Blog
+        Java并发编程学习之BlockingQueue｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,15 +166,17 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2015-04-13
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
-                        <a class="tag" href="/tags/#concurrent" title="concurrent">concurrent</a>
+                        <a class="tag" href="/tags/#concurrent"
+                           title="concurrent">concurrent</a>
                         
                     </div>
                 </div>
@@ -199,28 +194,27 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <p>在并发编程中，经常会遇到如下场景，前半部分为批量操作，比如我们要到数据库中或者远程api获取一批数据，另一部分是比较耗时的计算操作。如果使用单线程的实现，就需要对批量获取的数据进行循环然后调用非常耗时的计算操作。这种实现在数据量非常大得时候可能需要数天才能完成操作。并且单线程也没用充分利用机器的CPU资源。一方面无法发挥多核CPU的优势，另一个方面在获取批量数据时线程处于阻塞状态，也浪费了线程的执行效率。以上描述的问题，其实是一个经典的生产者消费者的问题。解决以上问题，可以使用一个线程拉取数据，另一些线程做计算操作。提高CPU的利用效率，减少执行时间。这是就需要一个容器作为一个缓冲区来以此来支持这种异步操作。<a id="more"></a><br>针对以上需要的缓冲区，需要具有如下特点：<br>1、需要具备队列的特点，即先进先出。（<em>）<br>2、需要出队、入队需要支持同步。(</em>)<br>3、需要支持设置缓冲区的大小。(*)<br>4、队列为空或者队列满，能够阻塞线程，以便其他线程执行时不被中断，能够减小线程上下文带来的消耗。<br>以上四点，前三点我认为是必须的，第四点是一个加分项。在很多场景可能还需要持久化功能。</p>
 <h4 id="BlockingQueue">BlockingQueue</h4><p>在jdk5中，java提供了BlockingQueue容器具备以上几种特点，它继承自Queue是一种队列。它还支持可阻塞的put和take方法，在队列为空时，会阻塞take线程直至队列不为空，在队列满时，它会阻塞put线程直至有空间。另外还有offer和pull方法支持设置阻塞超时时间。我们需要有界队列，我们使用ArrayBlockingQueue作为缓冲区的容器。<br>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">       BlockingQueue&lt;Integer&gt; queue=<span class="keyword">new</span> ArrayBlockingQueue&lt;Integer&gt;(<span class="number">100</span>);</div><div class="line">       <span class="keyword">new</span> Productor(queue).start();</div><div class="line">       <span class="keyword">new</span> Consumer(queue).start();</div><div class="line">       <span class="keyword">new</span> Consumer(queue).start();</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Productor</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line"></div><div class="line">       <span class="keyword">private</span> BlockingQueue&lt;Integer&gt; queue;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="title">Productor</span><span class="params">(BlockingQueue&lt;Integer&gt; queue)</span> </span>&#123;</div><div class="line">           <span class="keyword">this</span>.queue = queue;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> index=<span class="number">0</span>;index&lt;<span class="number">500</span>;index++)&#123;</div><div class="line">               <span class="keyword">try</span> &#123;</div><div class="line">                   queue.put(index);</div><div class="line">                   System.out.println(Thread.currentThread().getId()+<span class="string">"生产了："</span>+index);</div><div class="line">                   Thread.sleep((<span class="keyword">int</span>)(Math.random()*<span class="number">100</span>));</div><div class="line">               &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                   e.printStackTrace();</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line"></div><div class="line">       <span class="keyword">private</span> BlockingQueue&lt;Integer&gt; queue;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(BlockingQueue&lt;Integer&gt; queue)</span> </span>&#123;</div><div class="line">           <span class="keyword">this</span>.queue = queue;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">           System.out.println(<span class="string">"消费者准备就绪"</span>);</div><div class="line">           <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</div><div class="line">               <span class="keyword">try</span> &#123;</div><div class="line">                   Integer number=queue.take();</div><div class="line">                   System.out.println(Thread.currentThread().getId()+ <span class="string">"消费了："</span>+number);</div><div class="line">                   Thread.sleep((<span class="keyword">int</span>)(Math.random()*<span class="number">1000</span>));</div><div class="line">               &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                   e.printStackTrace();</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
 <p>以上示例主要是BlockQueue的示例，以上还有消费者无法停止的问题。这个问题我们后面来解决。<br>输出结果如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="number">10</span>消费了：<span class="number">22</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">95</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">96</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">97</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">98</span></div><div class="line"><span class="number">10</span>消费了：<span class="number">23</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">99</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">100</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">101</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">102</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">103</span></div><div class="line"><span class="number">11</span>消费了：<span class="number">24</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">104</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">105</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">106</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">107</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">108</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">109</span></div><div class="line"><span class="number">10</span>消费了：<span class="number">25</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">110</span></div><div class="line"><span class="number">9</span>生产了：<span class="number">111</span></div></pre></td></tr></table></figure></p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2015/04/20/java-concurrent-countdownlatch/" data-toggle="tooltip" data-placement="top" title="Java并发编程学习之CountDownLatch">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2015/04/20/java-concurrent-countdownlatch/" data-toggle="tooltip" data-placement="top"
+                           title="Java并发编程学习之CountDownLatch">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2015/04/12/java-concurrent-concurrentmap/" data-toggle="tooltip" data-placement="top" title="Java并发编程学习之ConcurrentMap">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2015/04/12/java-concurrent-concurrentmap/" data-toggle="tooltip" data-placement="top"
+                           title="Java并发编程学习之ConcurrentMap">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -228,9 +222,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2015/04/13/java-concurrent-blockingqueue/"
-                        data-title="Java并发编程学习之BlockingQueue"
-                        data-url="http://yywang.info/2015/04/13/java-concurrent-blockingqueue/" >
+                         data-thread-key="2015/04/13/java-concurrent-blockingqueue/"
+                         data-title="Java并发编程学习之BlockingQueue"
+                         data-url="http://yywang.info/2015/04/13/java-concurrent-blockingqueue/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -240,7 +234,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#BlockingQueue"><span class="toc-text">BlockingQueue</span></a></li></ol>
                 </div>
@@ -273,14 +267,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -289,15 +284,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -353,7 +345,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -382,7 +373,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -408,8 +399,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

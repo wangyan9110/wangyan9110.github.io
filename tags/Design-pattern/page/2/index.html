@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          wangyan9110&#39;s Blog
+        wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="true
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,15 +139,376 @@
     }
 </script>
 
-    <!-- Main Content -->
+<!-- Main Content -->
+
+
+<!-- Page Header -->
+<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
+    <div class="row">
+        <header class="intro-header">
+            <div class="container">
+                <div class="site-heading text-center">
+                    <div class="about-me">
+                        <!--移动端头部显示-->
+                        <img src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460"/>
+                        <h5><a href="/about/">wangyan9110</a></h5>
+                        <p>资深开发工程师，关注微服务、业务建模、性能优化等</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+</div>
+<!-- Main Content -->
+<div class="container custom-haojen-container">
+    <!-- Post Container -->
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
+            <!-- Main Content -->
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/10/17/decorator/">
+        <h2 class="post-title">
+            设计模式学习--Decorator
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-10-17
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+Decorator：动态地给一个对象添加一些额外的职责。就增加功能来说，Decorator模式相比生成子类更加灵活。
+WhyDecorator模式适用于可以动态的给对象增删职责，比如qq秀我们可以选择自己形象，并动态的添加衣服以及装饰，让自己的形象感觉高大上起来。Decorator适用..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/08/14/composite/">
+        <h2 class="post-title">
+            设计模式学习--Composite
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-08-14
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+Composite：将对象组合成树形结构以表示“部分-整体”的层次结构。Composite使得用户对单个对象和组合对象的使用具有一致性。
+
+WhyComposite模式是一个比较常见的模式，在面向对象设计中，我们经常使用对象的组合来完成大对象的创建或者表示一种层次关系，比如在设计一个公..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/07/29/bridge/">
+        <h2 class="post-title">
+            设计模式学习--Bridge
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-07-29
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+Bridge：将抽象部分与它的实现部分分离，使他们都可以独立的变化。
+
+WhyBrigde模式主要解决继承带来的耦合问题，在面向对象编程中，继承主要解决具有共同特征且存在父子关系的类的复用问题。但是有时候继承也会因为继承类比较多，带来的难以维护扩展问题，比如：我要做一个手机软件比如Re..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/07/26/adapter/">
+        <h2 class="post-title">
+            设计模式学习--Adapter
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-07-26
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+Adapter：将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。
+
+WhyAdpater主要用于系统接口兼容性问题，比如有一个现有的组件，它提供了我们需要的部分功能，我们就可以再该组件上封装一层Adapter以方便..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/07/12/singleton/">
+        <h2 class="post-title">
+            设计模式学习--Singleton
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-07-12
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+Singleton：保证一个类仅有一个实例，并提供一个访问它的全局访问点。
+
+WhySingletion是我比较熟悉的设计模式之一，在平常的开发过程中，也曾几次用到，它主要适用于如下场景：1、当类只能有一个实例而且客户可以从一个众所周知的访问点访问它时。2、当这个唯一实例应该是通过子类..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/07/12/prototype/">
+        <h2 class="post-title">
+            设计模式学习--Prototype
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-07-12
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+Prototype：用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。
+
+WhyPrototype适用于在一个类的实例有几种不同的状态组合的一种时，建立相应的数目的原型并克隆她们，要比每次使用合适的状态创建它们方便一些，或者为了避免创建一个与产品类层次平行的工厂类层次时，..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/06/28/factory-method/">
+        <h2 class="post-title">
+            设计模式学习--Factory Method
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-06-28
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+Factory Method：定义一个创建对象的接口，让子类来决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。
+
+WhyFactory Method是一个比较基础的创建型模式，它主要在于由子类决定实例化哪一个类。主要用于框架代码或者工具包中。适用于如下场景..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/06/24/builder/">
+        <h2 class="post-title">
+            设计模式学习--Builder
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-06-24
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+Builder：将一个复杂的对象的构建和表示分离，使得同样的构建过程可以创建不同的表示。
+
+WhyBuilder也是创建型模式的一种，它是一步一步的向导式的创建一个复杂的对象，Builder接口定义创建复杂对象的零部件，Director根据客户端端传入的builder按照一定的步骤创建..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/06/23/abstract-factory/">
+        <h2 class="post-title">
+            设计模式学习--Abstarct Factory
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-06-23
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+Abstarct Factory：提供一个创建一系列相关或相互依赖的接口，而无需指定他们具体类。
+
+WhyAbstarct Factory是创建型设计模式的一种，主要在创建对象时解耦，避免对象的直接依赖，方便替换与定制。常见的比如：一个功能有两种不同的风格，需要根据配置来切换不同的风格..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/06/23/design-patterns-preface/">
+        <h2 class="post-title">
+            设计模式学习-序
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-06-23
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                学习面向对象已经很长时间了，刚开始是从学习C++语言的时候，知道面向对象这个名词，后来又学习了多种面向对象语言，c#，java等，大概在刚开始学习c#不久，在10年左右，就开始知道面向对象设计，可能是没有足够的代码量，一直敬而远之。虽然也经常在写代码时注意面向对象设计，甚至有时用得上一种设计模式..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+
+<!-- 翻页 pager -->
+
+<ul class="pager">
     
-    <!-- Footer -->
-    <!-- Footer -->
+    <li class="previous">
+        <a href="/tags/Design-pattern/">&larr; Newer Posts</a>
+    </li>
+    
+    
+</ul>
+
+
+        </div>
+        <!-- Sidebar Container -->
+        <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+
+            <!-- About Me -->
+            <section class="visible-md visible-lg" style="padding: 0 18px">
+                <div class="short-about">
+                    <!--侧边栏头像-->
+                    
+                    <img src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460"/>
+                    
+                    <h5><a href="/about/">wangyan9110</a></h5>
+                    
+                    <p>资深开发工程师，关注微服务、业务建模、性能优化等</p>
+                    
+                    <hr>
+                    <!-- SNS Link 社交 -->
+                    <ul class="list-inline">
+                        
+                        
+                        
+
+                        
+                        <li>
+                            <a target="_blank" href="http://weibo.com/wangyan9110">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                        </span>
+                            </a>
+                        </li>
+                        
+
+                        
+
+                        
+                        <li>
+                            <a target="_blank" href="https://github.com/wangyan9110">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                        </span>
+                            </a>
+                        </li>
+                        
+
+                        
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Featured Tags  标签 -->
+            
+
+            
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -211,7 +564,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -240,7 +592,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -266,8 +618,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

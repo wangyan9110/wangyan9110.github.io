@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          WPF使用Canvas绘制可变矩形｜wangyan9110&#39;s Blog
+        WPF使用Canvas绘制可变矩形｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,17 +166,20 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2014-06-01
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#c#" title="c#">c#</a>
+                        <a class="tag" href="/tags/#c#"
+                           title="c#">c#</a>
                         
-                        <a class="tag" href="/tags/#wpf" title="wpf">wpf</a>
+                        <a class="tag" href="/tags/#wpf"
+                           title="wpf">wpf</a>
                         
-                        <a class="tag" href="/tags/#canvas" title="canvas">canvas</a>
+                        <a class="tag" href="/tags/#canvas"
+                           title="canvas">canvas</a>
                         
                     </div>
                 </div>
@@ -201,9 +197,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <h4 id="1、问题以及解决办法">1、问题以及解决办法</h4><p>最近因为项目需要，需要实现一个位置校对的功能，大致的需求如下：有一个图片，有一些位置信息，但是位置信息可能和实际有些偏差，需要做简单调整，后面会对这张图片进行切割等，做些处理。（位置信息连接起来是一个个小矩形。）</p>
 <p>解决以上问题的大致思路如下：使用canvas进行绘制，把图片作为canvas的背景，在canvas上绘制矩形，类似于qq截图一样，矩形框可以使用鼠标拖动调整大小。然后在记下修改后的位置，提供给后面切割图片使用。目前的关键问题就是实现<strong>类似qq截图那样可以拖动的矩形</strong>。<a id="more"></a></p>
 <h4 id="2、实现的效果预览">2、实现的效果预览</h4><p><img src="http://yywang.qiniudn.com/QQ%E6%88%AA%E5%9B%BE20140601225729.png" alt="可拖动的矩形"></p>
@@ -234,21 +229,21 @@
 <p>以上为单个关联点改变的情况的代码，两个关联点都变动的代码和这个类似。</p>
 <h4 id="4、获取源代码">4、获取源代码</h4><p>由于文字表达能力有限，另外说清点和线的关系，特别是点和线的联动，确实有点困难，如果感兴趣的话，强烈建议下载代码进行调试阅读。<br><a href="https://github.com/wangyan9110/ProjectDemos/tree/master/WPFCanvasDemo" target="_blank" rel="external">https://github.com/wangyan9110/ProjectDemos/tree/master/WPFCanvasDemo</a></p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2014/06/23/design-patterns-preface/" data-toggle="tooltip" data-placement="top" title="设计模式学习-序">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2014/06/23/design-patterns-preface/" data-toggle="tooltip" data-placement="top"
+                           title="设计模式学习-序">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2014/05/31/maven-install-and-create-project/" data-toggle="tooltip" data-placement="top" title="maven安装与创建多模块项目">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2014/05/31/maven-install-and-create-project/" data-toggle="tooltip" data-placement="top"
+                           title="maven安装与创建多模块项目">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -256,9 +251,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/06/01/wpf-canvas-var-rectangle/"
-                        data-title="WPF使用Canvas绘制可变矩形"
-                        data-url="http://yywang.info/2014/06/01/wpf-canvas-var-rectangle/" >
+                         data-thread-key="2014/06/01/wpf-canvas-var-rectangle/"
+                         data-title="WPF使用Canvas绘制可变矩形"
+                         data-url="http://yywang.info/2014/06/01/wpf-canvas-var-rectangle/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -268,7 +263,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、问题以及解决办法"><span class="toc-text">1、问题以及解决办法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、实现的效果预览"><span class="toc-text">2、实现的效果预览</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、可变矩形实现"><span class="toc-text">3、可变矩形实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4、获取源代码"><span class="toc-text">4、获取源代码</span></a></li></ol>
                 </div>
@@ -301,14 +296,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -317,15 +313,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -381,7 +374,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -410,7 +402,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -436,8 +428,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

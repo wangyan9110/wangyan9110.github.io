@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          如何做详细设计之序｜wangyan9110&#39;s Blog
+        如何做详细设计之序｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,17 +166,20 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2014-12-20
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#Design pattern" title="Design pattern">Design pattern</a>
+                        <a class="tag" href="/tags/#Design pattern"
+                           title="Design pattern">Design pattern</a>
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
-                        <a class="tag" href="/tags/#detailed design" title="detailed design">detailed design</a>
+                        <a class="tag" href="/tags/#detailed design"
+                           title="detailed design">detailed design</a>
                         
                     </div>
                 </div>
@@ -201,9 +197,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <p>详细设计是软件开发中非常重要的环节，无论你是工作几年的技术大牛，还是只有一两年工作经验的小菜。可能你看到设计两个字，就觉得非常高大上，然而你只要在用心写代码，在思考如何定义方法，如何定义类，你都在做着详细设计。至于做的怎么样，那就另说了。</p>
 <h4 id="详细设计涉及哪些内容？">详细设计涉及哪些内容？</h4><p>首先详细设计不同于架构设计，架构设计主要关注系统的架构模型、系统开发语言选型、系统数据存储方式选型、系统模块的划分以及系统模块间的关系，关键技术的选型，系统部署架构，系统硬件需求、系统的安全性扩展性等内容。<br>详细设计不同于代码实现，代码实现主要关注方法级别的算法实现，以及方法级别的调试，单元测试，以及各个模块间的接口联调。<br>那么详细设计是包括哪些内容？详细设计包括业务接口的定义、领域模型的定义、持久化层接口定义、关键业务设计模式的选用、关键业务模块的设计方案、关键方法的实现算法的选用等。当然如果web项目还包括请求响应接口的定义，我认为这是一个非常重要的工作。哪些地方可以使用ajax，哪些地方选用直接输出html。直接影响着响应速度以及用户体验。<a id="more"></a></p>
 <h4 id="详细设计需要具备什么能力？">详细设计需要具备什么能力？</h4><p>1、深刻理解架构设计模型，理解为什么选用这种架构。这种架构对于目前系统的利与弊。<br>2、深入理解业务需求，并且能够预测部分需求的变化方向。能够理解业务的本质。<br>3、具备面向对象思维，熟悉面向对象的基本设计原则，熟悉设计模式、重构技术。<br>我只是暂时想到了那么多，还涉及其他能力。当然我也是在为达到以上的能力努力中。从以上可以看出，成为一名好的详细设计人员还是非常有难度的。这可能具备良好这种能力人少的原因之一吧。</p>
@@ -211,21 +206,21 @@
 <h4 id="我也是一位学习者">我也是一位学习者</h4><p>以上扯得够多了，本系统主要总结一些详细设计的方法，大家共同学习，首先我不是详细设计的大牛，只是菜鸟，之所以写本系列，主要是对于详细设计的一些思考总结分享给大家，使自己也能够技术上得到进步。对于本系列中的思考，非常感谢<a href="https://github.com/znyinyyniu" target="_blank" rel="external">znyin</a>，和他共事将近一年，学到了很多详细设计方法以及思想，给了我很多宝贵的实践机会，非常感谢，本系列也是我从他那学习的技术的总结。<br>本系列计划包括如下内容：<br>1、<a href="http://yywang.info/2014/12/20/detailed-design-preface/">如何做详细设计之序</a><br>2、<a href="http://yywang.info/2014/12/21/detailed-design-coding/">如何做详细设计之设计即编码</a><br>3、<a href="http://yywang.info/2014/12/23/detailed-design-standard/">如何做详细设计之规范</a><br>4、<a href="http://yywang.info/2014/12/29/detailed-design-principle/">如何做详细设计之设计原则</a><br>5、<a href="http://yywang.info/2014/12/31/detailed-design-professional/">如何做详细设计之理解业务本质</a><br>6、<a href="http://yywang.info/2015/01/01/detailed-design-reconsitution/">如何做详细设计之重构</a><br>7、<a href="http://yywang.info/2015/01/02/detailed-design-pattern/">如何做详细设计之设计模式</a><br>8、<a href="http://yywang.info/2015/01/03/detailed-design-summarize/">如何做详细设计之总结</a></p>
 <p>本系列文中观点仅是个人观点，欢迎讨论。</p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2014/12/21/detailed-design-coding/" data-toggle="tooltip" data-placement="top" title="如何做详细设计之设计即编码">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2014/12/21/detailed-design-coding/" data-toggle="tooltip" data-placement="top"
+                           title="如何做详细设计之设计即编码">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2014/12/19/flyweight/" data-toggle="tooltip" data-placement="top" title="设计模式学习--Flyweight">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2014/12/19/flyweight/" data-toggle="tooltip" data-placement="top"
+                           title="设计模式学习--Flyweight">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -233,9 +228,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/12/20/detailed-design-preface/"
-                        data-title="如何做详细设计之序"
-                        data-url="http://yywang.info/2014/12/20/detailed-design-preface/" >
+                         data-thread-key="2014/12/20/detailed-design-preface/"
+                         data-title="如何做详细设计之序"
+                         data-url="http://yywang.info/2014/12/20/detailed-design-preface/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -245,7 +240,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#详细设计涉及哪些内容？"><span class="toc-text">详细设计涉及哪些内容？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#详细设计需要具备什么能力？"><span class="toc-text">详细设计需要具备什么能力？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#详细设计重要吗？"><span class="toc-text">详细设计重要吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#我也是一位学习者"><span class="toc-text">我也是一位学习者</span></a></li></ol>
                 </div>
@@ -278,14 +273,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -294,15 +290,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -358,7 +351,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -387,7 +379,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -413,8 +405,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

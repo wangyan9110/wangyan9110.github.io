@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          移动APP服务端开发你需要了解什么｜wangyan9110&#39;s Blog
+        移动APP服务端开发你需要了解什么｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,15 +166,17 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2016-08-24
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
-                        <a class="tag" href="/tags/#API" title="API">API</a>
+                        <a class="tag" href="/tags/#API"
+                           title="API">API</a>
                         
                     </div>
                 </div>
@@ -199,9 +194,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <p>按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。<br>我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。<a id="more"></a></p>
 <h4 id="接口设计">接口设计</h4><p>接口是前端后端交互的桥梁，所以在API开发的时候需要考虑接口的设计规范。</p>
 <h5 id="restful从使用到放弃">restful从使用到放弃</h5><p>网上有很多方法实践restful的api设计，在我们设计的时候也参考了很多的设计风格，参考微博的开发平台api设计，我们在真正的实施过程中发现了很问题</p>
@@ -245,17 +239,16 @@
 <h5 id="图片服务使用第三方平台">图片服务使用第三方平台</h5><p>我们图片存储以及CDN分发都使用的第三方存储平台，这样可以既减少了我们的开发工作量，又能提高用户体验。</p>
 <h5 id="服务器端能实现的功能尽量不要留给客户端">服务器端能实现的功能尽量不要留给客户端</h5><p>服务端可以随时的发布版本，如果客户端出现问题，需要版本迭代以及审核，把客户端尽量做的轻并且可配置</p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
                     
-                        <li class="next">
-                            <a href="/2016/08/21/mine/" data-toggle="tooltip" data-placement="top" title="我在创业公司这八个月">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2016/08/21/mine/" data-toggle="tooltip" data-placement="top"
+                           title="我在创业公司这八个月">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -263,9 +256,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2016/08/24/api/"
-                        data-title="移动APP服务端开发你需要了解什么"
-                        data-url="http://yywang.info/2016/08/24/api/" >
+                         data-thread-key="2016/08/24/api/"
+                         data-title="移动APP服务端开发你需要了解什么"
+                         data-url="http://yywang.info/2016/08/24/api/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -275,7 +268,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#接口设计"><span class="toc-text">接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#restful从使用到放弃"><span class="toc-text">restful从使用到放弃</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#定义统一的返回格式"><span class="toc-text">定义统一的返回格式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全设计"><span class="toc-text">安全设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创业公司的取舍之道"><span class="toc-text">创业公司的取舍之道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#打点统计使用开源产品"><span class="toc-text">打点统计使用开源产品</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#图片服务使用第三方平台"><span class="toc-text">图片服务使用第三方平台</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器端能实现的功能尽量不要留给客户端"><span class="toc-text">服务器端能实现的功能尽量不要留给客户端</span></a></li></ol></li></ol>
                 </div>
@@ -308,14 +301,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -324,15 +318,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -388,7 +379,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -417,7 +407,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -443,8 +433,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>

@@ -10,17 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword"  content="undefined">
+    <meta name="keyword" content="undefined">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#60090">
-    <link rel="shortcut icon" href="/img/coffee.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
     <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-          FastJson 自定义Serialize、Parser｜wangyan9110&#39;s Blog
+        FastJson 自定义Serialize、Parser｜wangyan9110&#39;s Blog
         
     </title>
 
@@ -34,30 +35,16 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
-
-    <!-- Custom Fonts -->
-    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <style>
 
-    header.intro-header{
+    header.intro-header {
         background-image: url('undefined')
     }
 </style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="">
+<body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
@@ -70,7 +57,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
                     wangyan9110
                 </span>
@@ -91,27 +78,32 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-
+					
                     
                         
                     
                         
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-                        
-                    
-                        
-                    
-                        
-                    
-                        
+							
                         <li>
                             <a href="/about/">About</a>
                         </li>
+							
+						
+                    
                         
                     
-
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
                 </ul>
             </div>
         </div>
@@ -122,7 +114,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+//    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -147,24 +139,25 @@
     }
 </script>
 
-    <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
+<!-- Main Content -->
+
 <!--only post-->
 
-    
-        <img class="wechat-title-img" src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
-    
+
+<img class="wechat-title-img"
+     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
+
 
 <style>
-
-    header.intro-header{
+    
+    header.intro-header {
         background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
     }
 
+    
 </style>
 
-<header class="intro-header" >
+<header class="intro-header">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
@@ -173,17 +166,20 @@
                     
                     <span class="meta">
                          作者 wangyan9110
-                         <span>
+                        <span>
                           日期 2014-07-02
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#java" title="java">java</a>
+                        <a class="tag" href="/tags/#java"
+                           title="java">java</a>
                         
-                        <a class="tag" href="/tags/#fastjson" title="fastjson">fastjson</a>
+                        <a class="tag" href="/tags/#fastjson"
+                           title="fastjson">fastjson</a>
                         
-                        <a class="tag" href="/tags/#in action" title="in action">in action</a>
+                        <a class="tag" href="/tags/#in action"
+                           title="in action">in action</a>
                         
                     </div>
                 </div>
@@ -201,9 +197,8 @@
 <article>
     <div class="container">
         <div class="row">
-                <!-- Post Container -->
+            <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-
                 <p>今天在处理Json反序列化时，在C#传过来的JSON字符串中枚举类型为int类型，FastJson对于枚举的处理有两种类型，一种是字符串一种是int类型，但是它自带的解析int是按照枚举的顺序来解析的，但是有时候值不一定和顺序相对应，所以使用自定义解析器方式进行解决。在网上找解决方案，没找到比较完整的方法。通过查看源代码得出解决方案。<a id="more"></a><br>以解析如下枚举为例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Status &#123;</div><div class="line"></div><div class="line">	Ready(<span class="number">10</span>),</div><div class="line"></div><div class="line">	Completed(<span class="number">20</span>);</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> value;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Status</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.value = value;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Status <span class="title">create</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</div><div class="line">		<span class="keyword">switch</span> (value) &#123;</div><div class="line">		<span class="keyword">case</span> <span class="number">10</span>:</div><div class="line">			<span class="keyword">return</span> Status.Ready;</div><div class="line">		<span class="keyword">case</span> <span class="number">20</span>:</div><div class="line">			<span class="keyword">return</span> Status.Completed;</div><div class="line">		<span class="keyword">default</span>:</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"code error"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">value</span><span class="params">(Status status)</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> status.value;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>反序列化过程实现objectDeserializer接口，以上枚举代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StatusDeserializer</span> <span class="keyword">implements</span> <span class="title">ObjectDeserializer</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">deserialze</span><span class="params">(DefaultJSONParser parser, Type type,</span></span></div><div class="line">			Object fieldName) &#123;</div><div class="line">		JSONLexer lexer = parser.getLexer();</div><div class="line">		<span class="keyword">int</span> value = lexer.intValue();</div><div class="line">		<span class="keyword">return</span> (T) Status.create(value);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getFastMatchToken</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="comment">// TODO Auto-generated method stub</span></div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>序列化过程实现ObjectSerializer接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StatusSerializer</span> <span class="keyword">implements</span> <span class="title">ObjectSerializer</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(JSONSerializer serializer, Object object,</span></span></div><div class="line">			Object fieldName, Type fieldType) <span class="keyword">throws</span> IOException &#123;</div><div class="line">		SerializeWriter out = serializer.getWriter();</div><div class="line">		 <span class="keyword">if</span> (object == <span class="keyword">null</span>) &#123;</div><div class="line">	            serializer.getWriter().writeNull();</div><div class="line">	            <span class="keyword">return</span>;</div><div class="line">	        &#125;</div><div class="line">		 out.write(Status.value((Status)object));</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -211,21 +206,21 @@
 <p>反序列化过程<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">   ParserConfig.getGlobalInstance().putDeserializer(Status.class, <span class="keyword">new</span> StatusDeserializer());</div><div class="line">Test test1=JSON.parseObject(jsonStr,Test.class);</div></pre></td></tr></table></figure></p>
 <p>除了处理枚举类型时，有时需要自定义序列化、反序列化方法外，在处理日期、时间等类型时也经常需要自己实现。</p>
 
-
                 <hr>
-
                 
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2014/07/05/spring-quartz-in-action/" data-toggle="tooltip" data-placement="top" title="Quartz任务调度实践">&larr; Previous Post</a>
-                        </li>
+                    <li class="previous">
+                        <a href="/2014/07/05/spring-quartz-in-action/" data-toggle="tooltip" data-placement="top"
+                           title="Quartz任务调度实践">&larr; Previous Post</a>
+                    </li>
                     
                     
-                        <li class="next">
-                            <a href="/2014/06/28/factory-method/" data-toggle="tooltip" data-placement="top" title="设计模式学习--Factory Method">Next Post &rarr;</a>
-                        </li>
+                    <li class="next">
+                        <a href="/2014/06/28/factory-method/" data-toggle="tooltip" data-placement="top"
+                           title="设计模式学习--Factory Method">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -233,9 +228,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/07/02/fastjson-define-serialize-parser/"
-                        data-title="FastJson 自定义Serialize、Parser"
-                        data-url="http://yywang.info/2014/07/02/fastjson-define-serialize-parser/" >
+                         data-thread-key="2014/07/02/fastjson-define-serialize-parser/"
+                         data-title="FastJson 自定义Serialize、Parser"
+                         data-url="http://yywang.info/2014/07/02/fastjson-define-serialize-parser/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -245,7 +240,7 @@
 
             </div>
 
-            <div class="hidden-xs col-sm-3 toc-col" >
+            <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
                     
                 </div>
@@ -278,14 +273,15 @@
     var _user = 'yywang';
 
     // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
+    var duoshuoQuery = {short_name: _user};
+    (function () {
         var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+        ds.type = 'text/javascript';
+        ds.async = true;
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
 <!-- 多说公共JS代码 end -->
@@ -294,15 +290,12 @@
 
 
 
-
-
-    <!-- Footer -->
-    <!-- Footer -->
+<!-- Footer -->
+<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <span class="text-muted"style="font-size: 14px">双击导航条返回顶部</span>
                 <br>
                 <ul class="list-inline text-center">
                 
@@ -358,7 +351,6 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/blog.js"></script>
 
-
 <!-- async load function -->
 <script>
     function async(u, c) {
@@ -387,7 +379,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
@@ -413,8 +405,8 @@
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!--wechat title img-->
-    <img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
 
 </html>
