@@ -1,0 +1,776 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,jvm," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="wangyan9110" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="对象已死？引用计数算法
+概念：给对象添加一个引用计数器，每当有地方引用它时，计数器就加1，当引用失效时，计数器就减，任何时刻计数器为0的对象就是不可能再被使用的。
+优点：简单、高效
+缺点：循环引用无法回收，如objA.instance=objB,ObjB.ins=objA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM垃圾收集器">
+<meta property="og:url" content="http://yywang.info/2014/10/22/jvm-garbage-collector/index.html">
+<meta property="og:site_name" content="wangyan9110">
+<meta property="og:description" content="对象已死？引用计数算法
+概念：给对象添加一个引用计数器，每当有地方引用它时，计数器就加1，当引用失效时，计数器就减，任何时刻计数器为0的对象就是不可能再被使用的。
+优点：简单、高效
+缺点：循环引用无法回收，如objA.instance=objB,ObjB.ins=objA">
+<meta property="og:updated_time" content="2015-03-21T08:16:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM垃圾收集器">
+<meta name="twitter:description" content="对象已死？引用计数算法
+概念：给对象添加一个引用计数器，每当有地方引用它时，计数器就加1，当引用失效时，计数器就减，任何时刻计数器为0的对象就是不可能再被使用的。
+优点：简单、高效
+缺点：循环引用无法回收，如objA.instance=objB,ObjB.ins=objA">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yywang.info/2014/10/22/jvm-garbage-collector/"/>
+
+
+
+
+
+  <title> JVM垃圾收集器 | wangyan9110 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">wangyan9110</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">关注微服务、业务建模、性能优化</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2014/10/22/jvm-garbage-collector/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JVM垃圾收集器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-10-22T23:14:04+08:00">
+                2014-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/10/22/jvm-garbage-collector/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/22/jvm-garbage-collector/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="对象已死？"><strong>对象已死？</strong></h3><h5 id="引用计数算法">引用计数算法</h5><ul>
+<li>概念：给对象添加一个引用计数器，每当有地方引用它时，计数器就加1，当引用失效时，计数器就减，任何时刻计数器为0的对象就是不可能再被使用的。</li>
+<li>优点：简单、高效</li>
+<li>缺点：循环引用无法回收，如objA.instance=objB,ObjB.ins=objA<a id="more"></a></li>
+</ul>
+<h5 id="可达性分析算法">可达性分析算法</h5><ul>
+<li>概念：从一个“GC Root”的对象作为起点，从这些节点开始向下搜索，搜索所走过的路径的引用链，当一个对象到GC Roots没有任何引用链相连时，则证明这个对象被判“死缓”</li>
+<li>Java,C#等语言都是通过这种方式确定对象不再使用。</li>
+<li>在虚拟机中，可达性分析是一个敏感的时间点，在可达性分析中，必须保证在一个能确保的一致性，这种一致性需要把所有对象冻结在一个时间点，这时需要“Stop the Word”，在枚举GC Root时，即便目前最先进的虚拟机也需要“Stop the word”，只是在尽量的减少而已。</li>
+</ul>
+<h5 id="死还是不死">死还是不死</h5><p>被判“死缓”还不一定死，还要看它在缓期间的情况，它还需要至少两次的标记过程，第一次标记看是否有必要执行finalize()方法。在对象没有覆盖finalize()或者虚拟机调用过finalize()方法，则不要执行，如果确定需要执行，则加入一个叫F-Queue的队列之中。这是第一次标记。虚拟机会建立一个Finalizer线程区执行它，如果在finalize()中把自己关联到GC Root上则可以“改判”，否则它将被移出“即将回收”集合，基本上华佗也救不了它了。<br>如果在finalize()中把自己关联到GC Root上，就可以逃脱死亡的命运，但是在实际的编码中，不推荐使用。</p>
+<h3 id="垃圾回收算法"><strong>垃圾回收算法</strong></h3><h5 id="标记-清除算法">标记-清除算法</h5><ul>
+<li>算法：首先标记需要清除的所有对象，在标记完成后统一回收所有被标记的对象。所有垃圾回收算法的基础算法。</li>
+<li>缺点：标记清楚效率较低，而空间碎片化，难以存储较大对象。<br>其他的算法主要围绕这两个缺点解决问题。</li>
+</ul>
+<h5 id="复制算法">复制算法</h5><ul>
+<li>算法：把内存平均分成两块，先用其中一块，当回收时把可用的对象复制到另一块，然后清理该部分内存。</li>
+<li>优点：实现简单、高效，不需要考虑内存碎片问题</li>
+<li>缺点：内存利用率低</li>
+<li>应用：目前主要使用收集新生代对象。新生代对象“朝生梦死”，内存不一定按照1:1划分，可以把可用对象部分内存小一些。</li>
+</ul>
+<h5 id="标记-整理算法">标记-整理算法</h5><ul>
+<li>算法：让存活的对象向一端移动，然后直接清理掉存活以外的对象。</li>
+<li>应用：主要用于收集老年代。复制算法对于存活对象比较多的情况，代价比较大，内存利用率不高。</li>
+</ul>
+<h5 id="分代收集算法">分代收集算法</h5><ul>
+<li>算法：根据存活期划分不同内存块，一般分为老年代和新生代，然后分别使用合适的算法收集。新生代一般使用复制算法，老年代使用标记-整理算法或者标记-清除算法。</li>
+<li>应用：当前的商业垃圾收集器都在使用。</li>
+</ul>
+<h3 id="内存分配和回收策略"><strong>内存分配和回收策略</strong></h3><p>内存分配主要是堆内存分配，在垃圾回收中也主要是堆内存中的对象回收，对象一般主要分配在堆内存的新生代区上。</p>
+<ul>
+<li>对象优先分配在新生代区上</li>
+<li>大对象分配到老年代区上，对于短命的大对象尽量减少使用。</li>
+<li>新生代区上的对象升级到老年代区上，一般一次GC，如果没有被回收的话，对象的年龄+1，到15岁的时候可进入老年代区，可以通过-XX:TenuringThreshold设置</li>
+<li>动态年龄判断，假设都根据3中的算法判断，假设如果对象有大量使用了相同年龄的对象，但都没达到15岁，那么会造成新生代的内存大小占用较大，对于相同年龄对象超过内存一半时，大于等于该年龄的对象会进入老年区。</li>
+<li>空间分配担保，就像生活中的贷款，银行贷款给你也是一种风险投资，所以需要有人担保，如果你没钱，银行可以找他要，如果老年区的连续内存空间小于新生代区内存大小，垃圾回收器就需要进行一次“冒险”收集，在新生代我们使用复制算法收集，一般是不等分配，如果存活对象比较多，另一半内存无法存放全部的对象，这时就需要老年代区有足够的空间来存放剩余的对象，老年区要做“担保”</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://yywang.qiniudn.com/IMG_0123.jpg" alt="wangyan9110 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://yywang.qiniudn.com/IMG_0122.jpg" alt="wangyan9110 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/jvm/" rel="tag"># jvm</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/10/19/facade/" rel="next" title="设计模式学习--Facade">
+                <i class="fa fa-chevron-left"></i> 设计模式学习--Facade
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/11/08/jdk-tools/" rel="prev" title="JDK那些有用的工具">
+                JDK那些有用的工具 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/10/22/jvm-garbage-collector/"
+           data-title="JVM垃圾收集器" data-url="http://yywang.info/2014/10/22/jvm-garbage-collector/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460"
+               alt="wangyan9110" />
+          <p class="site-author-name" itemprop="name">wangyan9110</p>
+          <p class="site-description motion-element" itemprop="description">关注微服务、业务建模、性能优化等</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象已死？"><span class="nav-number">1.</span> <span class="nav-text">对象已死？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引用计数算法"><span class="nav-number">1.0.1.</span> <span class="nav-text">引用计数算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#可达性分析算法"><span class="nav-number">1.0.2.</span> <span class="nav-text">可达性分析算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#死还是不死"><span class="nav-number">1.0.3.</span> <span class="nav-text">死还是不死</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾回收算法"><span class="nav-number">2.</span> <span class="nav-text">垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#标记-清除算法"><span class="nav-number">2.0.1.</span> <span class="nav-text">标记-清除算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#复制算法"><span class="nav-number">2.0.2.</span> <span class="nav-text">复制算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#标记-整理算法"><span class="nav-number">2.0.3.</span> <span class="nav-text">标记-整理算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分代收集算法"><span class="nav-number">2.0.4.</span> <span class="nav-text">分代收集算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分配和回收策略"><span class="nav-number">3.</span> <span class="nav-text">内存分配和回收策略</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyan9110</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yywang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
