@@ -1,889 +1,611 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en">
 
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="en">
+<!-- Head tag -->
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="wangyan9110" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
-
-
-
-
-
-
-<meta name="description" content="关注微服务、业务建模、性能优化等">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wangyan9110">
-<meta property="og:url" content="http://yywang.info/archives/page/2/index.html">
-<meta property="og:site_name" content="wangyan9110">
-<meta property="og:description" content="关注微服务、业务建模、性能优化等">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wangyan9110">
-<meta name="twitter:description" content="关注微服务、业务建模、性能优化等">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"right","display":"hide"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '9331113',
-      author: 'yywang'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
+<script type="text/javascript">
+    var _speedMark = new Date();
 </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="关注微服务、业务建模、性能优化等">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        wangyan9110&#39;s Blog
+        
+    </title>
 
+    <link rel="canonical" href="http://yywang.info/archives/page/2/">
 
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-  <link rel="canonical" href="http://yywang.info/archives/page/2/"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
 
-
-
-
-
-  <title> Archive | wangyan9110 </title>
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+<style>
 
-  
+    header.intro-header {
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    wangyan9110
+                </span>
+                's Blog
+            </a>
+        </div>
 
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-right  page-archive  ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">wangyan9110</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-    
-      <p class="site-subtitle">关注微服务、业务建模、性能优化</p>
-    
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            About
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archives
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+							
+						
+                    
+                        
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+                        
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
 </nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-       
-      
-      OK! 39 posts in total. Keep on posting.
-    </span>
-
-    
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2015">2015</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/01/03/detailed-design-summarize/" itemprop="url">
-              
-                <span itemprop="name">如何做详细设计之总结</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-01-03T23:11:44+08:00"
-              content="2015-01-03" >
-          01-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/01/02/detailed-design-pattern/" itemprop="url">
-              
-                <span itemprop="name">如何做详细设计之设计模式</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-01-02T23:19:16+08:00"
-              content="2015-01-02" >
-          01-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/01/01/detailed-design-reconsitution/" itemprop="url">
-              
-                <span itemprop="name">如何做详细设计之重构</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-01-01T22:58:51+08:00"
-              content="2015-01-01" >
-          01-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2014">2014</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2014/12/31/detailed-design-professional/" itemprop="url">
-              
-                <span itemprop="name">如何做详细设计之理解业务本质</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2014-12-31T23:16:18+08:00"
-              content="2014-12-31" >
-          12-31
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2014/12/29/detailed-design-principle/" itemprop="url">
-              
-                <span itemprop="name">如何做详细设计之设计原则</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2014-12-29T22:15:09+08:00"
-              content="2014-12-29" >
-          12-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2014/12/23/detailed-design-standard/" itemprop="url">
-              
-                <span itemprop="name">如何做详细设计之规范</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2014-12-23T23:26:27+08:00"
-              content="2014-12-23" >
-          12-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2014/12/21/detailed-design-coding/" itemprop="url">
-              
-                <span itemprop="name">如何做详细设计之设计即编码</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2014-12-21T23:09:43+08:00"
-              content="2014-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2014/12/20/detailed-design-preface/" itemprop="url">
-              
-                <span itemprop="name">如何做详细设计之序</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2014-12-20T21:46:43+08:00"
-              content="2014-12-20" >
-          12-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2014/12/19/flyweight/" itemprop="url">
-              
-                <span itemprop="name">设计模式学习--Flyweight</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2014-12-19T23:09:54+08:00"
-              content="2014-12-19" >
-          12-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2014/11/08/jdk-tools/" itemprop="url">
-              
-                <span itemprop="name">JDK那些有用的工具</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2014-11-08T23:41:31+08:00"
-              content="2014-11-08" >
-          11-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
-
-
-          
-          </div>
-          
-
-
-          
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460"
-               alt="wangyan9110" />
-          <p class="site-author-name" itemprop="name">wangyan9110</p>
-          <p class="site-description motion-element" itemprop="description">关注微服务、业务建模、性能优化等</p>
-        </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">39</span>
-                <span class="site-state-item-name">posts</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              
-                <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">categories</span>
-              
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">21</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">wangyan9110</span>
-</div>
-
-
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
-</div>
-
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-        
-
-        
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
 </script>
 
+<!-- Main Content -->
+
+
+<!-- Page Header -->
+<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
+    <div class="row">
+        <header class="intro-header">
+            <div class="container">
+                <div class="site-heading text-center">
+                    <div class="about-me">
+                        <!--移动端头部显示-->
+                        <img src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460"/>
+                        <h5><a href="/about/">wangyan9110</a></h5>
+                        <p>资深开发工程师，关注微服务、业务建模、性能优化等</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+</div>
+<!-- Main Content -->
+<div class="container custom-haojen-container">
+    <!-- Post Container -->
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
+            <!-- Main Content -->
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2015/01/03/detailed-design-summarize/">
+        <h2 class="post-title">
+            如何做详细设计之总结
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-01-03
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                如何做详细设计系列经过“两年”的时间终于写完了，今天主要为这个系列做下简单的总结。
+详细设计没有“公式”我们每个人从事的行业，负责的功能模块都不尽相同，不同的业务场景不同的项目特点都会产生不同的设计。可能有人会问，设计模式不是解决特定场景下的“公式”吗？设计模式是前人在具体的实践中，总结出来的解..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2015/01/02/detailed-design-pattern/">
+        <h2 class="post-title">
+            如何做详细设计之设计模式
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-01-02
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天来讨论详细设计的最后一个内容设计模式。在我们了解一些开源源代码时，经常可以看到这些开源源代码使用了大量的设计模式，有些用的还比较灵活和巧妙。比如Sping中的bean管理部分，就大量使用了工厂模式，juint中在不多的源代码中灵活的使用了工厂方法模式、模板方法模式、观察者模式，策略模式等等，..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2015/01/01/detailed-design-reconsitution/">
+        <h2 class="post-title">
+            如何做详细设计之重构
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2015-01-01
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天是2015年1月1日，又是一个新的开始。今天我们来讨论如何做详细设计中的重构。作为一名软件开发工程师，可能大部分都知道重构这个概念，相信也有很多人有看过Martin Flower的重构这本书，了解一些重构技巧。很多人理解的重构，就是代码结构基本上要重新设计，大部分代码需要重写，所以在实际的工..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/31/detailed-design-professional/">
+        <h2 class="post-title">
+            如何做详细设计之理解业务本质
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-12-31
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天来讨论详细设计中的一个重要的能力，理解业务的本质。在本系列第一篇，我们提到详细设计人员需要具备的三种能力中，其中有一条就是理解业务的本质。在做业务系统的开发中，业务是我们的核心，不管我们使用什么技术、什么设计目的只有一个为我们的业务服务。所以光有技术不行，没有业务分析能力，还是成为不了一名好..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/29/detailed-design-principle/">
+        <h2 class="post-title">
+            如何做详细设计之设计原则
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-12-29
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天我们来讨论一下设计原则，在详细设计的过程中，需要遵守一些设计原则，本篇的设计原则都是我自己经常思考总结，有可能有些不全，如果你已经能够很好的掌握和利用面向对象的程序设计原则，你可以不看本文。本文主要是在自己工作中的实践与体会，不讲六大原则。当然面向对象程序设计的六大原则，是我们在详细设计中要..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/23/detailed-design-standard/">
+        <h2 class="post-title">
+            如何做详细设计之规范
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-12-23
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/21/detailed-design-coding/">
+        <h2 class="post-title">
+            如何做详细设计之设计即编码
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-12-21
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                今天来讨论如何做详细设计的第一个内容，设计即编码。我在上篇序中开头讲到，”你只要在用心写代码，在思考如何定义方法，如何定义类，你都在做着详细设计“，其实设计本身也是在编码。当然表达设计的方式也有很多种。我比较喜欢编码这种方式。
+如何表达自己的设计？1、UML，可能大部分人谈到软件设计，想到的是U..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/20/detailed-design-preface/">
+        <h2 class="post-title">
+            如何做详细设计之序
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-12-20
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                详细设计是软件开发中非常重要的环节，无论你是工作几年的技术大牛，还是只有一两年工作经验的小菜。可能你看到设计两个字，就觉得非常高大上，然而你只要在用心写代码，在思考如何定义方法，如何定义类，你都在做着详细设计。至于做的怎么样，那就另说了。
+详细设计涉及哪些内容？首先详细设计不同于架构设计，架构设..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/12/19/flyweight/">
+        <h2 class="post-title">
+            设计模式学习--Flyweight
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-12-19
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                What
+运用共享技术有效地支持大量细粒度的对象。
+
+Why在创建大量对象时，如果每个小对象都创建一个对象都是非常消耗内存的。在古代我们的先人已经发现了，重复工作带来的成本消耗，我国古代四大发明之一活字印刷术，就是解决的这类问题。我们把每个字看做一个细粒度的对象的话，印刷一本书，就会有成千上万个..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')">
+    <a href="/2014/11/08/jdk-tools/">
+        <h2 class="post-title">
+            JDK那些有用的工具
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2014-11-08
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                在jdk中，无论是刚开始学习java的学生还是在职场叱咤多年的java程序员，肯定都知道bin目录里的java.exe以及javac.exe这两个命令行工具。但是有没有发现在bin目录除了这两个命令还有不少其他的命令。它们有什么作用呢？今天主要介绍这里面的一些工具。
+jps虚拟机进程状态工具
+功..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
 
 
 
 
+<!-- 翻页 pager -->
+
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="/archives/">&larr; Newer Posts</a>
+    </li>
+    
+    
+    <li class="next">
+        <a href="/archives/page/3/">Older Posts &rarr;</a>
+    </li>
+    
+</ul>
+
+
+        </div>
+        <!-- Sidebar Container -->
+        <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+
+            <!-- About Me -->
+            <section class="visible-md visible-lg" style="padding: 0 18px">
+                <div class="short-about">
+                    <!--侧边栏头像-->
+                    
+                    <img src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460"/>
+                    
+                    <h5><a href="/about/">wangyan9110</a></h5>
+                    
+                    <p>资深开发工程师，关注微服务、业务建模、性能优化等</p>
+                    
+                    <hr>
+                    <!-- SNS Link 社交 -->
+                    <ul class="list-inline">
+                        
+                        
+                        
+
+                        
+                        <li>
+                            <a target="_blank" href="http://weibo.com/wangyan9110">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                        </span>
+                            </a>
+                        </li>
+                        
+
+                        
+
+                        
+                        <li>
+                            <a target="_blank" href="https://github.com/wangyan9110">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                        </span>
+                            </a>
+                        </li>
+                        
+
+                        
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Featured Tags  标签 -->
+            
+
+            
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wangyan9110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; wangyan9110 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yywang.info/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
 
 
 
-
-  
-
+<!-- Baidu Tongji -->
 
 
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  _st('install','undefined','2.0.0');
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
 
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-
-
-
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
 </body>
+
 </html>
