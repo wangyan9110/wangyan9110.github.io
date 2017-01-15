@@ -1,205 +1,355 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
 
-<!-- Head tag -->
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
 <head>
-<script type="text/javascript">
-    var _speedMark = new Date();
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Design pattern,java,detailed design," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="wangyan9110" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="今天来讨论详细设计的最后一个内容设计模式。在我们了解一些开源源代码时，经常可以看到这些开源源代码使用了大量的设计模式，有些用的还比较灵活和巧妙。比如Sping中的bean管理部分，就大量使用了工厂模式，juint中在不多的源代码中灵活的使用了工厂方法模式、模板方法模式、观察者模式，策略模式等等，当然它们都是开源领域的经典之作。它们的作者都是业界的大师，对设计模式的理解都非常到位。其中juint的作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何做详细设计之设计模式">
+<meta property="og:url" content="http://yywang.info/2015/01/02/detailed-design-pattern/index.html">
+<meta property="og:site_name" content="wangyan9110">
+<meta property="og:description" content="今天来讨论详细设计的最后一个内容设计模式。在我们了解一些开源源代码时，经常可以看到这些开源源代码使用了大量的设计模式，有些用的还比较灵活和巧妙。比如Sping中的bean管理部分，就大量使用了工厂模式，juint中在不多的源代码中灵活的使用了工厂方法模式、模板方法模式、观察者模式，策略模式等等，当然它们都是开源领域的经典之作。它们的作者都是业界的大师，对设计模式的理解都非常到位。其中juint的作">
+<meta property="og:updated_time" content="2015-03-21T07:45:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何做详细设计之设计模式">
+<meta name="twitter:description" content="今天来讨论详细设计的最后一个内容设计模式。在我们了解一些开源源代码时，经常可以看到这些开源源代码使用了大量的设计模式，有些用的还比较灵活和巧妙。比如Sping中的bean管理部分，就大量使用了工厂模式，juint中在不多的源代码中灵活的使用了工厂方法模式、模板方法模式、观察者模式，策略模式等等，当然它们都是开源领域的经典之作。它们的作者都是业界的大师，对设计模式的理解都非常到位。其中juint的作">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6323027644577220000',
+      author: 'wangyy1991'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
 </script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="关注微服务、业务建模、性能优化等">
-    <meta name="keyword" content="undefined">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="wangyan9110" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        如何做详细设计之设计模式｜wangyan9110&#39;s Blog
-        
-    </title>
 
-    <link rel="canonical" href="http://yywang.info/2015/01/02/detailed-design-pattern/">
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+  <link rel="canonical" href="http://yywang.info/2015/01/02/detailed-design-pattern/"/>
 
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
+
+
+
+
+  <title> 如何做详细设计之设计模式 | wangyan9110 </title>
 </head>
 
-<style>
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
-    header.intro-header {
-        background-image: url('undefined')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
-" data-ishome = "false" >
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    wangyan9110
-                </span>
-                's Blog
-            </a>
-        </div>
+  
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-                    
-                        
-							
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-							
-						
-                    
-                        
-                    
-                        
-							
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-							
-						
-                    
-                        
-                    
-					
-					
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- /.container -->
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">wangyan9110</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">关注微服务、业务建模、性能优化</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
 </nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
-
-<!--only post-->
 
 
-<img class="wechat-title-img"
-     src="http://yywang.qiniudn.com/lion-blur-bg.jpg">
 
+ </div>
+    </header>
 
-<style>
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
     
-    header.intro-header {
-        background-image: url('http://yywang.qiniudn.com/lion-blur-bg.jpg')
-    }
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/01/02/detailed-design-pattern/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
 
     
-</style>
+      <header class="post-header">
 
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>如何做详细设计之设计模式</h1>
-                    
-                    <span class="meta">
-                         作者 wangyan9110
-                        <span>
-                          日期 2015-01-02
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#Design pattern"
-                           title="Design pattern">Design pattern</a>
-                        
-                        <a class="tag" href="/tags/#java"
-                           title="java">java</a>
-                        
-                        <a class="tag" href="/tags/#detailed design"
-                           title="detailed design">detailed design</a>
-                        
-                    </div>
-                </div>
-            </div>
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何做详细设计之设计模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-01-02T23:19:16+08:00">
+                2015-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/detailed-design/" itemprop="url" rel="index">
+                    <span itemprop="name">detailed design</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
         </div>
-    </div>
-    <div class="post-title-haojen">
-        <span>
-            如何做详细设计之设计模式
-        </span>
-    </div>
-</header>
+      </header>
+    
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>今天来讨论详细设计的最后一个内容设计模式。在我们了解一些开源源代码时，经常可以看到这些开源源代码使用了大量的设计模式，有些用的还比较灵活和巧妙。比如Sping中的bean管理部分，就大量使用了工厂模式，juint中在不多的源代码中灵活的使用了工厂方法模式、模板方法模式、观察者模式，策略模式等等，当然它们都是开源领域的经典之作。它们的作者都是业界的大师，对设计模式的理解都非常到位。其中juint的作者之一Erich Gamma也是GOF之一。我也没有分析透juint的源代码，通过网上一些大牛分析juint源代码了解到这些。分析源代码是非常有效的提高技术能力的一种方式，最近我也在思考如何分析开源源代码。对分析源代码有研究的欢迎交流讨论。有点远了，从上可以反思为什么开源代码中有那么重的设计模式呢，反观我们的设计却很少有那么好的设计，为什么呢？功力不够！^_^，回来讲我们的主题，在我们的详细设计中如何应用设计模式呢？<a id="more"></a></p>
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天来讨论详细设计的最后一个内容设计模式。在我们了解一些开源源代码时，经常可以看到这些开源源代码使用了大量的设计模式，有些用的还比较灵活和巧妙。比如Sping中的bean管理部分，就大量使用了工厂模式，juint中在不多的源代码中灵活的使用了工厂方法模式、模板方法模式、观察者模式，策略模式等等，当然它们都是开源领域的经典之作。它们的作者都是业界的大师，对设计模式的理解都非常到位。其中juint的作者之一Erich Gamma也是GOF之一。我也没有分析透juint的源代码，通过网上一些大牛分析juint源代码了解到这些。分析源代码是非常有效的提高技术能力的一种方式，最近我也在思考如何分析开源源代码。对分析源代码有研究的欢迎交流讨论。有点远了，从上可以反思为什么开源代码中有那么重的设计模式呢，反观我们的设计却很少有那么好的设计，为什么呢？功力不够！^_^，回来讲我们的主题，在我们的详细设计中如何应用设计模式呢？<a id="more"></a></p>
 <h4 id="设计模式也有“毒”">设计模式也有“毒”</h4><p>特别是像我一样刚工作一两年的开发人员，往往对设计模式理解不够深，就容易犯为模式而模式的错误。所以在工作中，我觉得想用某种设计模式时，通常会先反复思考，到底需不需要设计模式。也会和别人讨论，目前的设计需不需要引入设计模式。在我们目前的系统中，就有这样的场景，当时决定放弃使用设计模式的例子。<br>有一个统计学生分数的功能，需要根据不同的题型会有不同的算法，有的直接去数据库中的阅卷记录，有的比如选择题，需要自己判断是否和标准答案一致，给出分数。对于多选题还存在半对的情况，给出一半的分数。<br>这样的一个需求，当时准备使用策略模式，原因有以下两点：一是最终都是要获取题目分数，只是不同的题型算法不同，符合策略模式的场景。二是以后需求还可能存在多评，然后取平均分情况（其实这个需求已经提出来了，假期后就要解决）。<br>但是最后决定不进行代码重构，改为采用策略模式，原因有以下几点：一是其实评分算法很简单，就是一个比较，if else就可以完成。二是即使以后增加多评，分数计算策略还不定，需要根据当时实际需求再做设计。经过分析当前的私有方法的方式能够解决当前的需求，而且代码并不是很多。如果采用策略模式，会增加一些类，使结构变得复杂。所以当时放弃了使用该设计模式。<br>所以如果使用设计模式不当，不但没有提高设计的灵活性，反而会造成类的结构变的更加复杂。在使用设计模式需要反复考虑是否真正的适合使用设计模式。</p>
 <h4 id="设计模式是“良药”">设计模式是“良药”</h4><p>当然在我做的一些系统中，也有使用了设计模式的例子，我主要列举下我们用过的设计模式以及解决的问题</p>
 <ul>
@@ -212,207 +362,343 @@
 </ul>
 <p>本篇内容是在平常工作中的实践思考与总结。如有不妥之处，欢迎讨论。</p>
 
-                <hr>
-                
+      
+    </div>
 
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2015/01/03/detailed-design-summarize/" data-toggle="tooltip" data-placement="top"
-                           title="如何做详细设计之总结">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2015/01/01/detailed-design-reconsitution/" data-toggle="tooltip" data-placement="top"
-                           title="如何做详细设计之重构">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
+    <div>
+      
+        
 
-                
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                         data-thread-key="2015/01/02/detailed-design-pattern/"
-                         data-title="如何做详细设计之设计模式"
-                         data-url="http://yywang.info/2015/01/02/detailed-design-pattern/">
-                    </div>
-                </div>
-                <!-- 多说评论框 end -->
-                
+      
+    </div>
 
-                
+    <div>
+      
+        
 
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Design-pattern/" rel="tag"># Design pattern</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/detailed-design/" rel="tag"># detailed design</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/01/detailed-design-reconsitution/" rel="next" title="如何做详细设计之重构">
+                <i class="fa fa-chevron-left"></i> 如何做详细设计之重构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/03/detailed-design-summarize/" rel="prev" title="如何做详细设计之总结">
+                如何做详细设计之总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460"
+               alt="wangyan9110" />
+          <p class="site-author-name" itemprop="name">wangyan9110</p>
+          <p class="site-description motion-element" itemprop="description">关注微服务、业务建模、性能优化等</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
             </div>
+          
 
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#设计模式也有“毒”"><span class="toc-text">设计模式也有“毒”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设计模式是“良药”"><span class="toc-text">设计模式是“良药”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#“良药苦口”"><span class="toc-text">“良药苦口”</span></a></li></ol>
-                </div>
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">categories</span>
+              
             </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
         </div>
 
-        <div class="row">
-            <!-- Sidebar Container -->
+        
+        
 
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
+        
+        
 
-                <!-- Featured Tags -->
-                
+        
 
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#设计模式也有“毒”"><span class="nav-number">1.</span> <span class="nav-text">设计模式也有“毒”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设计模式是“良药”"><span class="nav-number">2.</span> <span class="nav-text">设计模式是“良药”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#“良药苦口”"><span class="nav-number">3.</span> <span class="nav-text">“良药苦口”</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
     </div>
-</article>
+  </aside>
 
 
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = 'yywang';
+        
+      </div>
+    </main>
 
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user};
-    (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyan9110</span>
+</div>
 
 
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
 
 
+        
 
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
+        
+      </div>
+    </footer>
 
-                
-                    <li>
-                        <a target="_blank" href="http://weibo.com/wangyan9110">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/wangyan9110">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; wangyan9110 2017
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
     </div>
-</footer>
+  </div>
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
+  
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yywang.info/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-<!-- Google Analytics -->
-
-
-
-<!-- Baidu Tongji -->
-
-
-<!-- swiftype -->
 <script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','undefined','2.0.0');
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
 </script>
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="https://avatars1.githubusercontent.com/u/3444324?v=3&amp;s=460">
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
 </body>
-
 </html>
