@@ -1,17 +1,90 @@
+<!doctype html>
 
- <!DOCTYPE HTML>
-<html lang="zh_CN">
-<head>
-  <meta charset="UTF-8">
+
+
   
-    <title>wangyan9110</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="wangyan9110">
-    
 
+
+<html class="theme-next muse use-motion" lang="zh_CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
     
-    <meta name="description" content="关注微服务、业务建模、性能优化等">
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="关注微服务、业务建模、性能优化等">
 <meta property="og:type" content="website">
 <meta property="og:title" content="wangyan9110">
 <meta property="og:url" content="http://yywang.info/index.html">
@@ -21,143 +94,378 @@
 <meta name="twitter:title" content="wangyan9110">
 <meta name="twitter:description" content="关注微服务、业务建模、性能优化等">
 
-    
-    <link rel="alternative" href="/atom.xml" title="wangyan9110" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yywang.info/"/>
+
+
+
+
+
+  <title> wangyan9110 </title>
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="wangyan9110" title="wangyan9110"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="wangyan9110">wangyan9110</a></h1>
-				<h2 class="blog-motto">关注微服务、业务建模、性能优化</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:yywang.info">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN">
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/08/24/api/" title="移动APP服务端开发你需要了解什么" itemprop="url">移动APP服务端开发你需要了解什么</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2016-08-24T07:48:46.000Z" itemprop="datePublished"> Published 2016-08-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。<br>我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/08/24/api/#more">Read More</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/API/">API</a>
-</div>
-
-
-  <div class="article-tags">
   
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/API/">API</a>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
+  
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">wangyan9110</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
   </div>
-
+    
+      <p class="site-subtitle">关注微服务、业务建模、性能优化</p>
+    
 </div>
 
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/08/24/api/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/08/24/api/" data-count-type="comments">&nbsp;</a>
-	
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
 </div>
 
-</footer>
+<nav class="site-nav">
+  
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/08/21/mine/" title="我在创业公司这八个月" itemprop="url">我在创业公司这八个月</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2016-08-21T15:54:58.000Z" itemprop="datePublished"> Published 2016-08-21</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+  
+    <ul id="menu" class="menu">
+      
         
-        <p>去年12月份，在经过很多的思考之后，自己希望做一个从0到1的产品，离开点评，从上海来到杭州，加入一家创业公司。这也是我加入的第一家创业公司。我将从下面几个方面写下自己的心得体会：</p>
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2016/08/24/api/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/24/api/" itemprop="url">
+                  移动APP服务端开发你需要了解什么
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-24T15:48:46+08:00">
+                2016-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/API/" itemprop="url" rel="index">
+                    <span itemprop="name">API</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>按照应用类划分，在服务端开发的接入层，最常见的有两种，一种是Web项目开发，一种面向APP客户端的API开发，当然还有一些比如消息队列的接入封装、后台Job等等。<br>我以前从事过大量的web后端开发，在前段时间，做APP开发的时，设计了我们的接入层。在接入层的设计上和WEB后端开发，大部分是相同的，但是也有些不同点。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/24/api/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2016/08/21/mine/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/21/mine/" itemprop="url">
+                  我在创业公司这八个月
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-21T23:54:58+08:00">
+                2016-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>去年12月份，在经过很多的思考之后，自己希望做一个从0到1的产品，离开点评，从上海来到杭州，加入一家创业公司。这也是我加入的第一家创业公司。我将从下面几个方面写下自己的心得体会：</p>
 <ul>
 <li>ALL IN</li>
 <li>技术</li>
@@ -165,516 +473,1174 @@
 <li>创业认识</li>
 </ul>
 <h4 id="ALL_IN">ALL IN</h4><p>在来创业公司我早已做好整天加班的准备，但是没想到到了之后，加班的强度远超我的预期，但是我还是熬过来。以前在大公司有着上班下班时间，还有双休，但是来到这家公司之后，除了写代码就是睡觉，一天工作14到16个小时，这样持续了一个多月。最后这一个月我做出了我们产品的1.0版本。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/21/mine/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/08/21/mine/#more">Read More</a>
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
 
 
-</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
 
 
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/08/21/mine/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/08/21/mine/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2016/06/24/version/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
     
-      <a href="/2016/06/24/version/" title="版本管理" itemprop="url">版本管理</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2016-06-24T06:48:38.000Z" itemprop="datePublished"> Published 2016-06-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+      <header class="post-header">
+
         
-        <h4 id="为什么需要版本管理">为什么需要版本管理</h4><p>在多模块的项目中，版本管理是一种特别重要的环节，版本管理混乱将直接导致项目的失控。<br>在项目发展的初期，代码是集中管理的，往往面临以下问题：</p>
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/06/24/version/" itemprop="url">
+                  版本管理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-06-24T14:48:38+08:00">
+                2016-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Archive/" itemprop="url" rel="index">
+                    <span itemprop="name">Archive</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="为什么需要版本管理">为什么需要版本管理</h4><p>在多模块的项目中，版本管理是一种特别重要的环节，版本管理混乱将直接导致项目的失控。<br>在项目发展的初期，代码是集中管理的，往往面临以下问题：</p>
 <ul>
 <li>业务的快速发展并且不断变化，代码也在不断的膨胀</li>
 <li>由于人力、时间等各个方面的原因，现阶段无法做到子系统的拆分</li>
 <li>团队人员在快速增加，每一次修改都可能影响到很多历史模块的</li>
 </ul>
 <p>对于这样的系统，可以先做到Jar包拆分，把每个模块拆分成独立的jar包，这时jar包的管理就需要有版本的管理。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/24/version/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/06/24/version/#more">Read More</a>
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Archive/">Archive</a>
-</div>
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
 
 
-  <div class="article-tags">
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-  <span></span> <a href="/tags/Archive/">Archive</a>
-  </div>
 
-</div>
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/06/02/char-microservice/">
 
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
 
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
 
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/06/24/version/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/06/24/version/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/02/char-microservice/" title="谈谈微服务" itemprop="url">谈谈微服务</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-02T13:00:11.000Z" itemprop="datePublished"> Published 2015-06-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+      <header class="post-header">
+
         
-        <p>自从去年在一次上厕所的时候，翻开手机，看到微服务这一个概念，就认为这种架构的模式非常看好，自那以后，一直关注微服务相关的内容。目前微服务已经是一个非常火的概念，在Infoq几乎每条都有关于微服务的文章或者新闻。可见微服务已经像我们靠近。</p>
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/02/char-microservice/" itemprop="url">
+                  谈谈微服务
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-06-02T21:00:11+08:00">
+                2015-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MicroService/" itemprop="url" rel="index">
+                    <span itemprop="name">MicroService</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>自从去年在一次上厕所的时候，翻开手机，看到微服务这一个概念，就认为这种架构的模式非常看好，自那以后，一直关注微服务相关的内容。目前微服务已经是一个非常火的概念，在Infoq几乎每条都有关于微服务的文章或者新闻。可见微服务已经像我们靠近。</p>
 <h4 id="微服务的“微”：">微服务的“微”：</h4><p>有一些观点体现在微服务的微在体现在代码量上，微服务的代码行数一定非常少。关于这个观点，个人并不认同，我觉得使用代码行数来衡量微服务的话，就像使用代码量来衡量一个软件开发工程师一样，都是不科学。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/06/02/char-microservice/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/06/02/char-microservice/#more">Read More</a>
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/MicroService/">MicroService</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/MicroService/">MicroService</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/06/02/char-microservice/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/06/02/char-microservice/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/20/java-concurrent-countdownlatch/" title="Java并发编程学习之CountDownLatch" itemprop="url">Java并发编程学习之CountDownLatch</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-20T13:12:23.000Z" itemprop="datePublished"> Published 2015-04-20</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>在多线程编程时，常常需要解决线程同步问题，在上一节讲得BlockQueue的take和put方法，是通过阻塞来控制生产者和消费者执行流程，它其实也是在解决线程同步问题。另外在线程同步问题还可以通过很多方式解决比如信号量，栅栏，闭锁。今天所说的CountDownLatch就是一种闭锁同步类，它的作用就像一扇门，在达到结束状态之前门是关闭的，并且没有任何线程可以通过这扇门，当达到了结束状态，门打开，所有的线程可以通过。并且结束后，不会再关闭。
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/04/20/java-concurrent-countdownlatch/#more">Read More</a>
-          
-       </p>
+    <div>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/concurrent/">concurrent</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/20/java-concurrent-countdownlatch/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/20/java-concurrent-countdownlatch/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/13/java-concurrent-blockingqueue/" title="Java并发编程学习之BlockingQueue" itemprop="url">Java并发编程学习之BlockingQueue</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-13T13:09:40.000Z" itemprop="datePublished"> Published 2015-04-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>在并发编程中，经常会遇到如下场景，前半部分为批量操作，比如我们要到数据库中或者远程api获取一批数据，另一部分是比较耗时的计算操作。如果使用单线程的实现，就需要对批量获取的数据进行循环然后调用非常耗时的计算操作。这种实现在数据量非常大得时候可能需要数天才能完成操作。并且单线程也没用充分利用机器的CPU资源。一方面无法发挥多核CPU的优势，另一个方面在获取批量数据时线程处于阻塞状态，也浪费了线程的执行效率。以上描述的问题，其实是一个经典的生产者消费者的问题。解决以上问题，可以使用一个线程拉取数据，另一些线程做计算操作。提高CPU的利用效率，减少执行时间。这是就需要一个容器作为一个缓冲区来以此来支持这种异步操作。
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/04/13/java-concurrent-blockingqueue/#more">Read More</a>
-          
-       </p>
+    <div>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
 
 
-  <div class="article-tags">
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/concurrent/">concurrent</a>
-  </div>
 
-</div>
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/04/20/java-concurrent-countdownlatch/">
 
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
 
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
 
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/13/java-concurrent-blockingqueue/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/13/java-concurrent-blockingqueue/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/12/java-concurrent-concurrentmap/" title="Java并发编程学习之ConcurrentMap" itemprop="url">Java并发编程学习之ConcurrentMap</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-12T14:28:38.000Z" itemprop="datePublished"> Published 2015-04-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>最近在学习java并发编程，学习java并发编程实战这本书，前几章都在介绍基础知识非常重要，但是总是感觉还没完全透彻的理解，所以先从基本应用入手，最后在对基础知识进行回顾。今天主要学习并发容器的ConcurrentMap类以及解决的问题。<br>在早期的jdk中，就提供了一些同步容器类，比如Hashtable,Vector，还有一个Collections.synchronizedXXX可以把非线程安全的容器转为线程安全的容器。这些同步容器的实现都是基于synchronzied来实现的，可以打开Hashtable的实现可以看到它实现Map的接口，然后看下它的put方法：
+      <header class="post-header">
+
         
         
-        <p class="article-more-link">
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/20/java-concurrent-countdownlatch/" itemprop="url">
+                  Java并发编程学习之CountDownLatch
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-04-20T21:12:23+08:00">
+                2015-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-            <a href="/2015/04/12/java-concurrent-concurrentmap/#more">Read More</a>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
-       </p>
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在多线程编程时，常常需要解决线程同步问题，在上一节讲得BlockQueue的take和put方法，是通过阻塞来控制生产者和消费者执行流程，它其实也是在解决线程同步问题。另外在线程同步问题还可以通过很多方式解决比如信号量，栅栏，闭锁。今天所说的CountDownLatch就是一种闭锁同步类，它的作用就像一扇门，在达到结束状态之前门是关闭的，并且没有任何线程可以通过这扇门，当达到了结束状态，门打开，所有的线程可以通过。并且结束后，不会再关闭。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/04/20/java-concurrent-countdownlatch/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
 
 
-  <div class="article-tags">
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/concurrent/">concurrent</a>
-  </div>
 
-</div>
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/04/13/java-concurrent-blockingqueue/">
 
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
 
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
 
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/12/java-concurrent-concurrentmap/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/12/java-concurrent-concurrentmap/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/11/git-branch/" title="Git分支管理" itemprop="url">Git分支管理</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-11T06:50:03.000Z" itemprop="datePublished"> Published 2015-04-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+      <header class="post-header">
+
         
-        <p>在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。</p>
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/13/java-concurrent-blockingqueue/" itemprop="url">
+                  Java并发编程学习之BlockingQueue
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-04-13T21:09:40+08:00">
+                2015-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在并发编程中，经常会遇到如下场景，前半部分为批量操作，比如我们要到数据库中或者远程api获取一批数据，另一部分是比较耗时的计算操作。如果使用单线程的实现，就需要对批量获取的数据进行循环然后调用非常耗时的计算操作。这种实现在数据量非常大得时候可能需要数天才能完成操作。并且单线程也没用充分利用机器的CPU资源。一方面无法发挥多核CPU的优势，另一个方面在获取批量数据时线程处于阻塞状态，也浪费了线程的执行效率。以上描述的问题，其实是一个经典的生产者消费者的问题。解决以上问题，可以使用一个线程拉取数据，另一些线程做计算操作。提高CPU的利用效率，减少执行时间。这是就需要一个容器作为一个缓冲区来以此来支持这种异步操作。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/04/13/java-concurrent-blockingqueue/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/04/12/java-concurrent-concurrentmap/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/12/java-concurrent-concurrentmap/" itemprop="url">
+                  Java并发编程学习之ConcurrentMap
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-04-12T22:28:38+08:00">
+                2015-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近在学习java并发编程，学习java并发编程实战这本书，前几章都在介绍基础知识非常重要，但是总是感觉还没完全透彻的理解，所以先从基本应用入手，最后在对基础知识进行回顾。今天主要学习并发容器的ConcurrentMap类以及解决的问题。<br>在早期的jdk中，就提供了一些同步容器类，比如Hashtable,Vector，还有一个Collections.synchronizedXXX可以把非线程安全的容器转为线程安全的容器。这些同步容器的实现都是基于synchronzied来实现的，可以打开Hashtable的实现可以看到它实现Map的接口，然后看下它的put方法：
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/04/12/java-concurrent-concurrentmap/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/04/11/git-branch/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/11/git-branch/" itemprop="url">
+                  Git分支管理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-04-11T14:50:03+08:00">
+                2015-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。</p>
 <h4 id="为什么要使用分支管理">为什么要使用分支管理</h4><p>在一个项目开发周期，假设有一个任务，你需要两周完成，但是你在第一周的时候提交了你的50%的代码，因为代码还没写完，导致当前代码库里的代码是编译不能通过的状态，这时就影响了别人的开发。或者其他已开发好的模块希望尽快上线，这时也不能上线了。如果自己建立一个分支，自己编写的代码只提交到自己的分支，和主分支分离，这样就不会相互影响了。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/04/11/git-branch/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/04/11/git-branch/#more">Read More</a>
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Git/">Git</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Git/">Git</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/04/11/git-branch/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/11/git-branch/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/12/goodbye-hefei/" title="Goodbye HeFei" itemprop="url">Goodbye HeFei</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-12T11:32:18.000Z" itemprop="datePublished"> Published 2015-03-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>明天早上就要离开合肥了。从2009年9月到合肥以来，已经是生活了五年多的城市。虽说我对合肥还是感觉不熟悉。但是这五六年来在合肥的学习和工作使我成长了很多，收获了很多。
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/12/goodbye-hefei/#more">Read More</a>
-          
-       </p>
+    <div>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/个人生活/">个人生活</a>
-</div>
+    <div>
+      
+    </div>
 
 
-  <div class="article-tags">
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-  <span></span> <a href="/tags/个人生活/">个人生活</a>
-  </div>
 
-</div>
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/03/12/goodbye-hefei/">
 
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
 
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
 
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/03/12/goodbye-hefei/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/12/goodbye-hefei/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/01/17/thread-pool-pattern/" title="【翻译】线程池" itemprop="url">【翻译】线程池</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yywang.info/about" title="wangyan9110" target="_blank" itemprop="author">wangyan9110</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-17T06:56:09.000Z" itemprop="datePublished"> Published 2015-01-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+      <header class="post-header">
+
         
-        <h4 id="原文">原文</h4><blockquote>
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/12/goodbye-hefei/" itemprop="url">
+                  Goodbye HeFei
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-03-12T19:32:18+08:00">
+                2015-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/个人生活/" itemprop="url" rel="index">
+                    <span itemprop="name">个人生活</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>明天早上就要离开合肥了。从2009年9月到合肥以来，已经是生活了五年多的城市。虽说我对合肥还是感觉不熟悉。但是这五六年来在合肥的学习和工作使我成长了很多，收获了很多。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/03/12/goodbye-hefei/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/01/17/thread-pool-pattern/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/17/thread-pool-pattern/" itemprop="url">
+                  【翻译】线程池
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-01-17T14:56:09+08:00">
+                2015-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Translation/" itemprop="url" rel="index">
+                    <span itemprop="name">Translation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="原文">原文</h4><blockquote>
 <p>地址：<a href="http://en.wikipedia.org/wiki/Thread_pool_pattern">http://en.wikipedia.org/wiki/Thread_pool_pattern</a></p>
 </blockquote>
 <h4 id="译文：">译文：</h4><p>在计算机程序中，线程池模式是指创建多个线程来执行一些任务，这些任务通常放在一个队列中。执行任务的结果可能也放在一个队列或者任务也可能没有返回值。通常情况下，任务数量要比线程要多。一个线程完成了一个任务，还会从队列中请求下一个任务直到任务队列的所有任务全部完成。然后线程可以终止或者sleep，直到有新的任务需要执行。<br>线程的数量可以被调整的，以提高性能参数。也就是说，线程的数量可以根据等待的任务数量来调整。例如：一个web服务器，如果有很多页面请求时创建线程，并且在这些请求结束删除这些线程。线程池越大，消耗的资源也会增加。下面是何时创建线程何时销毁线程对性能影响：</p>
@@ -685,381 +1651,276 @@
 <li>销毁线程太慢，占用太多资源，影响其他进程。</li>
 </ul>
 <p>该算法的选择，需要根据所解决的问题和实际的应用场景。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/01/17/thread-pool-pattern/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/01/17/thread-pool-pattern/#more">Read More</a>
-          
-       </p>
+      
     </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Translation/">Translation</a>
-</div>
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
 
 
-  <div class="article-tags">
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
   
-  <span></span> <a href="/tags/Translation/">Translation</a><a href="/tags/Thread-pool/">Thread pool</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/01/17/thread-pool-pattern/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/01/17/thread-pool-pattern/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
+          
+          </div>
+          
 
+
+          
+
+        </div>
+        
+          
   
-<div class="categorieslist">
-	<p class="asidetitle">Categories</p>
-		<ul>
-		
-		  
-			<li><a href="/categories/API/" title="API">API<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/Archive/" title="Archive">Archive<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/Design-pattern/" title="Design pattern">Design pattern<sup>12</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/FTP/" title="FTP">FTP<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/Git/" title="Git">Git<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/Maven/" title="Maven">Maven<sup>2</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/MicroService/" title="MicroService">MicroService<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/Translation/" title="Translation">Translation<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/java/" title="java">java<sup>8</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/wpf/" title="wpf">wpf<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
-		  
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/java/" title="java">java<sup>31</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Design-pattern/" title="Design pattern">Design pattern<sup>20</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/detailed-design/" title="detailed design">detailed design<sup>8</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/concurrent/" title="concurrent">concurrent<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/maven/" title="maven">maven<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/in-action/" title="in action">in action<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/FTP/" title="FTP">FTP<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/个人生活/" title="个人生活">个人生活<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/API/" title="API">API<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/MicroService/" title="MicroService">MicroService<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/fastjson/" title="fastjson">fastjson<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/quartz/" title="quartz">quartz<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Archive/" title="Archive">Archive<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Translation/" title="Translation">Translation<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Thread-pool/" title="Thread pool">Thread pool<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/c/" title="c#">c#<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/wpf/" title="wpf">wpf<sup>1</sup></a></li>
-			
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="http://www.cnblogs.com/JerryWang1991/" target="_blank" title="博客园博客">博客园博客</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://blog.isming.me/" target="_blank" title="码农明明桑">码农明明桑</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://www.baizihan.cn/" target="_blank" title="梓涵的博客">梓涵的博客</a>
-            
-          </li>
-        
-    </ul>
-</div>
-
-  
-
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
-</div>
-
-</aside>
-</div>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hello ,I&#39;m  yywang. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/wangyan9110" target="_blank" class="icon-weibo" title="微博"></a>
-		
-		
-		<a href="https://github.com/wangyan9110" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<a href="mailto:wangyan9110@163.com" target="_blank" class="icon-email" title="Email Me"></a>
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
-		
-		<a href="http://yywang.info/about" target="_blank" title="wangyan9110">wangyan9110</a>
-		
-		</p>
-</div>
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
+  </div>
 
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="wangyan9110" />
+          <p class="site-author-name" itemprop="name">wangyan9110</p>
+          <p class="site-description motion-element" itemprop="description">关注微服务、业务建模、性能优化等</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyan9110</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
 
 <script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
 </script>
 
 
 
 
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"yywang"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
 
 
 
 
 
+  
 
 
 
 
-<!-- Analytics Begin -->
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
 
 
 
 
 
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
+  
 
 
-<!-- MathJax End -->
 
-<!-- Tiny_search Begin -->
 
-<!-- Tiny_search End -->
 
-  </body>
- </html>
+  
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
