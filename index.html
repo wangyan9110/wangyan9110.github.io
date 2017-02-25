@@ -342,18 +342,100 @@
 
       
         
-          <p>RPC的全称是Remote Procedure Call，它是一个分布式系统必备的一个中间件，主要解决系统之间通信的问题。</p>
+          
+            <p>RPC的全称是Remote Procedure Call，它是一个分布式系统必备的一个中间件，主要解决系统之间通信的问题。</p>
 <p>一般来说一个RPC中间件的由以下组成：</p>
 <p><img src="http://yywang.qiniudn.com/rpc.png" alt="rpc"></p>
 <ul>
-<li>Provider：服务提供者，提供服务给消费者调用
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/25/rpc-provider/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<li>Provider：服务提供者，提供服务给消费者调用</li>
+<li>Consumer：服务消费者，提供可以像调用本地方法一样的方式，调用远程的服务</li>
+<li>Register：注册中心，为提供者、消费者提供服务地址的注册服务，当提供者不可用时即时通知调用者</li>
+<li>Protocal: 通信协议，定义服务提供者和服务调用者之间的契约</li>
+<li>Governance: 服务治理，为服务治理提供支持，包括限流规则、黑白名单等</li>
+<li>Heartbeat: 心跳，检测服务是否可用，服务不可用即时在本地服务地址列表里清除</li>
+</ul>
+<p>以上是一个的RPC中间件的组成以及各部分的职责，那么他们各个部分具体有哪些特性呢？对于使用者来说，平常的使用过程中需要哪些注意的问题呢？（接下来示例全部以Dubbo为例）</p>
+<p>我们今天先来看看Provider，Provider对于使用者来说，都很熟悉，我们经常开发一些服务提供者给别人调用。</p>
+<h4 id="Provider的注册过程">Provider的注册过程</h4><p>在开发中开发一个Provider一般需要如下工作：</p>
+<ol>
+<li><p>定义一个服务接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloService</span></span>&#123;</div><div class="line">   <span class="function">String <span class="title">say</span><span class="params">(String name)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>实现定义的接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceImpl</span> <span class="keyword">implements</span></span>&#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">say</span><span class="params">(String name)</span></span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="string">"Hello,"</span>+name;  </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>注册服务</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://192.168.0.122:2181"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"dubbo"</span> <span class="attr">port</span>=<span class="string">"20880"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"info.yywang.service.HelloService"</span> <span class="attr">ref</span>=<span class="string">"helloService"</span> /&gt;</span></div><div class="line"> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloService"</span> <span class="attr">class</span>=<span class="string">"info.yywang.service.impl.HelloServiceImpl"</span> /&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>通过以上三步的开发，我们就完成了一个HelloService服务的开发，那么在这三步的背后RPC框架帮我们做了什么呢？</p>
+<ol>
+<li>在启动时，首先加载Spring配置，然后进行解析，再创建bean，注册到Spring的上下文中，这个过程是Spring的bean的加载过程的范畴，不在细说</li>
+<li>其中在解析阶段，在spring的配置中，dubbo的标签是dubbo实现的对spring的命名空间的一个扩展。当遇到dubbo标签的配置会由DubboNamespaceHandler的定义来解析相应的节点，解析完成后注册到spring的上下文</li>
+<li>在注册完成后，会调用ServiceConfig的export执行方法暴露，在执行export方法时，首先进行一些配置检查，和默认值设置，中间很多判断，不在详细说，直接说下面的重点</li>
+<li>在执行export方式时，首先根据host、port等创建服务url，然后根据url的协议和配置，做一些设置，最后由ProxyFactory把URL转换成可以Invoker，然后通过Protocol.export把服务暴露出去</li>
+<li>Protocol.export根据协议获取RegistryProtocol，在以上配置中，我们使用dubbo协议。</li>
+<li>然后调用RegistryProtocol的export执行注册</li>
+<li>首先根据设置的注册中心地址，解析出注册中心地址，比如以上就是使用的就是zookeeper作为注册中心，服务地址是192.168.0.122。获取到Register对象。</li>
+<li>在zookeeper的注册中，实际就是调用zkClient创建一个URL路径节点，并且添加一个注册器，订阅url节点发生变化时通知，并提交给Listener处理</li>
+<li>至此一个服务的暴露就完成了</li>
+</ol>
+<p>以上是整个服务暴露的过程，对于使用者来说，以上过程需要了解，但是对于一个使用者来说，更重要的是<strong>如何设计一个让调用者用起来爽的接口</strong>。当然如何设计一个让调用者使用起来爽的接口，是另一个话题。我们另一篇文章再讲，读者也可以思考这个问题。</p>
+<h4 id="Provider的开发">Provider的开发</h4><p>在开发过程中，作为Provider的接口开发者需要注意哪些问题呢？可以从以下几个方面进行探讨</p>
+<ol>
+<li><p>扩展性</p>
+<p>对于一个服务接口来说，只要在线上使用过的接口，都要保证历史的接口可用。扩展性不好的接口，在每次新增需求都要修改接口或者直接新增接口。为保持接口的扩展性，在设计时需要注意一下问题</p>
+<ul>
+<li>保证接口职责单一，一个接口只干一件事。基于业务的本质去抽象接口，一个接口逻辑越重，面对新的需求时，越是力不从心，当接口职责足够单一时，面对新的需求可以更加灵活的去组合，实现新的业务</li>
+<li>为接口保留扩展字段，在对于一些需求时，可能字段经常增加。这时可以考虑为接口增加扩展字段，但是这时需要注意扩展字段滥用的风险，需要对于扩展字段的名称以及用途做好管控，比如可以在一个常量类里定义好可以使用的扩展字段，并注意维护</li>
+</ul>
+</li>
+<li><p>易用性</p>
+<p>接口的易用性可以从命名、参数、注释、设计等多个方面去考虑。在设计一个易用性的接口可以从如下方面考虑</p>
+<ul>
+<li>相同的操作约定的统一的命名。比如同样是查询操作，都使用query开头或者get开头，不要有的用query有的用get</li>
+<li>相同的业务含义使用统一的单词。比如相同的业务不要使用两个意义接近的单词</li>
+<li>尽量使用简单的参数类型，简单的参数类型可以减少调用者的使用成本</li>
+<li>对于复杂的参数类型，提供常用create方法，对于复杂的参数类型有些参数必填有些选填，可以提供最常用的几种create方法，方便调用者快速创建</li>
+<li>注意参数的顺序，对于不同的参数比如一个接口的顺序是getUser(int classId,int schooIId);另一个接口get(int schoolId,int classId);这种情况，调用者就非常容易使用错误</li>
+<li>对于从方法名看不出来的逻辑，需要在注释中写明</li>
+<li>对于可选参数标明，并且注明用途以及对于接口逻辑有什么影响</li>
+<li>从调用者的角度考虑，提供相应的工具方法，方便调用者使用，比如返回值，封装是否成功，调用者使用时只需要知道isSuccess就可以知道是否成功，不需要知道你是使用SUCCESS作为code还是直接用的布尔类型</li>
+</ul>
+</li>
+<li><p>兼容性</p>
+<p>一旦服务发布之后，以后任何的变更都需要考虑兼容性，需要从以下几个方面考虑兼容性</p>
+<ul>
+<li>在业务发展时，如果新老业务重合度不是非常高，尽量使用新增接口的方式</li>
+<li>接口的兼容性，在修改时通过增加参数来实现新业务，不能减少参数以及修改参数的类型</li>
+<li>在接口重构时，需要实现原有的业务逻辑，并保证输出的一致性，来保证接口的兼容性</li>
+<li>新老接口替换时，采用相同风格的命名、参数列表、使用方法等等，让接口之间自然替换</li>
+</ul>
+</li>
+<li><p>异常处理</p>
+<p>异常处理是否完善是评判一个接口健壮性的标准，异常从分类上来讲，有系统异常和业务异常。</p>
+<ul>
+<li>对于系统异常来说，一般来说是网络中断、调用超时、服务挂掉等等，这些异常在rpc框架层面做了一些处理，比如RPC的心跳机制来检测服务是否可用等，对于系统异常作为服务提供方不可避免，在服务的调用方需要考虑这个问题。</li>
+<li>对于业务异常，作为Provider的开发需要特别关注，一般业务的异常处理方式有两种，一种是把继承自RunningTimeException异常直接抛出，另一种是使用错误码的方式来报出异常。</li>
+<li>使用异常直接抛出，不同的业务异常对应不同的Exception，在调用者需要通过异常类型来区分不同的异常，在出现异常可以通过异常栈迅速定位到代码的位置，但是如果异常栈比较深，占用内存较大，在出现大量错误时，对系统的影响比较大</li>
+<li>使用错误码的方式，需要定义一套错误码标准，外部在调用时，需要对错误码做一定判断。错误码对异常做了包装，不利于错误定位，发生异常时抛出需要依赖Provider端打印的日志。一般业务性异常，使用错误码的方式</li>
+<li>在Provider实现层，对于异常一定要记录日志，方便问题排查和监控，如何做好异常日志打印也是个值得思考的话题，我自己也在思考这个问题，也欢迎大家一起来讨论这个话题</li>
+</ul>
+</li>
+<li><p>性能</p>
+<p>对于Provider的开发来说，性能也是一个很重要的话题，不同的接口对于性能的要求不一样。要达到不同的性能要求实现的成本也不一样。所以接口的性能指标，需要根据不同的业务场景结合实现成本来制定，对于接口性能一般可以从响应时间、并发数、吞吐量方面来衡量。一般考虑提高接口性能的方法有以下几种</p>
+<ul>
+<li>使用缓存，包括分布式缓存和JVM缓存，对于查询接口来说，使用缓存是提高响应时间的捷径，但是使用缓存的同时，需要考虑数据的一致性是否需要强一致。</li>
+<li>对于一个业务操作很多的接口，还可以考虑使用异步来提高接口的响应时间，对业务操作进行分类，区分哪些是可以异步完成的，交给消息中间件或者异步中间件来完成</li>
+<li>另外对于高并发的系统，需要支持集群部署，采用集群的方式支持高并发的请求</li>
+<li>回归根本，优化代码。比如尽量避免访问数据库的次数、缓存中间结果、并行处理、优化算法等等</li>
+<li>一般的业务操作的性能问题，多出在数据库操作上，所以优化数据存储也是解决性能问题的重要方式</li>
+</ul>
+</li>
+</ol>
+<h4 id="欢迎关注我的公众号MyArtNote">欢迎关注我的公众号MyArtNote</h4><p><img src="http://yywang.qiniudn.com/MyArtNote.jpg" alt="MyArtNote"></p>
+
+          
         
       
     </div>
