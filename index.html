@@ -390,225 +390,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yywang.info/2017/01/16/profile/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="wangyan9110">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="wangyan9110">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/16/profile/" itemprop="url">
-                  Untitled
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T19:18:59+08:00">
-                2017-01-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/16/profile/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/16/profile/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="秦传宝-个人简历">秦传宝-个人简历</h1><hr>
-<h1 id="个人信息">个人信息</h1><ul>
-<li>秦传宝/男/1991</li>
-<li>本科/合肥学院计算机科学与技术专业 </li>
-<li>工作年限：3.5年</li>
-<li>期望职位：java开发</li>
-</ul>
-<hr>
-<h1 id="联系方式">联系方式</h1><ul>
-<li>手机：15209871422</li>
-<li>Email: cbqin1991@163.com</li>
-<li>QQ: 751245584</li>
-</ul>
-<hr>
-<h1 id="工作经历">工作经历</h1><h2 id="科大讯飞（_2013年3月至今_）">科大讯飞（ 2013年3月至今 ）</h2><h3 id="多媒体格式转换服务">多媒体格式转换服务</h3><ul>
-<li><p>服务介绍：<br>主要提供各种常见的文档(word,ppt,excel,pdf)、视频、音频、图片、swf、html, zip包等多种格式文件的加工处理. 服务历经1.x和2.x两个大版本. 1.x版本基于python+C#开发. 2.x版本使用纯java语言开发, 技术上调度模块基于自主开发的分布式任务调度分发框架, 底层具体的转换任务封装了ffmpeg, graphics magick, libreoffice, phantomjs等第三方组件. 服务顶层使用http协议对任务调度框架进行再封装, 对上层调用者提供http接口.</p>
-</li>
-<li><p>我的工作：<br>进行各种文件处理工具的调研工作,并封装成具体的转换task, 集成进任务调度框架中, 并开发顶层的服务接口. 同时撰写转换参数文档, 各个组件选型的调研文档, 服务接口文档.</p>
-</li>
-<li><p>工作中遇到的难点：</p>
-<ol>
-<li>运行过程中遇到由jvm导致的机器CPU始终占用100%的问题, 最终通过jdk自带的jstack结合操作系统的命令排查解决.</li>
-<li>部分第三方组件遇到异常文件时会导致线程无限阻塞, 通过多线程技术实现的超时机制解决此问题. </li>
-</ol>
-</li>
-</ul>
-<h3 id="任务调度框架(公共组件)">任务调度框架(公共组件)</h3><ul>
-<li><p>功能介绍<br>主要提供任务的<code>异步/同步提交</code>,  <code>调度分发</code>,  <code>并行执行</code>,  <code>监控中心</code>, <code>状态持久化</code>,  <code>任务/队列/节点管理</code>等功能.</p>
-</li>
-<li><p>技术介绍<br>逻辑视图上可分为调度分发器(dispatcher), 执行器(executor), 监控中心(monitor), 后端存储(backend)四个基本模块. 完全使用java编写, 综合使用了反射, 注解, 线程池, ReentrantLock, Semaphore等java平台的底层技术. 基础组件使用了redis, zookeeper, mongodb等中间件. 在调度算法上实现了队列内先到先服务(FCFS),高响应比优先调度,基于优先级的调度,队列间基于权重的调度以及工作节点间基于一致性哈希的调度算法.</p>
-</li>
-<li><p>我的工作<br>收集需求, 设计整体架构, 负责所有后端代码的编写,并为关键的类编写单元测试. 同时撰写需求分析文档, 架构设计文档, 用户使用手册.</p>
-</li>
-<li><p>工作中遇到的重难点：</p>
-<ol>
-<li>由于处在并行运行环境中, 遇到了各种各样的因jvm内部并发或者节点间并行执行导致的数据不一致甚至死锁等问题. 最终通过AtomicInteger, ReentrantLock, ConcurrentHashMap, 基于redis的乐观锁等工具予以解决.</li>
-<li>各种调度算法的设计和实现. </li>
-</ol>
-</li>
-</ul>
-<h3 id="网盘服务">网盘服务</h3><p>-　服务介绍：<br>  网盘服务为其他业务线产品提供用户文件及文件夹的基础管理功能。技术选型上使用了<code>dubbo</code> + <code>thrift</code> + <code>spring</code> + <code>mongodb</code>的组合。对外提供基于thrift的RPC调用接口。</p>
-<p>-　我负责的工作：<br>  开发文件（夹）的基础操作接口，包括上传（创建）、删除、移动、复制、重命名等. 并撰写数据库设计文档、接口API文档.</p>
-<p>-　工作中的难点：</p>
-<ol>
-<li>thrift sdk线程安全问题： 使用Apache的commons-pool基于连接池技术解决了thrift默认生成的客户端在并发环境下因为使用同一个网络链接而导致的问题，原理上类似于数据库连接池. 简化了服务的调用方式(不用每次调用都创建Client)，同时也提高了性能。  </li>
-</ol>
-<h3 id="资源服务">资源服务</h3><ul>
-<li><p>服务介绍<br>资源服务为部门其他业务线产品提供资源元数据的管理，教材及目录的管理以及K12教育相关的基础数据(如年级, 学科等)的管理。服务历经五个大的版本. 其中3.x版本使用python的django框架开发; 4.x使用python(提供thrift接口)+java(调用thrift接口封装为http接口). 5.x使用纯java开发, 底层存储使用openstack swift, 框架/数据库使用了<code>dubbox</code>+<code>spring</code>+<code>mongodb</code>+<code>solr</code>的组合。对外提供基于http协议的restful风格的API接口．</p>
-</li>
-<li><p>我的工作<br>自3.x版本开始接手代码的维护和开发, 负责3.x版本python代码的维护, 4.x版本代码的重构和优化, 5.x版本使用java语言重写了整个服务, 同时完成相关文档和一系列维护工具的编写。</p>
-</li>
-<li><p>工作中遇到的重点和难点：</p>
-<ol>
-<li>在4.x版本中遇到接口性能问题, 通过优化thrift的并发模型, 优化dubbo框架日志收集方式,优化客户端中httpclien的使用方法三个手段, 将接口的调用时长缩短至原先的1/50.</li>
-<li>mongodb到solr数据同步方案:  以生产者消费者模型为架构, 基于mongodb的oplog开发了同步工具, 实现了数据的最终一致性.</li>
-</ol>
-</li>
-</ul>
-<hr>
-<h1 id="个人项目">个人项目</h1><p><strong>Mongo Batis</strong>  <a href="https://github.com/qinchuanbao/nosql-batis" target="_blank" rel="external">https://github.com/qinchuanbao/nosql-batis</a></p>
-<blockquote>
-<p>Mongo Batis 是一个模仿mybatis风格的针对Mongodb的数据访问框架。只需要定义数据操作的接口，并进行相关配置，Mongo Batis即可通过动态代理方式生成相应的实现类，从而避免大量的重复性代码。让我们的代码更简洁。</p>
-</blockquote>
-<p>目前已开发完成的功能包括:</p>
-<ul>
-<li>提供对Mongodb进行增删查改四种操作的封装</li>
-<li>基于注解的映射器配置方式</li>
-<li>自动生成接口实现类</li>
-<li>提供扩展点实现自定义的注解及其解析器</li>
-<li>可非常方便得与spring进行集成</li>
-</ul>
-<h1 id="技能概要">技能概要</h1><ul>
-<li>熟悉面向对象编程和面向对象设计的五大原则(SOLID), 熟悉常用的设计模式, 有实际服务架构的重构/设计经验</li>
-<li>熟悉常用的RPC框架, 如thrift, dubbo, 了解其底层实现原理</li>
-<li>熟悉restful风格的接口设计和开发</li>
-<li>熟悉spring框架, 熟悉ioc和aop的实现原理</li>
-<li>熟悉jvm内存模型,了解jvm执行引擎的基本执行流程</li>
-<li>熟悉并发编程, 熟练使用juc包中的常用工具类, 了解他们的基本的原理</li>
-<li>熟悉常用的中间件/数据库, 如redis, mongodb, mysql, 了解数据库索引的实现原理</li>
-<li>熟悉常用的单元测试/集成测试/性能测试框架, 如junit, mockito, jemeter</li>
-<li>熟悉架构文档, 接口文档的编写</li>
-</ul>
-<hr>
-<h1 id="编程素养">编程素养</h1><ul>
-<li>对技术非常感兴趣，有激情和动力不断探索新技术</li>
-<li>有较强的自学能力，能够快速掌握需要的技能</li>
-<li>对自身的工作认真负责</li>
-<li>恪守代码规范并追求最佳实践</li>
-<li>遇到问题能够主动沟通</li>
-</ul>
-<h1 id="致谢">致谢</h1><p>感谢您花时间阅读我的简历，期待与您一起奋斗.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yywang.info/2016/08/24/api/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1833,11 +1614,166 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/03/12/goodbye-hefei/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/12/goodbye-hefei/" itemprop="url">
+                  Goodbye HeFei
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-03-12T19:32:18+08:00">
+                2015-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/个人生活/" itemprop="url" rel="index">
+                    <span itemprop="name">个人生活</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/03/12/goodbye-hefei/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/12/goodbye-hefei/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>明天早上就要离开合肥了。从2009年9月到合肥以来，已经是生活了五年多的城市。虽说我对合肥还是感觉不熟悉。但是这五六年来在合肥的学习和工作使我成长了很多，收获了很多。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/03/12/goodbye-hefei/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1880,7 +1816,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
