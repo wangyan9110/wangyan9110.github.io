@@ -1,0 +1,775 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="RPC," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="wangyan9110" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在上一篇我们介绍了RPC的Provider，包括它的发布过程和在设计一个Provider时需要考虑的问题，本文将介绍做一个调用方，在这个Consumer调用过程中，RPC又帮我们做了哪些事情和在使用别人提供的Provider时需要注意哪些问题。(和上篇一样，我们仍以Dubbo为例)
+Consumer的调用过程作为Consumer调用别人提供的一个服务，一般需要如下工作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊聊RPC之Consumer">
+<meta property="og:url" content="http://yywang.info/2017/03/12/rpc-consumer/index.html">
+<meta property="og:site_name" content="wangyan9110">
+<meta property="og:description" content="在上一篇我们介绍了RPC的Provider，包括它的发布过程和在设计一个Provider时需要考虑的问题，本文将介绍做一个调用方，在这个Consumer调用过程中，RPC又帮我们做了哪些事情和在使用别人提供的Provider时需要注意哪些问题。(和上篇一样，我们仍以Dubbo为例)
+Consumer的调用过程作为Consumer调用别人提供的一个服务，一般需要如下工作">
+<meta property="og:image" content="http://yywang.qiniudn.com/MyArtNote.jpg">
+<meta property="og:updated_time" content="2017-03-12T09:58:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聊聊RPC之Consumer">
+<meta name="twitter:description" content="在上一篇我们介绍了RPC的Provider，包括它的发布过程和在设计一个Provider时需要考虑的问题，本文将介绍做一个调用方，在这个Consumer调用过程中，RPC又帮我们做了哪些事情和在使用别人提供的Provider时需要注意哪些问题。(和上篇一样，我们仍以Dubbo为例)
+Consumer的调用过程作为Consumer调用别人提供的一个服务，一般需要如下工作">
+<meta name="twitter:image" content="http://yywang.qiniudn.com/MyArtNote.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yywang.info/2017/03/12/rpc-consumer/"/>
+
+
+
+
+
+  <title> 聊聊RPC之Consumer | wangyan9110 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">wangyan9110</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">关注微服务、业务建模、性能优化</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2017/03/12/rpc-consumer/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                聊聊RPC之Consumer
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-12T17:55:19+08:00">
+                2017-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/12/rpc-consumer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/12/rpc-consumer/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在<a href="http://yywang.info/2017/02/25/rpc-provider/">上一篇</a>我们介绍了RPC的Provider，包括它的发布过程和在设计一个Provider时需要考虑的问题，本文将介绍做一个调用方，在这个Consumer调用过程中，RPC又帮我们做了哪些事情和在使用别人提供的Provider时需要注意哪些问题。(和上篇一样，我们仍以Dubbo为例)</p>
+<h4 id="Consumer的调用过程">Consumer的调用过程</h4><p>作为Consumer调用别人提供的一个服务，一般需要如下工作<a id="more"></a></p>
+<ol>
+<li><p>引入client包</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>info.yywang.demo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hello-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>Spring中引用远程服务</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://192.168.0.122:2181"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"helloService"</span> <span class="attr">interface</span>=<span class="string">"info.yywang.service.HelloService"</span> /&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>调用远程服务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloTest</span></span>&#123;</div><div class="line">  </div><div class="line">  <span class="meta">@Resources</span></div><div class="line">  <span class="keyword">private</span> HelloService helloService;</div><div class="line">  </div><div class="line">  <span class="meta">@Test</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSay</span><span class="params">()</span></span>&#123;</div><div class="line">    helloService.say(<span class="string">'yywang'</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>通过以上代码，我们可以看出，只需要我们在spring配置中，增加一些配置，其他的就像我们使用本地接口一样，来使用远程接口。那么在这个背后，RPC框架帮我们做了什么呢？（今天不在赘述过程，也不在针对Dubbo框架，我们从几个问题思考）</p>
+<h5 id="Consumer端怎么找到Provider的地址">Consumer端怎么找到Provider的地址</h5><p>答：从注册中心获取到Provider的地址，并且根据路由规则，比如随机、轮训等方式，最后获取到一个将要方式的Provider地址，一般Consumer端会把Provider的地址缓存到本地，当请求来的时候，从本地获取。</p>
+<h5 id="Consumer端怎么和Provider进行通信">Consumer端怎么和Provider进行通信</h5><p>答：Consumer端和Provider的通信有两种方式，一种是同步调用，一种是异步调用。</p>
+<ol>
+<li><p>同步调用</p>
+<p>一个工作线程在调用远程服务时，在得到结果之前，一直处于阻塞状态。在启动后，建立一个连接池，当一个请求来了之后，首先会经过对象序列化，然后从连接池里拿到一个连接，发送请求包，请求远程的服务，当远程服务响应结果之后，把连接放回连接池。然后工作线程继续执行以下代码</p>
+</li>
+<li><p>异步调用</p>
+<p>一个工作线程，在发起调用之后，在拿到结果之前，不会阻塞。在Dubbo的dubbo协议底层，使用dubbo协议就是基于Netty的底层通信模型。过程太长暂时不说了。</p>
+</li>
+</ol>
+<h5 id="请求包里有哪些内容">请求包里有哪些内容</h5><p>答：请求包里有接口名，方法名字，参数类型等，参数值，请求ID。</p>
+<h5 id="异步情况下，怎么把请求、响应对应起来">异步情况下，怎么把请求、响应对应起来</h5><p>答：在远程调用时，首先会生成一个ID用于标记本次请求，并且把这个ID发送给服务端，同时使用这个ID作为Key，将调用信息放在一个map里。在服务端响应的时候，把这个ID带过来，然后通过这个ID直接从map里找到对应的信息</p>
+<h5 id="Consumer怎么知道Provider挂了">Consumer怎么知道Provider挂了</h5><p>答：在Consumer端缓存了Provider的服务地址之后，Consumer会和Provider保持心跳，同时在Provider挂掉之后，ConfigServer也会通知Consumer，Consumer在本地的地址列表里清除该地址</p>
+<h5 id="Consumer怎么知道Provider端增加了机器">Consumer怎么知道Provider端增加了机器</h5><p>答：同上ConfigServer会通知Consumer端增加服务地址</p>
+<p>以上可以看出ConfigServer在这里扮演了很重要的角色，下篇文章我们将揭秘ConfigServer具体怎么实现通知的</p>
+<h4 id="Consumer的开发">Consumer的开发</h4><p>以上是对于原理的讲解，我们回到作为RPC的使用者来说，我们探讨一些几个问题</p>
+<h5 id="面向异常编程">面向异常编程</h5><p>在使用了RPC之后，我们不得不面对一个问题，就是网络通信。在网络通信过程中，就会有各种不确定的问题，所以在使用远程接口调用时，我们要考虑以下异常场景：</p>
+<ol>
+<li><p>超时了怎么办</p>
+<p>超时一般有几种情况，一种是在调用时机器负载比较高，响应比较慢。第二种，方法本身存在性能问题。第二种，可能在调用的过程中，网络出现了抖动，可能调用方的逻辑已经执行完成了，但是由于网络原因，没有及时的响应。</p>
+<p>对于超时情况，通常的处理办法是重试，一旦选择了重试，就需要在实现具体的业务时，分析需不需要做幂等。需要注意对于写的操作，如果重复执行，可能出现两次写入相同的值。关于如何做幂等又是一个话题，大家可以思考</p>
+<p>对于方法本身的性能问题，首先可以通过提高超时时间来解决当前问题，同时需要催促服务提供方做性能改进。</p>
+</li>
+<li><p>调用返回了失败</p>
+<p>返回失败的可能性有几种，第一种是业务错误，第二种是程序错误。对于业务错误很简单，根据业务逻辑处理即可，但是当对于业务错误，需要做监控时，需要记录好用于监控的错误日志。对于程序错误，可能出现在几点，一是程序bug，对于程序bug已经要记录好错误日志。第二是网络原因等错误。这种错误可以通过重试机制来保证。</p>
+</li>
+</ol>
+<h5 id="错误日志，监控日志">错误日志，监控日志</h5><ol>
+<li>错误日志，是排查线上问题时的最有利的武器，没有之一。线上处理问题，所以在调用远程服务的时候，一定需要记录好错误日志，但是日志也不是越多越好，日志过多也会代码排查问题的难度。并且在记录错误日志的同时，需要记录好关键的业务字段，比如订单编号、商品Code等等</li>
+<li>监控日志，对于线上的出现的业务错误，我们通常需要通过监控来获取，有的时候监控日志和错误日志在一块，有的专门记录一个监控日志用于监控，个人推荐对于监控专门记录日志，用于监控。另外监控日志同样需要记录好关键的监控参数。</li>
+</ol>
+<h5 id="外部系统模型和本系统模型的适配">外部系统模型和本系统模型的适配</h5><p>这个问题是在系统设计层面上的问题。就是在设计时，如何做到外部系统模型和本系统模型的适配。解决这个问题很简单，增加防腐层，就是增加一层防腐层，来将其他系统的模型适配到本系统模型，这样本系统的代码将不会充斥着其他系统模型的代码，并且在防腐层还能在提供方的系统发生变化时帮助本系统保持稳定。</p>
+<h5 id="如何测试你的代码">如何测试你的代码</h5><p>当你调用了远程接口之后，你想编写单元测试代码来测试自己的代码。如果你直接调用远程接口，有可能远程接口还调用了其他的远程接口。所以你需要准备满足这些系统的测试数据，这是非常麻烦的过程，通常这时就需要使用mock的方式来模拟远程接口。这样你只需要关心自己的逻辑即可。在集成测试时，在使用真实接口。</p>
+<h4 id="欢迎关注我的公众号MyArtNote">欢迎关注我的公众号MyArtNote</h4><p><img src="http://yywang.qiniudn.com/MyArtNote.jpg" alt="MyArtNote"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://yywang.qiniudn.com/IMG_0123.jpg" alt="wangyan9110 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://yywang.qiniudn.com/IMG_0122.jpg" alt="wangyan9110 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RPC/" rel="tag"># RPC</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/25/rpc-provider/" rel="next" title="聊聊RPC之Provider">
+                <i class="fa fa-chevron-left"></i> 聊聊RPC之Provider
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/03/12/rpc-consumer/"
+     data-title="聊聊RPC之Consumer"
+     data-content=""
+     data-url="http://yywang.info/2017/03/12/rpc-consumer/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/12/rpc-consumer/"
+           data-title="聊聊RPC之Consumer" data-url="http://yywang.info/2017/03/12/rpc-consumer/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460"
+               alt="wangyan9110" />
+          <p class="site-author-name" itemprop="name">wangyan9110</p>
+          <p class="site-description motion-element" itemprop="description">关注微服务、业务建模、性能优化等</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Consumer的调用过程"><span class="nav-number">1.</span> <span class="nav-text">Consumer的调用过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Consumer端怎么找到Provider的地址"><span class="nav-number">1.1.</span> <span class="nav-text">Consumer端怎么找到Provider的地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Consumer端怎么和Provider进行通信"><span class="nav-number">1.2.</span> <span class="nav-text">Consumer端怎么和Provider进行通信</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#请求包里有哪些内容"><span class="nav-number">1.3.</span> <span class="nav-text">请求包里有哪些内容</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#异步情况下，怎么把请求、响应对应起来"><span class="nav-number">1.4.</span> <span class="nav-text">异步情况下，怎么把请求、响应对应起来</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Consumer怎么知道Provider挂了"><span class="nav-number">1.5.</span> <span class="nav-text">Consumer怎么知道Provider挂了</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Consumer怎么知道Provider端增加了机器"><span class="nav-number">1.6.</span> <span class="nav-text">Consumer怎么知道Provider端增加了机器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Consumer的开发"><span class="nav-number">2.</span> <span class="nav-text">Consumer的开发</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#面向异常编程"><span class="nav-number">2.1.</span> <span class="nav-text">面向异常编程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#错误日志，监控日志"><span class="nav-number">2.2.</span> <span class="nav-text">错误日志，监控日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#外部系统模型和本系统模型的适配"><span class="nav-number">2.3.</span> <span class="nav-text">外部系统模型和本系统模型的适配</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何测试你的代码"><span class="nav-number">2.4.</span> <span class="nav-text">如何测试你的代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#欢迎关注我的公众号MyArtNote"><span class="nav-number">3.</span> <span class="nav-text">欢迎关注我的公众号MyArtNote</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyan9110</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yywang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
