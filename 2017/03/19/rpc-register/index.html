@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Design pattern,java,detailed design," />
+  <meta name="keywords" content="RPC," />
 
 
 
@@ -86,19 +86,22 @@
 
 
 
-<meta name="description" content="在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、接口调用者才能更好的理解接口。
-起名难吗？如果你认真的为一个方法名或者一个类名思考过或者纠结过，说明我们">
+<meta name="description" content="在前两篇文章中，我们多次讲到了注册中心。在Provider中，我们讲到在服务注册的过程中，需要注册到注册中心。在Consumer中，我们讲到从注册中心获取到Provider地址。可见注册中心是RPC中重要的组成部分。那么注册中心，担任哪些职责呢？注册中心需要有解决哪些问题呢？
+注册中心的基本功能我们先来看下注册中心在服务调用中的位置">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何做详细设计之规范">
-<meta property="og:url" content="http://yywang.info/2014/12/23/detailed-design-standard/index.html">
+<meta property="og:title" content="聊聊RPC之Register">
+<meta property="og:url" content="http://yywang.info/2017/03/19/rpc-register/index.html">
 <meta property="og:site_name" content="wangyan9110">
-<meta property="og:description" content="在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、接口调用者才能更好的理解接口。
-起名难吗？如果你认真的为一个方法名或者一个类名思考过或者纠结过，说明我们">
-<meta property="og:updated_time" content="2015-03-21T07:45:04.000Z">
+<meta property="og:description" content="在前两篇文章中，我们多次讲到了注册中心。在Provider中，我们讲到在服务注册的过程中，需要注册到注册中心。在Consumer中，我们讲到从注册中心获取到Provider地址。可见注册中心是RPC中重要的组成部分。那么注册中心，担任哪些职责呢？注册中心需要有解决哪些问题呢？
+注册中心的基本功能我们先来看下注册中心在服务调用中的位置">
+<meta property="og:image" content="http://yywang.info/Users/yanyan.wang/Desktop/register-base.png">
+<meta property="og:image" content="http://yywang.qiniudn.com/MyArtNote.jpg">
+<meta property="og:updated_time" content="2017-03-19T02:39:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何做详细设计之规范">
-<meta name="twitter:description" content="在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、接口调用者才能更好的理解接口。
-起名难吗？如果你认真的为一个方法名或者一个类名思考过或者纠结过，说明我们">
+<meta name="twitter:title" content="聊聊RPC之Register">
+<meta name="twitter:description" content="在前两篇文章中，我们多次讲到了注册中心。在Provider中，我们讲到在服务注册的过程中，需要注册到注册中心。在Consumer中，我们讲到从注册中心获取到Provider地址。可见注册中心是RPC中重要的组成部分。那么注册中心，担任哪些职责呢？注册中心需要有解决哪些问题呢？
+注册中心的基本功能我们先来看下注册中心在服务调用中的位置">
+<meta name="twitter:image" content="http://yywang.info/Users/yanyan.wang/Desktop/register-base.png">
 
 
 
@@ -126,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yywang.info/2014/12/23/detailed-design-standard/"/>
+  <link rel="canonical" href="http://yywang.info/2017/03/19/rpc-register/"/>
 
 
 
 
 
-  <title> 如何做详细设计之规范 | wangyan9110 </title>
+  <title> 聊聊RPC之Register | wangyan9110 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -255,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yywang.info/2014/12/23/detailed-design-standard/">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2017/03/19/rpc-register/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="wangyan9110">
@@ -279,7 +282,7 @@
             
             
               
-                如何做详细设计之规范
+                聊聊RPC之Register
               
             
           </h1>
@@ -294,8 +297,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-23T23:26:27+08:00">
-                2014-12-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-19T10:38:06+08:00">
+                2017-03-19
               </time>
             
 
@@ -305,28 +308,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/detailed-design/" itemprop="url" rel="index">
-                    <span itemprop="name">detailed design</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -335,8 +316,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2014/12/23/detailed-design-standard/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/23/detailed-design-standard/" itemprop="commentCount"></span>
+                <a href="/2017/03/19/rpc-register/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/19/rpc-register/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -362,36 +343,36 @@
       
 
       
-        <p>在软件开发中，很多时候都在讲规范，一般至少一个团队需要一致的规范。当然讲到规范很多人也可能想到驼峰规则、匈牙利命名法，今天我们不谈这些命名法则，遵守这些基本的法则，是做为一个程序员必备的素质。我们主要谈一些如何起名，参数列表一致性，善用注释、接口方法顺序等有趣的话题。详细设计规范了，接口实现者、接口调用者才能更好的理解接口。</p>
-<h4 id="起名难吗？">起名难吗？</h4><p>如果你认真的为一个方法名或者一个类名思考过或者纠结过，说明我们都在为起一个好名字而努力。以下是个人就一些场景起名的一个看法。</p>
+        <p>在前两篇文章中，我们多次讲到了注册中心。在Provider中，我们讲到在服务注册的过程中，需要注册到注册中心。在Consumer中，我们讲到从注册中心获取到Provider地址。可见注册中心是RPC中重要的组成部分。那么注册中心，担任哪些职责呢？注册中心需要有解决哪些问题呢？</p>
+<h4 id="注册中心的基本功能">注册中心的基本功能</h4><p>我们先来看下注册中心在服务调用中的位置<a id="more"></a></p>
+<p><img src="/Users/yanyan.wang/Desktop/register-base.png" alt="register-base"></p>
+<p>从以上可以看出，注册中心有以下两个基本职责：</p>
 <ol>
-<li>业务领域类，或者叫实体类，首先类名需要能够准确表达领域类的意图，比如我们一个领域类，School类，我们不可能拿它来表示班级。这是最简单的情况。<ul>
-<li>具备共性的领域类，使用相同的结尾或者开头，比如Archive类，档案类，另外我们根据学生、班级、学校各有一个档案的领域类，这就是一个档案类的族，我们叫UserArchive、ClassArchive、SchoolArchive等。<a id="more"></a></li>
-<li>具有对应关系的领域类，使用相同的开头，比如Order类，订单类，通常订单类还需要一个订单详情类，我们叫OrderDetail类。</li>
-</ul>
-</li>
-<li>业务接口名<ul>
-<li>业务接口类，和详细设计者的抽象设计有关，不过一般业务接口类都有一个门面，门面类名字需要和具体的业务模块用例相关。比如阅卷门面接口类，我们就可以叫MarkingService。当然也有些不一定和业务用例有关，是设计者为实现某个用例，抽象出来的接口，比如以上的阅卷业务类，部分业务接口比较复杂，需要继续抽象。我们抽象出来一个阅卷任务类，我们就可以叫MarkingTask，当然MarkingTask不能被外部调用。需要通过门面接口类MarkingService对外提供服务。</li>
-<li>业务接口方法，业务接口方法和业务用例相关。比如我们有个业务用例是生成档案，我们就叫generateArchive，这个名字和业务相关。</li>
-</ul>
-</li>
-<li>数据持久层接口名<ul>
-<li>一般持久层接口设计比较轻，这个具体的接口设计原则，会在下次讲到。接口方法设计，一般几个固定开头就够用了，比如：insert,update,delete,find开头就够用。比如查询一条用户档案就叫findUserArchive。</li>
-</ul>
-</li>
+<li>服务地址注册，服务提供者主要把服务地址注册到地址中心。在注册中心聚合了服务提供者的地址列表。能够提供给服务调用者使用</li>
+<li>服务地址发现，注册中心需要为服务调用者提供，服务提供者的地址。并且能够感知到服务提供者的变化，并及时的更新地址列表，并通知给调用者</li>
 </ol>
-<h4 id="顺序重要吗？">顺序重要吗？</h4><p>不知大家有没有思考过，类中字段顺序、接口方法顺序的问题。我个人思考过这个问题，但是我自己在工作中，也做的不好。</p>
+<p>从以上可以看出，注册中心需要提供一个注册中心服务，一个注册中心客户端。注册中心负责感知服务提供者地址是否在线，服务地址列表的聚合。在服务地址发生变更时及时的通知服务的调用者。注册中心的客户端，在提供者端，负责将提供者的服务地址主动的通知给服务端，并且在服务发生了变更时及时的更新服务端的信息。在消费者端，负责从服务端拉去服务地址，并且缓存在本地。</p>
+<p>从以上可以看出，对于注册中心来说，需要有服务提供者的地址、服务消费者的地址，以及服务消费者和服务的订阅关系。</p>
+<h4 id="服务的优雅上下线">服务的优雅上下线</h4><p>实现优雅的上下线之前，我们先解决者怎么感知服务的上线和下线的问题</p>
+<p>注册中心感知服务上线，在服务提供者时，会主动的通知给注册中心。在注册中心拿到新的服务地址之后，会通知给调用者客户端。这个上线过程比较简单。那么对于服务的下线如何感知呢？</p>
+<p>服务下线有两种情况，一种是主动下线，另一种是心跳包检测服务下线。主动下线的操作比较可靠。心跳包检测到服务下线就有可能产生误判。有以下两种情况：</p>
 <ol>
-<li>属性的顺序，比如两个类有几个相同的属性（不考虑是否需要抽离到一个Base的抽象类中），在一个类中，把它们放在开头，另一个类中放在后面，当自己的调试一些问题，或者别人阅读时总是不方便，不好找。建议表达相近的属性放在一块，并保持顺序一致，比如表达个人信息的基础信息（userId,userCode,userName）放在连续顺序。所以字段顺序保持一致性也是非常好的习惯。</li>
-<li>方法的顺序，和字段同样的问题，比如两个重载方法，方法名一致，参数列表不同，如果把一个放在开头，另一个放在结尾。看着肯定累。<br>建议，表达相近业务的方法放在连续，并保持顺序一致。比如获取档案列表接口getUserArchive() getUserArchivesByClassId,getUserArchivesBySchoolId就可以保持连续。</li>
-<li>参数列表一致性,定义接口时参数列表的顺序不知道大家有没有注意过，比如两个接口，一个接口方法A(String userId,String classId)，接口方法B(String classId,String userId)，两个相同的接口，参数列表不同，首先我们从调用者的角度考虑，非常容易把参数写反，造成不必要的问题。另外查看我们的接口列表也会非常奇怪。<br>所以在参数相近的接口，一定需要注意参数列表的顺序。</li>
+<li>当注册中心的负载比较高时，服务提供者的心跳包来不及处理，就误认为服务已下线。并且通知给服务的调用者。导致本可以使用的服务，变成不可用。</li>
+<li>注册中心和服务提供者的网络断了，这样导致注册中心产生误判。</li>
 </ol>
-<h4 id="善用注释">善用注释</h4><p>在设计接口时，特别是业务接口方法时，通常不能通过简单的英文单词就能表达接口的意思。这时我们需要考虑两点，第一这个接口职责单一吗？第二如何起个好名字?当然第一种情况就是需要检查接口是否合理，第二种情况就需要我们在方法名和注释和权衡。<br>比如有这样一个接口，获取某个学生每个学科最近一次的考试分数以及排名。如果我们完全按照字面意思来写方法名如下：getStudentEverySubjectsRecentlyScoreAndRank(),显然这不是个好名字.<br>遇到以上情况，我们需要思考如下：<br>1、业务接口方法解决的主要问题是干什么？<br>2、可不可以通过方法参数列表或者返回值来更好的表达？<br>以上需求最主要表达是获取学生成绩。我们在来看用户分以及排名应该是个DTO，我们叫UserScoreDTO，所以DTO可以用类表示用户的成绩。我们在看传入参数，应该为一个userId表示学生，所以通过以上我们可以变成如下接口List<userscoredto> getEverySubjectsRecently(String userId);<br>以上名字依然不好，可能看到这个接口之后，更晕了，还不通顺。这时候注释就派上了用场。以上的EverySubjectsRecently可以通过注释类描述。我们接口就变成List<userscoredto> get(String userId)或者叫List<userscoredto> getUserScores(String userId);这个接口最终如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 获取某个学生每个学科最近一次的考试成绩。</div><div class="line"> * &lt;p&gt;</div><div class="line"> *     仅返回有答题记录的用户的学科。</div><div class="line"> * &lt;/p&gt;</div><div class="line"> * <span class="doctag">@param</span> userId 用户id</div><div class="line"> * <span class="doctag">@return</span> 用户成绩</div><div class="line"> */</div><div class="line"><span class="function">List&lt;UserScoreDTO&gt; <span class="title">getUserScores</span><span class="params">(String userId)</span></span>;</div></pre></td></tr></table></figure></userscoredto></userscoredto></userscoredto></p>
-<h4 id="其他">其他</h4><ol>
-<li>尽量不要使用缩写，除非团队规定</li>
-<li>开启代码检查工具，比如java的checkstyle，避免手误。</li>
+<p>针对以上的解决办法，可以通过在服务调用者判定服务下线之前，自己做一次检查。这样避免了注册中心误判而产生的服务提供者的下线。但这样就增加了一次服务调用者和服务提供者的一次通信。</p>
+<p>以上解决了服务的上线和下线感知的问题，那么怎么做到优雅呢？</p>
+<p>比如在我们做应用的发布时，我们通常使用分批发布应用，如果我们直接把服务停掉做发布。那么将会导致一些没处理完的任务报错，并且还有很多找不到服务的问题。做到优雅的发布，我们可以先把将要停止服务的地址，先主动从注册中心移除，等待正在处理的任务结束后，再进行停止服务。</p>
+<h4 id="服务分组">服务分组</h4><p>在平常开发中，一般会遇到以下服务分组的场景：</p>
+<ol>
+<li><p>环境分组</p>
+<p>比如在线上我们要区分预发环境、线上环境，线下需要区分测试环境、项目环境。环境的区分，就是通过在设计注册中心时，引入分组的方式完成。</p>
+</li>
+<li><p>优先级分组</p>
+<p>比如对于一个电商网站的应用。交易链路的应用是它核心的应用。它调用的服务和一个后台运营平台也调用这个服务。显然这两个完全优先级不同的业务。这时对于服务做专门的分组，交易链路调用专用的分组。后台运营平台调用默认的分组。</p>
+</li>
 </ol>
-<p>本篇内容是在平常工作中的实践思考与总结。如有不妥之处，欢迎讨论。</p>
+<h4 id="欢迎关注我的公众号MyArtNote">欢迎关注我的公众号MyArtNote</h4><p><img src="http://yywang.qiniudn.com/MyArtNote.jpg" alt="MyArtNote"></p>
 
       
     </div>
@@ -436,11 +417,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Design-pattern/" rel="tag"># Design pattern</a>
-          
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-            <a href="/tags/detailed-design/" rel="tag"># detailed design</a>
+            <a href="/tags/RPC/" rel="tag"># RPC</a>
           
         </div>
       
@@ -449,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/12/21/detailed-design-coding/" rel="next" title="如何做详细设计之设计即编码">
-                <i class="fa fa-chevron-left"></i> 如何做详细设计之设计即编码
+              <a href="/2017/03/12/rpc-consumer/" rel="next" title="聊聊RPC之Consumer">
+                <i class="fa fa-chevron-left"></i> 聊聊RPC之Consumer
               </a>
             
           </div>
@@ -458,10 +435,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2014/12/29/detailed-design-principle/" rel="prev" title="如何做详细设计之设计原则">
-                如何做详细设计之设计原则 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -476,10 +449,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2014/12/23/detailed-design-standard/"
-     data-title="如何做详细设计之规范"
+        <div class="ds-share flat" data-thread-key="2017/03/19/rpc-register/"
+     data-title="聊聊RPC之Register"
      data-content=""
-     data-url="http://yywang.info/2014/12/23/detailed-design-standard/">
+     data-url="http://yywang.info/2017/03/19/rpc-register/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -506,8 +479,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2014/12/23/detailed-design-standard/"
-           data-title="如何做详细设计之规范" data-url="http://yywang.info/2014/12/23/detailed-design-standard/">
+      <div class="ds-thread" data-thread-key="2017/03/19/rpc-register/"
+           data-title="聊聊RPC之Register" data-url="http://yywang.info/2017/03/19/rpc-register/">
       </div>
     
   </div>
@@ -614,7 +587,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#起名难吗？"><span class="nav-number">1.</span> <span class="nav-text">起名难吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#顺序重要吗？"><span class="nav-number">2.</span> <span class="nav-text">顺序重要吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#善用注释"><span class="nav-number">3.</span> <span class="nav-text">善用注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#注册中心的基本功能"><span class="nav-number">1.</span> <span class="nav-text">注册中心的基本功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务的优雅上下线"><span class="nav-number">2.</span> <span class="nav-text">服务的优雅上下线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务分组"><span class="nav-number">3.</span> <span class="nav-text">服务分组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#欢迎关注我的公众号MyArtNote"><span class="nav-number">4.</span> <span class="nav-text">欢迎关注我的公众号MyArtNote</span></a></li></ol></div>
             
 
           </div>
