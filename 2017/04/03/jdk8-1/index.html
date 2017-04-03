@@ -94,11 +94,13 @@ OptionalNullPointerExceptions是在调用其他接口的时候，必须要考虑
 <meta property="og:site_name" content="wangyan9110">
 <meta property="og:description" content="JDK8正式版已经发布三年了，JDK9预计将于今年9月发布。很多应用都已经升级到了jdk8，java的大部分开源框架也早已支持jdk8，但是你真正开始使用jdk8了吗？jdk8给你的代码带来哪些改变？今天我们来梳理下，JDK8的特性给我们的代码带来哪些改变？
 OptionalNullPointerExceptions是在调用其他接口的时候，必须要考虑的问题。在业务代码中充斥着很多if(user!=">
-<meta property="og:updated_time" content="2017-04-03T09:10:28.000Z">
+<meta property="og:image" content="http://yywang.qiniudn.com/MyArtNote.jpg">
+<meta property="og:updated_time" content="2017-04-03T10:36:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="你真的开始用JDK8了吗？（上）">
 <meta name="twitter:description" content="JDK8正式版已经发布三年了，JDK9预计将于今年9月发布。很多应用都已经升级到了jdk8，java的大部分开源框架也早已支持jdk8，但是你真正开始使用jdk8了吗？jdk8给你的代码带来哪些改变？今天我们来梳理下，JDK8的特性给我们的代码带来哪些改变？
 OptionalNullPointerExceptions是在调用其他接口的时候，必须要考虑的问题。在业务代码中充斥着很多if(user!=">
+<meta name="twitter:image" content="http://yywang.qiniudn.com/MyArtNote.jpg">
 
 
 
@@ -366,6 +368,7 @@ OptionalNullPointerExceptions是在调用其他接口的时候，必须要考虑
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">filter</span><span class="params">(List&lt;User&gt; users, </span></span></div><div class="line">                                   Function&lt;User, String&gt; function) &#123;</div><div class="line">    List&lt;String&gt; pros = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    users.forEach((user) -&gt; &#123;</div><div class="line">        pros.add(function.apply(user));</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> pros;</div><div class="line">&#125;</div><div class="line"></div><div class="line">List&lt;User&gt; users = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">users.add(<span class="keyword">new</span> User(<span class="string">"1232"</span>,<span class="string">"2323"</span>));</div><div class="line">List&lt;String&gt; phones=filter(users,(user)-&gt;user.getPhone());</div><div class="line">phones.forEach(System.out::println);</div></pre></td></tr></table></figure>
 <p>在以上的示例中，就实现了一个获取一个user的集合中，所有的电话号码的需求，当然以上的filter方法在stream中已经存在，直接使用即可，在上面我们只作为一个示例。</p>
 <p>以上是直观的感受了Lambda表达式的写法的改变，下篇中，我们继续探讨Streams的用法以及接口的默认方法的支持。</p>
+<h4 id="欢迎关注我的公众号MyArtNote">欢迎关注我的公众号MyArtNote</h4><p><img src="http://yywang.qiniudn.com/MyArtNote.jpg" alt="MyArtNote"></p>
 
       
     </div>
@@ -580,7 +583,7 @@ OptionalNullPointerExceptions是在调用其他接口的时候，必须要考虑
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Optional"><span class="nav-number">1.</span> <span class="nav-text">Optional</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用示例"><span class="nav-number">1.0.1.</span> <span class="nav-text">使用示例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用isPresent&get来“优雅”的避免空值判断"><span class="nav-number">1.0.2.</span> <span class="nav-text">使用isPresent&get来“优雅”的避免空值判断</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用Optional类型做参数或者属性"><span class="nav-number">1.0.3.</span> <span class="nav-text">使用Optional类型做参数或者属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda_Expressions"><span class="nav-number">2.</span> <span class="nav-text">Lambda Expressions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#排序：使用()->{}替代匿名类"><span class="nav-number">2.1.</span> <span class="nav-text">排序：使用()->{}替代匿名类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找：循环"><span class="nav-number">2.2.</span> <span class="nav-text">查找：循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数式编程"><span class="nav-number">2.3.</span> <span class="nav-text">函数式编程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Optional"><span class="nav-number">1.</span> <span class="nav-text">Optional</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用示例"><span class="nav-number">1.0.1.</span> <span class="nav-text">使用示例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用isPresent&get来“优雅”的避免空值判断"><span class="nav-number">1.0.2.</span> <span class="nav-text">使用isPresent&get来“优雅”的避免空值判断</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用Optional类型做参数或者属性"><span class="nav-number">1.0.3.</span> <span class="nav-text">使用Optional类型做参数或者属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda_Expressions"><span class="nav-number">2.</span> <span class="nav-text">Lambda Expressions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#排序：使用()->{}替代匿名类"><span class="nav-number">2.1.</span> <span class="nav-text">排序：使用()->{}替代匿名类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找：循环"><span class="nav-number">2.2.</span> <span class="nav-text">查找：循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数式编程"><span class="nav-number">2.3.</span> <span class="nav-text">函数式编程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#欢迎关注我的公众号MyArtNote"><span class="nav-number">2.4.</span> <span class="nav-text">欢迎关注我的公众号MyArtNote</span></a></li></ol></li></ol></div>
             
 
           </div>
