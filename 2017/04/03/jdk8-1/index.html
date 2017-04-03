@@ -1,0 +1,751 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JDK8," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="wangyan9110" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="JDK8正式版已经发布三年了，JDK9预计将于今年9月发布。很多应用都已经升级到了jdk8，java的大部分开源框架也早已支持jdk8，但是你真正开始使用jdk8了吗？jdk8给你的代码带来哪些改变？今天我们来梳理下，JDK8的特性给我们的代码带来哪些改变？
+OptionalNullPointerExceptions是在调用其他接口的时候，必须要考虑的问题。在业务代码中充斥着很多if(user!=">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你真的开始用JDK8了吗？（上）">
+<meta property="og:url" content="http://yywang.info/2017/04/03/jdk8-1/index.html">
+<meta property="og:site_name" content="wangyan9110">
+<meta property="og:description" content="JDK8正式版已经发布三年了，JDK9预计将于今年9月发布。很多应用都已经升级到了jdk8，java的大部分开源框架也早已支持jdk8，但是你真正开始使用jdk8了吗？jdk8给你的代码带来哪些改变？今天我们来梳理下，JDK8的特性给我们的代码带来哪些改变？
+OptionalNullPointerExceptions是在调用其他接口的时候，必须要考虑的问题。在业务代码中充斥着很多if(user!=">
+<meta property="og:updated_time" content="2017-04-03T09:06:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你真的开始用JDK8了吗？（上）">
+<meta name="twitter:description" content="JDK8正式版已经发布三年了，JDK9预计将于今年9月发布。很多应用都已经升级到了jdk8，java的大部分开源框架也早已支持jdk8，但是你真正开始使用jdk8了吗？jdk8给你的代码带来哪些改变？今天我们来梳理下，JDK8的特性给我们的代码带来哪些改变？
+OptionalNullPointerExceptions是在调用其他接口的时候，必须要考虑的问题。在业务代码中充斥着很多if(user!=">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yywang.info/2017/04/03/jdk8-1/"/>
+
+
+
+
+
+  <title> 你真的开始用JDK8了吗？（上） | wangyan9110 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">wangyan9110</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">关注微服务、业务建模、性能优化</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2017/04/03/jdk8-1/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                你真的开始用JDK8了吗？（上）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-03T16:58:10+08:00">
+                2017-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/03/jdk8-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/03/jdk8-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JDK8正式版已经发布三年了，JDK9预计将于今年9月发布。很多应用都已经升级到了jdk8，java的大部分开源框架也早已支持jdk8，但是你真正开始使用jdk8了吗？jdk8给你的代码带来哪些改变？今天我们来梳理下，JDK8的特性给我们的代码带来哪些改变？</p>
+<h3 id="Optional">Optional</h3><p>NullPointerExceptions是在调用其他接口的时候，必须要考虑的问题。在业务代码中充斥着很多if(user!=null)..这样的判断空的代码。在Jdk8中提供了Optional来帮助我们优雅的解决NullPointerExceptions问题。<a id="more"></a></p>
+<h5 id="使用示例">使用示例</h5><p>我们来看下面一个示例：</p>
+<p>一个用户包含手机号和固定电话，输入一个用户对象，获取这个用户的联系方式，如果手机号不为空，则为手机号，否则如果固定电话不为空，则返回固定电话，否则默认返回“000000”</p>
+<p>我们先来看下在jdk8以前的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">User user = getUser();</div><div class="line"></div><div class="line"><span class="keyword">if</span> (user == <span class="keyword">null</span>) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"000000"</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (user.getMobilePhone() != <span class="keyword">null</span> </div><div class="line">    &amp;&amp; !user.getMobilePhone().isEmpty()) &#123;</div><div class="line">    <span class="keyword">return</span> user.getMobilePhone();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (user.getPhone() != <span class="keyword">null</span> </div><div class="line">    &amp;&amp; !user.getPhone().isEmpty()) &#123;</div><div class="line">    <span class="keyword">return</span> user.getPhone();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">return</span> <span class="string">"000000"</span>;</div></pre></td></tr></table></figure>
+<p>我们接着看下使用Optional以后的用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Optional&lt;User&gt; user = Optional.ofNullable(getUser());</div><div class="line"></div><div class="line">Optional&lt;String&gt; mobilePhone = </div><div class="line">         user.flatMap((u) -&gt; Optional.ofNullable(u.getMobilePhone()))</div><div class="line">        .filter(s-&gt;!s.isEmpty());</div><div class="line"></div><div class="line">Optional&lt;String&gt; phone = </div><div class="line">        user.flatMap((u) -&gt; Optional.ofNullable(u.getPhone()))</div><div class="line">        .filter(s-&gt;!s.isEmpty());</div><div class="line"></div><div class="line"><span class="keyword">return</span> mobilePhone.orElse(phone.orElse(<span class="string">"000000"</span>));</div></pre></td></tr></table></figure>
+<p>相信大多数开发者觉得第一种方式更容易看懂，而且对于这个需求来说，大部分开发者的实现也是第一种方式。因为第一种方式是大家从刚学编程语言开发，最熟悉的方式。从第一种方式转向使用Optional来实现本需求时，是一种思维的转变。从以往的null的方式转向Optional这种新的方式。那么这两种方式的思维有哪些改变呢？</p>
+<p>第一种方式，是一种命令式的思维方式，这是我们从学编程的第一天起就熟悉的过程式的思维，程序执行了什么样的步骤，得到了什么样的结果。我们可以通过设计优秀的算法来优化执行的步骤，提高程序的性能。</p>
+<p>第二种方式，为是一种函数式的思维方式，在函数式的思维方式里，结果比过程更重要，不需要关注执行的细节。程序的具体执行由编译器来决定。这种情况下提高程序的性能是一个不容易的事情。</p>
+<p>我们再回到Optional，来说说使用它容易陷入的误区</p>
+<h5 id="使用isPresent&amp;get来“优雅”的避免空值判断">使用isPresent&amp;get来“优雅”的避免空值判断</h5><p>我们知道了Optional为我们提供了可以优雅的避免空指针的方案，我们以上的代码还可以这样写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Optional&lt;User&gt; user = Optional.ofNullable(getUser());</div><div class="line"></div><div class="line"><span class="keyword">if</span> (user.isPresent()) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"000000"</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (Optional.ofNullable(user.get().getMobilePhone()).isPresent() </div><div class="line">        &amp;&amp; !user.get().getMobilePhone().isEmpty()) &#123;</div><div class="line">    <span class="keyword">return</span> user.get().getMobilePhone();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码我们避免了像user==null这样的代码，我们使用了Optional的isPresent方法进行优雅的判空，但是这不是最好的方案，也不是使用Optional的初衷，所以当你的代码里出现了Optional的isPresent或者get方法你就要注意了，看下是否是正确的使用了Optional，另外在你使用get时，必须要使用isPresent做判断</p>
+<h5 id="使用Optional类型做参数或者属性">使用Optional类型做参数或者属性</h5><p>在设计类或者方法时，也没有必要使用Optional作为参数和属性，可以使用它作为返回值，这是推荐的。参数和属性的本质是做数据的传递，Optional是作为一种避免使用null的容器类。</p>
+<h3 id="Lambda_Expressions">Lambda Expressions</h3><p>Lambda表达式也是jdk8中新增的一大特性，也是JDK8中最火的一个特性，在上节中，我们已经使用了Lambda表达式。并且Lambda表达式也是函数式编程思维的一种体现，上面也已经提到过，函数式编程思维。</p>
+<p>示例如下，有一个名字集合，我们来对名字进行排序、查找能操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; names = Arrays.asList(<span class="string">"Name1"</span>, <span class="string">"Name2"</span>, <span class="string">"S4"</span>, </div><div class="line">                                   <span class="string">"Name3"</span>, <span class="string">"Name4"</span>, <span class="string">"S1"</span>, <span class="string">"S2"</span>);</div></pre></td></tr></table></figure>
+<h4 id="排序：使用()-&gt;{}替代匿名类">排序：使用()-&gt;{}替代匿名类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//jdk8 before</span></div><div class="line">Collections.sort(names, <span class="keyword">new</span> Comparator&lt;String&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String o1, String o2)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (o1.startsWith(<span class="string">"N"</span>) &amp;&amp; !o2.startsWith(<span class="string">"N"</span>)) &#123;</div><div class="line">           <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//Lambda</span></div><div class="line">Collections.sort(names, (o1, o2) -&gt; o1.startsWith(<span class="string">"N"</span>) </div><div class="line">                 &amp;&amp; !o2.startsWith(<span class="string">"N"</span>) ? -<span class="number">1</span> : <span class="number">1</span>);</div></pre></td></tr></table></figure>
+<h4 id="查找：循环">查找：循环</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//jdk8 before</span></div><div class="line">List&lt;String&gt; startWithN = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"><span class="keyword">for</span> (String name : names) &#123;</div><div class="line">    <span class="keyword">if</span> (name.startsWith(<span class="string">"N"</span>)) &#123;</div><div class="line">        startWithN.add(name);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//Lambda</span></div><div class="line">List&lt;String&gt; startWithN2 = names.stream()</div><div class="line">        .filter((name) -&gt; name.startsWith(<span class="string">"N"</span>))</div><div class="line">        .collect(Collectors.toList());</div></pre></td></tr></table></figure>
+<p>在以上的示例中我们使用了stream，其中stream也是jdk8的一大特性这个将在下篇讲。</p>
+<h4 id="函数式编程">函数式编程</h4><p>在java8中为了支持函数式的编程，java8引入了java.util.function的包，其中Predicate接口是支持Lambda的函数式的编程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">filter</span><span class="params">(List&lt;User&gt; users, </span></span></div><div class="line">                                   Function&lt;User, String&gt; function) &#123;</div><div class="line">    List&lt;String&gt; pros = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    users.forEach((user) -&gt; &#123;</div><div class="line">        pros.add(function.apply(user));</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> pros;</div><div class="line">&#125;</div><div class="line"></div><div class="line">List&lt;User&gt; users = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">users.add(<span class="keyword">new</span> User(<span class="string">"1232"</span>,<span class="string">"2323"</span>));</div><div class="line">List&lt;String&gt; phones=filter(users,(user)-&gt;user.getPhone());</div><div class="line">phones.forEach(System.out::println);</div></pre></td></tr></table></figure>
+<p>在以上的示例中，就实现了一个获取一个user的集合中，所有的电话号码的需求，当然以上的filter方法在stream中已经存在，直接使用即可，在上面我们只作为一个示例。</p>
+<p>以上是直观的感受了Lambda表达式的写法的改变，下篇中，我们继续探讨Streams的用法以及接口的默认方法的支持。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://yywang.qiniudn.com/IMG_0123.jpg" alt="wangyan9110 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://yywang.qiniudn.com/IMG_0122.jpg" alt="wangyan9110 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JDK8/" rel="tag"># JDK8</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/19/rpc-register/" rel="next" title="聊聊RPC之Register">
+                <i class="fa fa-chevron-left"></i> 聊聊RPC之Register
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/04/03/jdk8-1/"
+     data-title="你真的开始用JDK8了吗？（上）"
+     data-content=""
+     data-url="http://yywang.info/2017/04/03/jdk8-1/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/03/jdk8-1/"
+           data-title="你真的开始用JDK8了吗？（上）" data-url="http://yywang.info/2017/04/03/jdk8-1/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460"
+               alt="wangyan9110" />
+          <p class="site-author-name" itemprop="name">wangyan9110</p>
+          <p class="site-description motion-element" itemprop="description">关注微服务、业务建模、性能优化等</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Optional"><span class="nav-number">1.</span> <span class="nav-text">Optional</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用示例"><span class="nav-number">1.0.1.</span> <span class="nav-text">使用示例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用isPresent&get来“优雅”的避免空值判断"><span class="nav-number">1.0.2.</span> <span class="nav-text">使用isPresent&get来“优雅”的避免空值判断</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用Optional类型做参数或者属性"><span class="nav-number">1.0.3.</span> <span class="nav-text">使用Optional类型做参数或者属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda_Expressions"><span class="nav-number">2.</span> <span class="nav-text">Lambda Expressions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#排序：使用()->{}替代匿名类"><span class="nav-number">2.1.</span> <span class="nav-text">排序：使用()->{}替代匿名类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找：循环"><span class="nav-number">2.2.</span> <span class="nav-text">查找：循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数式编程"><span class="nav-number">2.3.</span> <span class="nav-text">函数式编程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyan9110</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yywang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
