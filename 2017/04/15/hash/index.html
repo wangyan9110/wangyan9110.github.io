@@ -95,7 +95,8 @@
 <meta property="og:image" content="http://yywang.qiniudn.com/hash1.png">
 <meta property="og:image" content="http://yywang.qiniudn.com/hash2.png">
 <meta property="og:image" content="http://yywang.qiniudn.com/hash3.png">
-<meta property="og:updated_time" content="2017-04-15T09:15:46.000Z">
+<meta property="og:image" content="http://yywang.qiniudn.com/MyArtNote.jpg">
+<meta property="og:updated_time" content="2017-04-15T09:17:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一致性Hash算法的实现">
 <meta name="twitter:description" content="一致性hash作为一个负载均衡算法，可以用在分布式缓存、数据库的分库分表等场景中，还可以应用在负载均衡器中作为作为负载均衡算法。在有多台服务器时，对于某个请求资源通过hash算法，映射到某一个台服务器，当增加或减少一台服务器时，可能会改变这些资源对应的hash值，这样可能导致一部分缓存或数据失效了。一致性hash就是尽可能在将同一个资源请求路由到同一台服务器中。">
@@ -393,6 +394,7 @@
 <p>这时缓存命中率</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">删除一个节点的缓存命中率：<span class="number">0.7928</span></div></pre></td></tr></table></figure>
 <p>从以上可以看出，我们可以看出使用一致性hash算法，可以极大的提高缓存的命中率，减少在增加节点、删除节点时，数据迁移的成本。</p>
+<h4 id="欢迎关注我的公众号MyArtNote">欢迎关注我的公众号MyArtNote</h4><p><img src="http://yywang.qiniudn.com/MyArtNote.jpg" alt="MyArtNote"></p>
 
       
     </div>
@@ -607,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#节点&集群设计"><span class="nav-number">1.</span> <span class="nav-text">节点&集群设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#节点"><span class="nav-number">1.1.</span> <span class="nav-text">节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群"><span class="nav-number">1.2.</span> <span class="nav-text">集群</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取模"><span class="nav-number">2.</span> <span class="nav-text">取模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性hash"><span class="nav-number">3.</span> <span class="nav-text">一致性hash</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#节点&集群设计"><span class="nav-number">1.</span> <span class="nav-text">节点&集群设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#节点"><span class="nav-number">1.1.</span> <span class="nav-text">节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群"><span class="nav-number">1.2.</span> <span class="nav-text">集群</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取模"><span class="nav-number">2.</span> <span class="nav-text">取模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性hash"><span class="nav-number">3.</span> <span class="nav-text">一致性hash</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#欢迎关注我的公众号MyArtNote"><span class="nav-number">3.1.</span> <span class="nav-text">欢迎关注我的公众号MyArtNote</span></a></li></ol></li></ol></div>
             
 
           </div>
