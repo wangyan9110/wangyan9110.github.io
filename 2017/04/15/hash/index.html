@@ -1,0 +1,778 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="分布式," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="wangyan9110" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一致性hash作为一个负载均衡算法，可以用在分布式缓存、数据库的分库分表等场景中，还可以应用在负载均衡器中作为作为负载均衡算法。在有多台服务器时，对于某个请求资源通过hash算法，映射到某一个台服务器，当增加或减少一台服务器时，可能会改变这些资源对应的hash值，这样可能导致一部分缓存或数据失效了。一致性hash就是尽可能在将同一个资源请求路由到同一台服务器中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一致性Hash算法的实现">
+<meta property="og:url" content="http://yywang.info/2017/04/15/hash/index.html">
+<meta property="og:site_name" content="wangyan9110">
+<meta property="og:description" content="一致性hash作为一个负载均衡算法，可以用在分布式缓存、数据库的分库分表等场景中，还可以应用在负载均衡器中作为作为负载均衡算法。在有多台服务器时，对于某个请求资源通过hash算法，映射到某一个台服务器，当增加或减少一台服务器时，可能会改变这些资源对应的hash值，这样可能导致一部分缓存或数据失效了。一致性hash就是尽可能在将同一个资源请求路由到同一台服务器中。">
+<meta property="og:image" content="http://yywang.qiniudn.com/hash1.png">
+<meta property="og:image" content="http://yywang.qiniudn.com/hash2.png">
+<meta property="og:image" content="http://yywang.qiniudn.com/hash3.png">
+<meta property="og:updated_time" content="2017-04-15T09:15:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一致性Hash算法的实现">
+<meta name="twitter:description" content="一致性hash作为一个负载均衡算法，可以用在分布式缓存、数据库的分库分表等场景中，还可以应用在负载均衡器中作为作为负载均衡算法。在有多台服务器时，对于某个请求资源通过hash算法，映射到某一个台服务器，当增加或减少一台服务器时，可能会改变这些资源对应的hash值，这样可能导致一部分缓存或数据失效了。一致性hash就是尽可能在将同一个资源请求路由到同一台服务器中。">
+<meta name="twitter:image" content="http://yywang.qiniudn.com/hash1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yywang.info/2017/04/15/hash/"/>
+
+
+
+
+
+  <title> 一致性Hash算法的实现 | wangyan9110 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">wangyan9110</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">关注微服务、业务建模、性能优化</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2017/04/15/hash/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                一致性Hash算法的实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-15T17:11:12+08:00">
+                2017-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/15/hash/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/15/hash/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一致性hash作为一个负载均衡算法，可以用在分布式缓存、数据库的分库分表等场景中，还可以应用在负载均衡器中作为作为负载均衡算法。在有多台服务器时，对于某个请求资源通过hash算法，映射到某一个台服务器，当增加或减少一台服务器时，可能会改变这些资源对应的hash值，这样可能导致一部分缓存或数据失效了。一致性hash就是尽可能在将同一个资源请求路由到同一台服务器中。<a id="more"></a></p>
+<p>本篇文章将模拟实现一个分布式缓存系统来探讨在使用了一致性hash以及普通hash在增加、删除节点之后，对数据分布、缓存命中率的影响</p>
+<h3 id="节点&amp;集群设计">节点&amp;集群设计</h3><p>在一个分布式缓存系统中，每台机器可以认为是一个节点，节点作为数据存储的地方，由一些节点来组成一个集群。我们先来设计我们的节点和集群。</p>
+<h4 id="节点">节点</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Data</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</div><div class="line">  </div><div class="line">    <span class="keyword">private</span> String domain;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String ip;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Map&lt;String, Object&gt; data;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(String key, T value)</span> </span>&#123;</div><div class="line">        data.put(key, value);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(String key)</span></span>&#123;</div><div class="line">        data.remove(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> (T) data.get(key);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一个节点包括domain(域名)，ip(IP地址)，data(节点存储数据)，节点可以存放、删除、获取数据。</p>
+<h4 id="集群">集群</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Cluster</span> </span>&#123;</div><div class="line">  </div><div class="line">    <span class="keyword">protected</span> List&lt;Node&gt; nodes;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Cluster</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.nodes = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    &#125;</div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addNode</span><span class="params">(Node node)</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">removeNode</span><span class="params">(Node node)</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Node <span class="title">get</span><span class="params">(String key)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在一个集群中包含多个节点，可以在一个集群中，增加、删除节点。还可以通过key获取数据存储的节点。</p>
+<h3 id="取模">取模</h3><p>在使用取模的场景中，当一个请求资源，请求某个集群时，通过对请求资源进行hash得到的值，然后对存储集群的节点数取模来得到，该请求资源，应该存储到哪一个存储节点。</p>
+<p>具体实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NormalHashCluster</span> <span class="keyword">extends</span> <span class="title">Cluster</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NormalHashCluster</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addNode</span><span class="params">(Node node)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.nodes.add(node);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeNode</span><span class="params">(Node node)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.nodes.removeIf(o -&gt; o.getIp().equals(node.getIp()) ||</div><div class="line">                o.getDomain().equals(node.getDomain()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Node <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        <span class="keyword">long</span> hash = hash(key);</div><div class="line">        <span class="keyword">long</span> index =  hash % nodes.size();</div><div class="line">        <span class="keyword">return</span> nodes.get((<span class="keyword">int</span>)index);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面我们对该算法，在数据分布、增加一个节点、删除一个节点对缓存的命中率影响做一个测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">Cluster cluster = <span class="keyword">new</span> NormalHashCluster();</div><div class="line">cluster.addNode(<span class="keyword">new</span> Node(<span class="string">"c1.yywang.info"</span>, <span class="string">"192.168.0.1"</span>));</div><div class="line">cluster.addNode(<span class="keyword">new</span> Node(<span class="string">"c2.yywang.info"</span>, <span class="string">"192.168.0.2"</span>));</div><div class="line">cluster.addNode(<span class="keyword">new</span> Node(<span class="string">"c3.yywang.info"</span>, <span class="string">"192.168.0.3"</span>));</div><div class="line">cluster.addNode(<span class="keyword">new</span> Node(<span class="string">"c4.yywang.info"</span>, <span class="string">"192.168.0.4"</span>));</div><div class="line"></div><div class="line">IntStream.range(<span class="number">0</span>, DATA_COUNT)</div><div class="line">        .forEach(index -&gt; &#123;</div><div class="line">            Node node = cluster.get(PRE_KEY + index);</div><div class="line">            node.put(PRE_KEY + index, <span class="string">"Test Data"</span>);</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">System.out.println(<span class="string">"数据分布情况："</span>);</div><div class="line">cluster.nodes.forEach(node -&gt; &#123;</div><div class="line">    System.out.println(<span class="string">"IP:"</span> + node.getIp() + <span class="string">",数据量:"</span> + node.getData().size());</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//缓存命中率</span></div><div class="line"><span class="keyword">long</span> hitCount = IntStream.range(<span class="number">0</span>, DATA_COUNT)</div><div class="line">        .filter(index -&gt; cluster.get(PRE_KEY + index).get(PRE_KEY + index) != <span class="keyword">null</span>)</div><div class="line">        .count();</div><div class="line">System.out.println(<span class="string">"缓存命中率："</span> + hitCount * <span class="number">1f</span> / DATA_COUNT);</div></pre></td></tr></table></figure>
+<p>在初始状态下，数据的分布和缓存命中率如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">数据分布情况：</div><div class="line">IP:<span class="number">192.168</span>.0.1,数据量:<span class="number">12499</span></div><div class="line">IP:<span class="number">192.168</span>.0.2,数据量:<span class="number">12501</span></div><div class="line">IP:<span class="number">192.168</span>.0.3,数据量:<span class="number">12499</span></div><div class="line">IP:<span class="number">192.168</span>.0.4,数据量:<span class="number">12501</span></div><div class="line">缓存命中率：<span class="number">1.0</span></div></pre></td></tr></table></figure>
+<p>从以上数据可以看出，数据分布较均匀，在不增不减节点的情况下，缓存全部命中</p>
+<p>我们新增一个节点</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//增加一个节点</span></div><div class="line">cluster.addNode(<span class="keyword">new</span> Node(<span class="string">"c5.yywang.info"</span>, <span class="string">"192.168.0.5"</span>));</div></pre></td></tr></table></figure>
+<p>这时缓存命中率</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">增加一个节点的缓存命中率：<span class="number">0.19808</span></div></pre></td></tr></table></figure>
+<p>我们来删除一个节点</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cluster.removeNode(<span class="keyword">new</span> Node(<span class="string">"c4.yywang.info"</span>, <span class="string">"192.168.0.4"</span>));</div></pre></td></tr></table></figure>
+<p>这时缓存命中率</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">删除缓存命中率：<span class="number">0.25196</span></div></pre></td></tr></table></figure>
+<p>从以上可以看出，通过取模算法，在增加节点、删除节点时，将对缓存命中率产生极大的影响，所以在该场景中如果使用取模运算将会产生很多的数据迁移量。</p>
+<h3 id="一致性hash">一致性hash</h3><p>为了解决以上取模运算的缺点，我们引入一致性hash算法，一致性hash算法的原理如下：</p>
+<p>首先我们把2的32次方想象成一个环，比如：</p>
+<p><img src="http://yywang.qiniudn.com/hash1.png" alt="hash1"></p>
+<p>假如我们有四台服务器分布这个环上，其中Node1,Node2,Node3,Node4就表示这四台服务器在环上的位置，一致性hash算法就是，在缓存的Key的值计算后得到的hash值，映射到这个环上的点，然后这些点按照顺时针方向找，找到离自己最近的一个物理节点就是自己要存储的节点。</p>
+<p>当我们增加了一个节点如下：</p>
+<p><img src="http://yywang.qiniudn.com/hash2.png" alt="hash2"></p>
+<p>我们增加了Node5放在Node3和Node4之间，这时我们可以看到增加了一个节点只会影响Node3至Node5之间的数据，其他节点的数据不会受到影响。同时我们还可以看到，Node4和Node5的压力要小于其他节点，大约是其他节点的一半。这样就带了压力分布均匀的情况，假定Node4和Node5的机器配置和其它的节点机器配置相同，那么Node4和Node5的机器资源就浪费了一半，那么怎么解决这个问题呢？</p>
+<p>我们引入虚拟节点，简单来说，虚拟节点就是不存在的点，这些虚拟节点尽量的分布在环上，需要做的就是把这些虚拟节点需要映射到物理节点。</p>
+<p><img src="http://yywang.qiniudn.com/hash3.png" alt="hash3"></p>
+<p>在引入虚拟节点后，我们把虚拟节点上均匀的分布到环上，然后把虚拟节点映射到物理节点，当增加了新的机器后，我们只需要把虚拟节点映射到新的机器即可，这样就解决了机器压力分布不均匀的情况</p>
+<p>上面我们说了一致性hash的基本算法，下面我们来看下具体实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConsistencyHashCluster</span> <span class="keyword">extends</span> <span class="title">Cluster</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> SortedMap&lt;Long, Node&gt; virNodes = <span class="keyword">new</span> TreeMap&lt;Long, Node&gt;();</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VIR_NODE_COUNT = <span class="number">512</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SPLIT = <span class="string">"#"</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConsistencyHashCluster</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addNode</span><span class="params">(Node node)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.nodes.add(node);</div><div class="line">        IntStream.range(<span class="number">0</span>, VIR_NODE_COUNT)</div><div class="line">                .forEach(index -&gt; &#123;</div><div class="line">                    <span class="keyword">long</span> hash = hash(node.getIp() + SPLIT + index);</div><div class="line">                    virNodes.put(hash, node);</div><div class="line">                &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeNode</span><span class="params">(Node node)</span> </span>&#123;</div><div class="line">        nodes.removeIf(o -&gt; node.getIp().equals(o.getIp()));</div><div class="line">        IntStream.range(<span class="number">0</span>, VIR_NODE_COUNT)</div><div class="line">                .forEach(index -&gt; &#123;</div><div class="line">                    <span class="keyword">long</span> hash = hash(node.getIp() + SPLIT + index);</div><div class="line">                    virNodes.remove(hash);</div><div class="line">                &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Node <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        <span class="keyword">long</span> hash = hash(key);</div><div class="line">        SortedMap&lt;Long, Node&gt; subMap = virNodes.tailMap(hash);</div><div class="line">        <span class="keyword">if</span> (subMap.isEmpty()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> subMap.get(subMap.firstKey());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面我们同样对一致性hash算法，在数据分布、增加一个节点、删除一个节点对缓存的命中率影响做一个测试</p>
+<p>测试代码很简单，我们只需要把以上的代码替换成ConsistencyHashCluster实现即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//        Cluster cluster = new NormalHashCluster();</span></div><div class="line">        Cluster cluster=<span class="keyword">new</span> ConsistencyHashCluster();</div></pre></td></tr></table></figure>
+<p>在初始状态下，数据的分布和缓存命中率如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">数据分布情况：</div><div class="line">IP:<span class="number">192.168</span>.0.1,数据量:<span class="number">15345</span></div><div class="line">IP:<span class="number">192.168</span>.0.2,数据量:<span class="number">14084</span></div><div class="line">IP:<span class="number">192.168</span>.0.3,数据量:<span class="number">10211</span></div><div class="line">IP:<span class="number">192.168</span>.0.4,数据量:<span class="number">10360</span></div><div class="line">缓存命中率：<span class="number">1.0</span></div></pre></td></tr></table></figure>
+<p>从以上数据可以看出，数据分布相对均匀，没有取模算法的均匀，在不增不减节点的情况下，缓存全部命中</p>
+<p>我们增加一个节点</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cluster.addNode(<span class="keyword">new</span> Node(<span class="string">"c"</span> + <span class="number">5</span> + <span class="string">".yywang.info"</span>, <span class="string">"192.168.0."</span> + <span class="number">5</span>));</div></pre></td></tr></table></figure>
+<p>这时缓存命中率</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">增加一个节点的缓存命中率：<span class="number">0.82154</span></div></pre></td></tr></table></figure>
+<p>可以看出缓存命中率明显高于取模运算的命中率</p>
+<p>我们删除一个节点</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cluster.removeNode(<span class="keyword">new</span> Node(<span class="string">"c4.yywang.info"</span>, <span class="string">"192.168.0.4"</span>));</div></pre></td></tr></table></figure>
+<p>这时缓存命中率</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">删除一个节点的缓存命中率：<span class="number">0.7928</span></div></pre></td></tr></table></figure>
+<p>从以上可以看出，我们可以看出使用一致性hash算法，可以极大的提高缓存的命中率，减少在增加节点、删除节点时，数据迁移的成本。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://yywang.qiniudn.com/IMG_0123.jpg" alt="wangyan9110 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://yywang.qiniudn.com/IMG_0122.jpg" alt="wangyan9110 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分布式/" rel="tag"># 分布式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/04/jdk8-2/" rel="next" title="你真的开始用JDK8了吗？（下）">
+                <i class="fa fa-chevron-left"></i> 你真的开始用JDK8了吗？（下）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/04/15/hash/"
+     data-title="一致性Hash算法的实现"
+     data-content=""
+     data-url="http://yywang.info/2017/04/15/hash/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/15/hash/"
+           data-title="一致性Hash算法的实现" data-url="http://yywang.info/2017/04/15/hash/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460"
+               alt="wangyan9110" />
+          <p class="site-author-name" itemprop="name">wangyan9110</p>
+          <p class="site-description motion-element" itemprop="description">关注微服务、业务建模、性能优化等</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#节点&集群设计"><span class="nav-number">1.</span> <span class="nav-text">节点&集群设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#节点"><span class="nav-number">1.1.</span> <span class="nav-text">节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群"><span class="nav-number">1.2.</span> <span class="nav-text">集群</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取模"><span class="nav-number">2.</span> <span class="nav-text">取模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性hash"><span class="nav-number">3.</span> <span class="nav-text">一致性hash</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyan9110</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yywang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
