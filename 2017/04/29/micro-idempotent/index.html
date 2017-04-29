@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Git," />
+  <meta name="keywords" content="微服务," />
 
 
 
@@ -86,19 +86,36 @@
 
 
 
-<meta name="description" content="在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。
-为什么要使用分支管理在一个项目">
+<meta name="description" content="在微服务架构下，我们在完成一个订单流程时经常遇到下面的场景：
+
+
+一个订单创建接口，第一次调用超时了，然后调用方重试了一次
+在订单创建时，我们需要去扣减库存，这时接口发生了超时，调用方重试了一次
+当这笔订单开始支付，在支付请求发出之后，在服务端发生了扣钱操作，接口响应超时了，调用方重试了一次
+一个订单状态更新接口，调用方连续发送了两个消息，一个是已创建，一个是已付款。但是你先接收到已付款，然后又接">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git分支管理">
-<meta property="og:url" content="http://yywang.info/2015/04/11/git-branch/index.html">
+<meta property="og:title" content="如何保证微服务接口的幂等性">
+<meta property="og:url" content="http://yywang.info/2017/04/29/micro-idempotent/index.html">
 <meta property="og:site_name" content="wangyan9110">
-<meta property="og:description" content="在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。
-为什么要使用分支管理在一个项目">
-<meta property="og:updated_time" content="2015-04-11T07:04:03.000Z">
+<meta property="og:description" content="在微服务架构下，我们在完成一个订单流程时经常遇到下面的场景：
+
+
+一个订单创建接口，第一次调用超时了，然后调用方重试了一次
+在订单创建时，我们需要去扣减库存，这时接口发生了超时，调用方重试了一次
+当这笔订单开始支付，在支付请求发出之后，在服务端发生了扣钱操作，接口响应超时了，调用方重试了一次
+一个订单状态更新接口，调用方连续发送了两个消息，一个是已创建，一个是已付款。但是你先接收到已付款，然后又接">
+<meta property="og:image" content="http://yywang.qiniudn.com/MyArtNote.jpg">
+<meta property="og:updated_time" content="2017-04-29T07:49:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git分支管理">
-<meta name="twitter:description" content="在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。
-为什么要使用分支管理在一个项目">
+<meta name="twitter:title" content="如何保证微服务接口的幂等性">
+<meta name="twitter:description" content="在微服务架构下，我们在完成一个订单流程时经常遇到下面的场景：
+
+
+一个订单创建接口，第一次调用超时了，然后调用方重试了一次
+在订单创建时，我们需要去扣减库存，这时接口发生了超时，调用方重试了一次
+当这笔订单开始支付，在支付请求发出之后，在服务端发生了扣钱操作，接口响应超时了，调用方重试了一次
+一个订单状态更新接口，调用方连续发送了两个消息，一个是已创建，一个是已付款。但是你先接收到已付款，然后又接">
+<meta name="twitter:image" content="http://yywang.qiniudn.com/MyArtNote.jpg">
 
 
 
@@ -126,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="http://yywang.info/2015/04/11/git-branch/"/>
+  <link rel="canonical" href="http://yywang.info/2017/04/29/micro-idempotent/"/>
 
 
 
 
 
-  <title> Git分支管理 | wangyan9110 </title>
+  <title> 如何保证微服务接口的幂等性 | wangyan9110 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -255,7 +272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/04/11/git-branch/">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2017/04/29/micro-idempotent/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="wangyan9110">
@@ -279,7 +296,7 @@
             
             
               
-                Git分支管理
+                如何保证微服务接口的幂等性
               
             
           </h1>
@@ -294,8 +311,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-04-11T14:50:03+08:00">
-                2015-04-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-29T15:46:01+08:00">
+                2017-04-29
               </time>
             
 
@@ -305,28 +322,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -335,8 +330,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/04/11/git-branch/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/11/git-branch/" itemprop="commentCount"></span>
+                <a href="/2017/04/29/micro-idempotent/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/29/micro-idempotent/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -362,17 +357,34 @@
       
 
       
-        <p>在来到新公司之后，使用Git作为源代码版本控制管理的工具，虽然一直在用git来管理自己的代码，但是还一直没有使用过分支管理。在以前的工作中，也是用过svn的分支管理，但是那种分支管理使用起来非常不方便，新建分支和切换分支都非常不方便。在svn里基本很少人愿意使用分支管理。但是Git不一样，Git可以很方便的来管理分支。所以在Git中分支管理是一个非常常用的一个功能。</p>
-<h4 id="为什么要使用分支管理">为什么要使用分支管理</h4><p>在一个项目开发周期，假设有一个任务，你需要两周完成，但是你在第一周的时候提交了你的50%的代码，因为代码还没写完，导致当前代码库里的代码是编译不能通过的状态，这时就影响了别人的开发。或者其他已开发好的模块希望尽快上线，这时也不能上线了。如果自己建立一个分支，自己编写的代码只提交到自己的分支，和主分支分离，这样就不会相互影响了。<a id="more"></a></p>
-<h4 id="Git分支管理实践">Git分支管理实践</h4><h5 id="基本命令">基本命令</h5><p>以GitHub中的一个Project为例：<br>首先我们看下该项目的当前有几个分支：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git branch</div><div class="line">* master</div></pre></td></tr></table></figure></p>
-<p>可以看出当前只有一个master分支。下面我们建立一个dev分支<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git branch dev</div><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git branch</div><div class="line">  dev</div><div class="line">* master</div></pre></td></tr></table></figure></p>
-<p>以上我们新建了一个dev分支，但是目前仍然选中的时master分支，我们切换到dev分支<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git checkout dev</div><div class="line">Switched to branch <span class="string">'dev'</span></div><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git branch</div><div class="line">* dev</div><div class="line">  master</div></pre></td></tr></table></figure></p>
-<p>可以看出我们已经切换至dev分支，下面我们进行一些开发，新建或者修改一些文件，然后commit到dev分支：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ vim test.js</div><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git add .</div><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git commit -m <span class="string">"add test.java"</span></div><div class="line">[dev ec9e87d] add test.java</div><div class="line"> <span class="number">1</span> file changed, <span class="number">1</span> insertion(+)</div><div class="line"> create mode <span class="number">100644</span> test.js</div></pre></td></tr></table></figure></p>
-<p>以上命令先把修改添加到暂存区（git add .），然后提交至分支（git commit），下面我们把分支push到远程服务器：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git push origin dev</div><div class="line">Warning: Permanently added the RSA host key <span class="keyword">for</span> IP address <span class="string">'192.30.252.128'</span> to the list of known hosts.</div><div class="line">Counting objects: <span class="number">3</span>, done.</div><div class="line">Delta compression using up to <span class="number">4</span> threads.</div><div class="line">Compressing objects: <span class="number">100</span>% (<span class="number">2</span>/<span class="number">2</span>), done.</div><div class="line">Writing objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), <span class="number">279</span> bytes | <span class="number">0</span> bytes/s, done.</div><div class="line">Total <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</div><div class="line">To git<span class="meta">@github</span>.com:wangyan9110/gitbranch.git</div><div class="line"> * [<span class="keyword">new</span> branch]      dev -&gt; dev</div></pre></td></tr></table></figure></p>
-<p>以上命令已经把dev分支push远程服务器。下面我们把dev分支合并到master分支<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git checkout master</div><div class="line">Already on <span class="string">'master'</span></div><div class="line">Your branch is up-to-date with <span class="string">'origin/master'</span>.</div><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git merge dev</div><div class="line">Updating <span class="number">528</span>edc3..ec9e87d</div><div class="line">Fast-forward</div><div class="line"> test.js | <span class="number">1</span> +</div><div class="line"> <span class="number">1</span> file changed, <span class="number">1</span> insertion(+)</div><div class="line"> create mode <span class="number">100644</span> test.js</div></pre></td></tr></table></figure></p>
-<p>以上已经完成了dev分支合并到master分支。然后把master分支push到远程<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:gitbranch yanyanwang$ git push</div></pre></td></tr></table></figure></p>
-<p>最后几个其他的有用的命令：<br>git status: 查看文件状态<br>git branch -d  dev：删除分支</p>
-<h5 id="分支管理最佳实践">分支管理最佳实践</h5><p>上面主要介绍了git分支管理的命令，下面我们来介绍下git分支管理的最佳实践：<br>git有两个主要的分支：master,develop。<br>master：管理要上线的代码。主要用于生产上线。<br>develop：来管理开发代码。主要用于开发集成测试。<br>下面我们分两个场景：<br>1、新的开发任务<br>新的开发任务我们先从master或者develop建立一个分支，可以命名为：日期<em>名字，或者日期</em>任务Id_名字。作为自己分支来作为开发。开发完成后，需要合并至develop分支，进行集成测试，集成测试完成后，就可以合并至master分支用于生产上线。<br>2、Bug修复<br>在线上运行期间，需要修复紧急bug，可以从master建立一个分支，然后修复紧急bug,，并需要合并至master分支以及develop分支。如果是测试MM测试过程中发现bug，如果可以在下个版本修复的话，可以先在自己当前分支修复，最后会合并至master，如果比较紧急，可以使用线上运行期间发现bug的处理方式建立分支。</p>
+        <p>在微服务架构下，我们在完成一个订单流程时经常遇到下面的场景：</p>
+<blockquote>
+<ol>
+<li>一个订单创建接口，第一次调用超时了，然后调用方重试了一次</li>
+<li>在订单创建时，我们需要去扣减库存，这时接口发生了超时，调用方重试了一次</li>
+<li>当这笔订单开始支付，在支付请求发出之后，在服务端发生了扣钱操作，接口响应超时了，调用方重试了一次</li>
+<li>一个订单状态更新接口，调用方连续发送了两个消息，一个是已创建，一个是已付款。但是你先接收到已付款，然后又接收到了已创建</li>
+<li>在支付完成订单之后，需要发送一条短信，当一台机器接收到短信发送的消息之后，处理较慢。消息中间件又把消息投递给另外一台机器处理</li>
+</ol>
+</blockquote>
+<p>以上问题，就是在单体架构转成微服务架构之后，带来的问题。当然不是说单体架构下没有这些问题，在单体架构下同样要避免重复请求。但是出现的问题要比这少得多。</p>
+<p>为了解决以上问题，就需要保证接口的幂等性，接口的幂等性实际上就是<strong>接口可重复调用，在调用方多次调用的情况下，接口最终得到的结果是一致的</strong>。有些接口可以天然的实现幂等性，比如查询接口，对于查询来说，你查询一次和两次，对于系统来说，没有任何影响，查出的结果也是一样。</p>
+<p>除了查询功能具有天然的幂等性之外，增加、更新、删除都要保证幂等性。那么如何来保证幂等性呢？</p>
+<h3 id="全局唯一ID">全局唯一ID</h3><p>如果使用全局唯一ID，就是根据业务的操作和内容生成一个全局ID，在执行操作前先根据这个全局唯一ID是否存在，来判断这个操作是否已经执行。如果不存在则把全局ID，存储到存储系统中，比如数据库、redis等。如果存在则表示该方法已经执行。</p>
+<p>从工程的角度来说，使用全局ID做幂等可以作为一个业务的基础的微服务存在，在很多的微服务中都会用到这样的服务，在每个微服务中都完成这样的功能，会存在工作量重复。另外打造一个高可靠的幂等服务还需要考虑很多问题，比如一台机器虽然把全局ID先写入了存储，但是在写入之后挂了，这就需要引入全局ID的超时机制。</p>
+<p>使用全局唯一ID是一个通用方案，可以支持插入、更新、删除业务操作。但是这个方案看起来很美但是实现起来比较麻烦，下面的方案适用于特定的场景，但是实现起来比较简单。</p>
+<h3 id="去重表">去重表</h3><p>这种方法适用于在业务中有唯一标的插入场景中，比如在以上的支付场景中，如果一个订单只会支付一次，所以订单ID可以作为唯一标识。这时，我们就可以建一张去重表，并且把唯一标识作为唯一索引，在我们实现时，把创建支付单据和写入去去重表，放在一个事务中，如果重复创建，数据库会抛出唯一约束异常，操作就会回滚。</p>
+<h3 id="插入或更新">插入或更新</h3><p>这种方法插入并且有唯一索引的情况，比如我们要关联商品品类，其中商品的ID和品类的ID可以构成唯一索引，并且在数据表中也增加了唯一索引。这时就可以使用InsertOrUpdate操作。在mysql数据库中如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> goods_category (goods_id,category_id,create_time,update_time) </div><div class="line">       <span class="keyword">values</span>(#&#123;goodsId&#125;,#&#123;categoryId&#125;,<span class="keyword">now</span>(),<span class="keyword">now</span>()) </div><div class="line">       <span class="keyword">on</span> <span class="keyword">DUPLICATE</span> <span class="keyword">KEY</span> <span class="keyword">UPDATE</span></div><div class="line">       update_time=<span class="keyword">now</span>()</div></pre></td></tr></table></figure>
+<h3 id="多版本控制">多版本控制</h3><p>这种方法适合在更新的场景中，比如我们要更新商品的名字，这时我们就可以在更新的接口中增加一个版本号，来做幂等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">updateGoodsName</span><span class="params">(<span class="keyword">int</span> id,String newName,<span class="keyword">int</span> version)</span></span>;</div></pre></td></tr></table></figure>
+<p>在实现时可以如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> goods <span class="keyword">set</span> <span class="keyword">name</span>=#&#123;newName&#125;,<span class="keyword">version</span>=#&#123;<span class="keyword">version</span>&#125; <span class="keyword">where</span> <span class="keyword">id</span>=#&#123;<span class="keyword">id</span>&#125; <span class="keyword">and</span> <span class="keyword">version</span>&lt;$&#123;<span class="keyword">version</span>&#125;</div></pre></td></tr></table></figure>
+<h3 id="状态机控制">状态机控制</h3><p>这种方法适合在有状态机流转的情况下，比如就会订单的创建和付款，订单的付款肯定是在之前，这时我们可以通过在设计状态字段时，使用int类型，并且通过值类型的大小来做幂等，比如订单的创建为0，付款成功为100。付款失败为99</p>
+<p>在做状态机更新时，我们就这可以这样控制</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> <span class="string">`order`</span> <span class="keyword">set</span> <span class="keyword">status</span>=#&#123;<span class="keyword">status</span>&#125; <span class="keyword">where</span> <span class="keyword">id</span>=#&#123;<span class="keyword">id</span>&#125; <span class="keyword">and</span> <span class="keyword">status</span>&lt;#&#123;<span class="keyword">status</span>&#125;</div></pre></td></tr></table></figure>
+<p>以上就是保证接口幂等性的一些方法。</p>
+<h3 id="欢迎关注我的公众号MyArtNote">欢迎关注我的公众号MyArtNote</h3><p><img src="http://yywang.qiniudn.com/MyArtNote.jpg" alt="MyArtNote"></p>
 
       
     </div>
@@ -417,7 +429,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Git/" rel="tag"># Git</a>
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
           
         </div>
       
@@ -426,8 +438,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/01/17/thread-pool-pattern/" rel="next" title="【翻译】线程池">
-                <i class="fa fa-chevron-left"></i> 【翻译】线程池
+              <a href="/2017/04/15/hash/" rel="next" title="一致性Hash算法的实现">
+                <i class="fa fa-chevron-left"></i> 一致性Hash算法的实现
               </a>
             
           </div>
@@ -435,10 +447,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/04/12/java-concurrent-concurrentmap/" rel="prev" title="Java并发编程学习之ConcurrentMap">
-                Java并发编程学习之ConcurrentMap <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -453,10 +461,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/04/11/git-branch/"
-     data-title="Git分支管理"
+        <div class="ds-share flat" data-thread-key="2017/04/29/micro-idempotent/"
+     data-title="如何保证微服务接口的幂等性"
      data-content=""
-     data-url="http://yywang.info/2015/04/11/git-branch/">
+     data-url="http://yywang.info/2017/04/29/micro-idempotent/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -483,8 +491,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/04/11/git-branch/"
-           data-title="Git分支管理" data-url="http://yywang.info/2015/04/11/git-branch/">
+      <div class="ds-thread" data-thread-key="2017/04/29/micro-idempotent/"
+           data-title="如何保证微服务接口的幂等性" data-url="http://yywang.info/2017/04/29/micro-idempotent/">
       </div>
     
   </div>
@@ -591,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要使用分支管理"><span class="nav-number">1.</span> <span class="nav-text">为什么要使用分支管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git分支管理实践"><span class="nav-number">2.</span> <span class="nav-text">Git分支管理实践</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本命令"><span class="nav-number">2.1.</span> <span class="nav-text">基本命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分支管理最佳实践"><span class="nav-number">2.2.</span> <span class="nav-text">分支管理最佳实践</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局唯一ID"><span class="nav-number">1.</span> <span class="nav-text">全局唯一ID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#去重表"><span class="nav-number">2.</span> <span class="nav-text">去重表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入或更新"><span class="nav-number">3.</span> <span class="nav-text">插入或更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多版本控制"><span class="nav-number">4.</span> <span class="nav-text">多版本控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态机控制"><span class="nav-number">5.</span> <span class="nav-text">状态机控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欢迎关注我的公众号MyArtNote"><span class="nav-number">6.</span> <span class="nav-text">欢迎关注我的公众号MyArtNote</span></a></li></ol></div>
             
 
           </div>

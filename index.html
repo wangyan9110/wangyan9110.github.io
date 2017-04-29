@@ -253,6 +253,162 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2017/04/29/micro-idempotent/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/29/micro-idempotent/" itemprop="url">
+                  如何保证微服务接口的幂等性
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-29T15:46:01+08:00">
+                2017-04-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/29/micro-idempotent/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/29/micro-idempotent/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在微服务架构下，我们在完成一个订单流程时经常遇到下面的场景：</p>
+<blockquote>
+<ol>
+<li>一个订单创建接口，第一次调用超时了，然后调用方重试了一次</li>
+<li>在订单创建时，我们需要去扣减库存，这时接口发生了超时，调用方重试了一次</li>
+<li>当这笔订单开始支付，在支付请求发出之后，在服务端发生了扣钱操作，接口响应超时了，调用方重试了一次</li>
+<li>一个订单状态更新接口，调用方连续发送了两个消息，一个是已创建，一个是已付款。但是你先接收到已付款，然后又接收到了已创建</li>
+<li>在支付完成订单之后，需要发送一条短信，当一台机器接收到短信发送的消息之后，处理较慢。消息中间件又把消息投递给另外一台机器处理</li>
+</ol>
+</blockquote>
+<p>以上问题，就是在单体架构转成微服务架构之后，带来的问题。当然不是说单体架构下没有这些问题，在单体架构下同样要避免重复请求。但是出现的问题要比这少得多。</p>
+<p>为了解决以上问题，就需要保证接口的幂等性，接口的幂等性实际上就是<strong>接口可重复调用，在调用方多次调用的情况下，接口最终得到的结果是一致的</strong>。有些接口可以天然的实现幂等性，比如查询接口，对于查询来说，你查询一次和两次，对于系统来说，没有任何影响，查出的结果也是一样。</p>
+<p>除了查询功能具有天然的幂等性之外，增加、更新、删除都要保证幂等性。那么如何来保证幂等性呢？</p>
+<h3 id="全局唯一ID">全局唯一ID</h3><p>如果使用全局唯一ID，就是根据业务的操作和内容生成一个全局ID，在执行操作前先根据这个全局唯一ID是否存在，来判断这个操作是否已经执行。如果不存在则把全局ID，存储到存储系统中，比如数据库、redis等。如果存在则表示该方法已经执行。</p>
+<p>从工程的角度来说，使用全局ID做幂等可以作为一个业务的基础的微服务存在，在很多的微服务中都会用到这样的服务，在每个微服务中都完成这样的功能，会存在工作量重复。另外打造一个高可靠的幂等服务还需要考虑很多问题，比如一台机器虽然把全局ID先写入了存储，但是在写入之后挂了，这就需要引入全局ID的超时机制。</p>
+<p>使用全局唯一ID是一个通用方案，可以支持插入、更新、删除业务操作。但是这个方案看起来很美但是实现起来比较麻烦，下面的方案适用于特定的场景，但是实现起来比较简单。</p>
+<h3 id="去重表">去重表</h3><p>这种方法适用于在业务中有唯一标的插入场景中，比如在以上的支付场景中，如果一个订单只会支付一次，所以订单ID可以作为唯一标识。这时，我们就可以建一张去重表，并且把唯一标识作为唯一索引，在我们实现时，把创建支付单据和写入去去重表，放在一个事务中，如果重复创建，数据库会抛出唯一约束异常，操作就会回滚。</p>
+<h3 id="插入或更新">插入或更新</h3><p>这种方法插入并且有唯一索引的情况，比如我们要关联商品品类，其中商品的ID和品类的ID可以构成唯一索引，并且在数据表中也增加了唯一索引。这时就可以使用InsertOrUpdate操作。在mysql数据库中如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> goods_category (goods_id,category_id,create_time,update_time) </div><div class="line">       <span class="keyword">values</span>(#&#123;goodsId&#125;,#&#123;categoryId&#125;,<span class="keyword">now</span>(),<span class="keyword">now</span>()) </div><div class="line">       <span class="keyword">on</span> <span class="keyword">DUPLICATE</span> <span class="keyword">KEY</span> <span class="keyword">UPDATE</span></div><div class="line">       update_time=<span class="keyword">now</span>()</div></pre></td></tr></table></figure>
+<h3 id="多版本控制">多版本控制</h3><p>这种方法适合在更新的场景中，比如我们要更新商品的名字，这时我们就可以在更新的接口中增加一个版本号，来做幂等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">updateGoodsName</span><span class="params">(<span class="keyword">int</span> id,String newName,<span class="keyword">int</span> version)</span></span>;</div></pre></td></tr></table></figure>
+<p>在实现时可以如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> goods <span class="keyword">set</span> <span class="keyword">name</span>=#&#123;newName&#125;,<span class="keyword">version</span>=#&#123;<span class="keyword">version</span>&#125; <span class="keyword">where</span> <span class="keyword">id</span>=#&#123;<span class="keyword">id</span>&#125; <span class="keyword">and</span> <span class="keyword">version</span>&lt;$&#123;<span class="keyword">version</span>&#125;</div></pre></td></tr></table></figure>
+<h3 id="状态机控制">状态机控制</h3><p>这种方法适合在有状态机流转的情况下，比如就会订单的创建和付款，订单的付款肯定是在之前，这时我们可以通过在设计状态字段时，使用int类型，并且通过值类型的大小来做幂等，比如订单的创建为0，付款成功为100。付款失败为99</p>
+<p>在做状态机更新时，我们就这可以这样控制</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> <span class="string">`order`</span> <span class="keyword">set</span> <span class="keyword">status</span>=#&#123;<span class="keyword">status</span>&#125; <span class="keyword">where</span> <span class="keyword">id</span>=#&#123;<span class="keyword">id</span>&#125; <span class="keyword">and</span> <span class="keyword">status</span>&lt;#&#123;<span class="keyword">status</span>&#125;</div></pre></td></tr></table></figure>
+<p>以上就是保证接口幂等性的一些方法。</p>
+<h3 id="欢迎关注我的公众号MyArtNote">欢迎关注我的公众号MyArtNote</h3><p><img src="http://yywang.qiniudn.com/MyArtNote.jpg" alt="MyArtNote"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yywang.info/2017/04/15/hash/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1506,162 +1662,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yywang.info/2015/06/02/char-microservice/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="wangyan9110">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="wangyan9110">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/06/02/char-microservice/" itemprop="url">
-                  谈谈微服务
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-06-02T21:00:11+08:00">
-                2015-06-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MicroService/" itemprop="url" rel="index">
-                    <span itemprop="name">MicroService</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2015/06/02/char-microservice/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/02/char-microservice/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>自从去年在一次上厕所的时候，翻开手机，看到微服务这一个概念，就认为这种架构的模式非常看好，自那以后，一直关注微服务相关的内容。目前微服务已经是一个非常火的概念，在Infoq几乎每条都有关于微服务的文章或者新闻。可见微服务已经像我们靠近。</p>
-<h4 id="微服务的“微”：">微服务的“微”：</h4><p>有一些观点体现在微服务的微在体现在代码量上，微服务的代码行数一定非常少。关于这个观点，个人并不认同，我觉得使用代码行数来衡量微服务的话，就像使用代码量来衡量一个软件开发工程师一样，都是不科学。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/06/02/char-microservice/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1709,7 +1709,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1727,7 +1727,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
