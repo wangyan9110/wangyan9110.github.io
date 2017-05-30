@@ -1,0 +1,795 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Docker," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="wangyan9110" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="最近准备写如何实现分布式锁的文章，实现分布式锁可以借助数据库、缓存和Zoopkpeer实现。在实现代码时就需要安装以上软件。于是就想到使用docker来简化我的安装，并可以正好学习一下Docker相关知识，本篇文章就介绍下如何使用Docker安装Mysql/Reids/Zookeeper。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用Docker安装Mysql\Reids\Zookeeper">
+<meta property="og:url" content="http://yywang.info/2017/05/30/docker-redis-zookeeper-mysql/index.html">
+<meta property="og:site_name" content="wangyan9110">
+<meta property="og:description" content="最近准备写如何实现分布式锁的文章，实现分布式锁可以借助数据库、缓存和Zoopkpeer实现。在实现代码时就需要安装以上软件。于是就想到使用docker来简化我的安装，并可以正好学习一下Docker相关知识，本篇文章就介绍下如何使用Docker安装Mysql/Reids/Zookeeper。">
+<meta property="og:image" content="https://static.oschina.net/uploads/img/201705/30085638_ae6z.jpg">
+<meta property="og:updated_time" content="2017-05-30T02:29:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用Docker安装Mysql\Reids\Zookeeper">
+<meta name="twitter:description" content="最近准备写如何实现分布式锁的文章，实现分布式锁可以借助数据库、缓存和Zoopkpeer实现。在实现代码时就需要安装以上软件。于是就想到使用docker来简化我的安装，并可以正好学习一下Docker相关知识，本篇文章就介绍下如何使用Docker安装Mysql/Reids/Zookeeper。">
+<meta name="twitter:image" content="https://static.oschina.net/uploads/img/201705/30085638_ae6z.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yywang.info/2017/05/30/docker-redis-zookeeper-mysql/"/>
+
+
+
+
+
+  <title> 如何使用Docker安装Mysql\Reids\Zookeeper | wangyan9110 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">wangyan9110</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">关注微服务、业务建模、性能优化</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yywang.info/2017/05/30/docker-redis-zookeeper-mysql/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="wangyan9110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="wangyan9110">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="wangyan9110" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何使用Docker安装Mysql\Reids\Zookeeper
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-30T10:28:26+08:00">
+                2017-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/30/docker-redis-zookeeper-mysql/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/30/docker-redis-zookeeper-mysql/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近准备写如何实现分布式锁的文章，实现分布式锁可以借助数据库、缓存和Zoopkpeer实现。在实现代码时就需要安装以上软件。于是就想到使用docker来简化我的安装，并可以正好学习一下Docker相关知识，本篇文章就介绍下如何使用Docker安装Mysql/Reids/Zookeeper。<a id="more"></a></p>
+<p>关于docker的安装教程很多，不同的操作系统也不一样，这里不再赘述。如果仅是个人研究和学习，在mac上安装建议大家使用docker for mac安装，<a href="https://store.docker.com/editions/community/docker-ce-desktop-mac" target="_blank" rel="external">https://store.docker.com/editions/community/docker-ce-desktop-mac</a> </p>
+<h2 id="Docker基础概念">Docker基础概念</h2><p>在使用Docker之前，我们先了解下几个Docker的核心概念</p>
+<h3 id="Docker_Daemon">Docker Daemon</h3><p>Docker引擎，就是运行在后台的一个守护进程，在我们启动它之后，我们就可以通过Docker客户端发送相关Docker的命令。</p>
+<h3 id="Docker_Images">Docker Images</h3><p>Docker镜像，这个就类似于我们在安装Windows时的镜像，只不过windows的镜像，在以前我们通常存在光盘上或者U盘里，这里的镜像我们通常会发布到Docker Registry</p>
+<h3 id="Docker_Containers">Docker Containers</h3><p>Docker容器，在获取到Docker镜像之后，我们可以运行该镜像，此时便会启动一个Docker容器，该容器中运行镜像中的程序。如果把Docker镜像理解为一个类的话，那么Docker容器就是一个实例</p>
+<h3 id="Docker_Client">Docker Client</h3><p>Docker客户端，我们安装完Docker之后，我们打开终端使用docker 相关命令进行操作，这些命令便是Docker客户端的命令，另外还有一个基于REST API的Docker客户端，REST API一般用于在开发一些基于Docker运维的系统中使用。</p>
+<h3 id="Docker_Registry">Docker Registry</h3><p>Docker镜像注册中心，Docker的官网的注册中心为<a href="http://hub.docker.com。我们也可以自己搭建自己的注册中心。" target="_blank" rel="external">http://hub.docker.com。我们也可以自己搭建自己的注册中心。</a></p>
+<p>以上是Docker的核心概念，下面我们来看如何使用Docker安装Redis、Zookeeper、Mysql,并在过程中，学习使用Docker Client的一些常用命令</p>
+<h2 id="Redis">Redis</h2><h3 id="查找镜像">查找镜像</h3><p>使用以下命令在Docker Hub搜索Redis镜像</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker search redis</div></pre></td></tr></table></figure>
+<p>执行以上命令，会搜索出所有带redis关键字的镜像（为减少篇幅，仅展示部分结果）</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:~ yanyan.wang$ docker search redis</div><div class="line">NAME                      DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</div><div class="line">redis                     Redis is an open source key-value store th...   3788      [OK]</div><div class="line">bitnami/redis             Bitnami Redis Docker Image                      47                   [OK]</div><div class="line">torusware/speedus-redis   Always updated official Redis docker image...   32                   [OK]</div></pre></td></tr></table></figure>
+<p>其中Name表示镜像仓库的名称，如果不带/则表示Docker官方仓库，带/则表示其他用户公开的镜像。OFFICIAL表示是否为官方仓库，一般我们推荐使用官方的仓库。</p>
+<h3 id="拉取镜像">拉取镜像</h3><p>我们使用以下命令拉取，Redis的镜像</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull redis:latest</div></pre></td></tr></table></figure>
+<p>其中redis:latest表示我们下载NAME为redis的镜像，latest表示TAG</p>
+<p>在执行完以上命令之后，Docker Client会从Docker镜像注册中心下载Redis的镜像，待下载之后，我们查看本地的镜像</p>
+<h3 id="列出所有镜像">列出所有镜像</h3><p>我们使用以下命令查看，本地的redis镜像</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker images</div></pre></td></tr></table></figure>
+<p>执行以上命令，就会显示本地的所有镜像</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">redis               latest              a858478874d1        10 days ago         184 MB</div></pre></td></tr></table></figure>
+<p>其中IMAGE ID表示镜像ID,具有唯一性</p>
+<h3 id="创建并启动容器">创建并启动容器</h3><p>使用以下命令，使用Reids镜像，创建并启动Redis容器</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -p 6379:6379 -v $PWD/data:/data  -d redis:latest redis-server --appendonly yes</div></pre></td></tr></table></figure>
+<p>执行以上命令，我们就使用redis:latest镜像创建并启动了一个Redis容器,其中</p>
+<p>-p 6379:6379：将容器的6379端口映射成主机的6379端口</p>
+<p>-v $PWD/data:/data :将主机中当前目录下的data挂载到容器的/data</p>
+<p>redis-server —appendonly yes : 在容器执行redis-server启动命令，并打开redis持久化配置</p>
+<h3 id="查看容器启动情况">查看容器启动情况</h3><p>使用以下命令查看所有容器</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker ps</div></pre></td></tr></table></figure>
+<p>执行以上命令,输出如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES</div><div class="line">07f0edc95fb3        redis:latest        "docker-entrypoint..."   2 minutes ago       Up 2 minutes        0.0.0.0:6379-&gt;6379/tcp   quirky_davinci</div></pre></td></tr></table></figure>
+<p>其中Status表示运行状态，Up表示运行中，PORTS表示容器需要对外暴露的端口号</p>
+<h3 id="连接、查看容器">连接、查看容器</h3><p>我们使用Redis镜像使用redis-cli客户端，连接到redis容器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -it redis:latest redis-cli -h <span class="number">192.168</span>.0.101</div></pre></td></tr></table></figure>
+<p>执行以上命令，我们就连接到redis容器，接下来我们就可以使用redis命令进行操作</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">192.168.0.101:6379&gt; set "testKey" "test"</div><div class="line">OK</div><div class="line">192.168.0.101:6379&gt; get "testKey"</div><div class="line">"test"</div><div class="line">192.168.0.101:6379&gt;</div></pre></td></tr></table></figure>
+<p>至此，我们已经完成了Reids的安装。</p>
+<h2 id="Zookeeper">Zookeeper</h2><p>接下来我们安装zookeeper，我们使用和redis相同的方法。直接使用最少的步骤安装，不再做过多解释</p>
+<h3 id="查找zookeeper镜像">查找zookeeper镜像</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker search zookeeper</div></pre></td></tr></table></figure>
+<p>查找结果如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">NAME                           DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</div><div class="line">jplock/zookeeper               Builds a docker image for Zookeeper versio...   160                  [OK]</div><div class="line">zookeeper                      Apache ZooKeeper is an open-source server ...   157       [OK]</div><div class="line">mesoscloud/zookeeper           ZooKeeper                                       70                   [OK]</div><div class="line">digitalwonderland/zookeeper    Latest Zookeeper - clusterable                  14                   [OK]</div><div class="line">springxd/zookeeper             A Docker image that can run a ZooKeeper se...   6                    [OK]</div></pre></td></tr></table></figure>
+<h3 id="拉取镜像-1">拉取镜像</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull zookeeper</div></pre></td></tr></table></figure>
+<h3 id="创建并启动容器-1">创建并启动容器</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -p 2181:2181 -v $PWD/data:/data  -d zookeeper:latest</div></pre></td></tr></table></figure>
+<p>使用zookeeprt镜像创建并启动容器，我们把容器的2181映射到机器的2181上，同样把当前目录的data 挂载到容器的/data</p>
+<h3 id="查看当前容器列表">查看当前容器列表</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:zookeeper yanyan.wang$ docker ps</div><div class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                        NAMES</div><div class="line">44b43e486817        zookeeper:latest    "/docker-entrypoin..."   24 minutes ago      Up 24 minutes       2888/tcp, 0.0.0.0:2181-&gt;2181/tcp, 3888/tcp   mystifying_wing</div><div class="line">2358c79358d6        redis:latest        "docker-entrypoint..."   About an hour ago   Up About an hour    0.0.0.0:6379-&gt;6379/tcp                       fervent_lamarr</div></pre></td></tr></table></figure>
+<h3 id="进入容器">进入容器</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker exec -it 44b43e486817 /bin/bash</div></pre></td></tr></table></figure>
+<p>进入容器之后，ls查看操作目录，可以查看下有哪些目录</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">bash-4.3# ls</div><div class="line">LICENSE.txt                bin                        dist-maven                 lib                        zookeeper-3.4.10.jar.asc</div><div class="line">NOTICE.txt                 build.xml                  docs                       recipes                    zookeeper-3.4.10.jar.md5</div><div class="line">README.txt                 conf                       ivy.xml                    src                        zookeeper-3.4.10.jar.sha1</div><div class="line">README_packaging.txt       contrib                    ivysettings.xml            zookeeper-3.4.10.jar</div></pre></td></tr></table></figure>
+<h2 id="Mysql">Mysql</h2><p>接下来我们安装Mysql，和以上直接从docker注册中心拉取镜像不同。我们首先构建自己的mysql镜像，然后在创建并启动容器</p>
+<h3 id="构建镜像">构建镜像</h3><h4 id="编写Dockerfile文件">编写Dockerfile文件</h4><p>我们可以使用Dockerfile来快速的构建。Dockerfile实际上就是一种编写Docker镜像的脚本，Dockerfile脚本有固定的格式，通过这些固定的格式，我们可以编写不同需求的Docker镜像。以下是构建Mysql镜像的脚本以及脚本的含义</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">## 设置基础镜像</div><div class="line">FROM mysql:latest</div><div class="line"></div><div class="line">## 设置维护者信息</div><div class="line">MAINTAINER yywang &lt;wangyan9110@163.com&gt;</div><div class="line"></div><div class="line">## 设置描述信息</div><div class="line">LABEL Descripttion="This image is build for MAC to use mysql" Vendor="GitHub" Version="latest"</div><div class="line">## 设置镜像制作过程中，需要执行的命令</div><div class="line">RUN apt-get update</div><div class="line">RUN apt-get -y install vim</div><div class="line">RUN usermod -u 1000 mysql</div><div class="line">RUN mkdir -p /var/run/mysqld</div><div class="line">RUN chmod -R 777 /var/run/mysqld</div></pre></td></tr></table></figure>
+<p>其中FROM 表示设置基础镜像指令，该指令有固定的格式，即“仓库名:标签名”，RUN 表示在镜像构建过程中，需要执行的命令。</p>
+<p>把以上脚本保存在一个叫Dockerfile的文件下，这时mysql镜像的Dockfile的脚本就完成了。</p>
+<h4 id="构建mysql镜像">构建mysql镜像</h4><p>在Dockerfile文件的同一目录下输入如下命令:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker build -t yywang/mysql-osx:latest .</div></pre></td></tr></table></figure>
+<p>其中-t 指定了镜像的名称，. 这一点表示读取当前目录下的Dockerfile文件</p>
+<h4 id="查看镜像">查看镜像</h4><p>在执行完成以上命令后，我们查看当前镜像</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yanyanwangdeMacBook-Pro:zookeeper yanyan.wang$ docker images</div><div class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">yywang/mysql-osx    latest              38c6579b6f70        4 minutes ago       446 MB</div></pre></td></tr></table></figure>
+<p>可以看出yywang/mysql-osx就是我们刚刚构建的镜像</p>
+<h3 id="创建并启动容器-2">创建并启动容器</h3><h4 id="创建并启动mysql容器">创建并启动mysql容器</h4><p>接下来我们就创建并启动mysql容器</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">docker run -d -h mysql \</div><div class="line">  -v $PWD/mysql:/var/lib/mysql \</div><div class="line">  -p 0.0.0.0:3306:3306 --name mysql \</div><div class="line">  -e MYSQL_ROOT_PASSWORD=123456 yywang/mysql-osx</div></pre></td></tr></table></figure>
+<p>其中-e 表示设置mysql的root账户密码为123456</p>
+<h4 id="连接、查看容器-1">连接、查看容器</h4><p>我们使用Mysql镜像的mysql客户端，连接到mysql容器</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -it yywang/mysql-osx mysql -h192.168.0.101 -uroot -p123456</div></pre></td></tr></table></figure>
+<p>登录完成后，我们就可以使用mysql的命令操作mysql</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select GET_LOCK("testKey",0);</div><div class="line">+-----------------------+</div><div class="line">| GET_LOCK("testKey",0) |</div><div class="line">+-----------------------+</div><div class="line">|                     1 |</div><div class="line">+-----------------------+</div><div class="line">1 row in set (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; select RELEASE_LOCK("testKey");</div><div class="line">+-------------------------+</div><div class="line">| RELEASE_LOCK("testKey") |</div><div class="line">+-------------------------+</div><div class="line">|                       1 |</div><div class="line">+-------------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<p>至此Mysql的安装也已经完成。</p>
+<h2 id="关注公众号">关注公众号</h2><p><img src="https://static.oschina.net/uploads/img/201705/30085638_ae6z.jpg" alt="输入图片说明"></p>
+<p><strong>关注以上公众号回复 Docker 获取PDF版</strong></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://yywang.qiniudn.com/IMG_0123.jpg" alt="wangyan9110 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://yywang.qiniudn.com/IMG_0122.jpg" alt="wangyan9110 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/20/kotlin-miroservice/" rel="next" title="如何使用Kotlin开发微服务">
+                <i class="fa fa-chevron-left"></i> 如何使用Kotlin开发微服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/05/30/docker-redis-zookeeper-mysql/"
+     data-title="如何使用Docker安装Mysql\Reids\Zookeeper"
+     data-content=""
+     data-url="http://yywang.info/2017/05/30/docker-redis-zookeeper-mysql/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/30/docker-redis-zookeeper-mysql/"
+           data-title="如何使用Docker安装Mysql\Reids\Zookeeper" data-url="http://yywang.info/2017/05/30/docker-redis-zookeeper-mysql/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/3444324?v=3&s=460"
+               alt="wangyan9110" />
+          <p class="site-author-name" itemprop="name">wangyan9110</p>
+          <p class="site-description motion-element" itemprop="description">关注微服务、业务建模、性能优化等</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker基础概念"><span class="nav-number">1.</span> <span class="nav-text">Docker基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker_Daemon"><span class="nav-number">1.1.</span> <span class="nav-text">Docker Daemon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker_Images"><span class="nav-number">1.2.</span> <span class="nav-text">Docker Images</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker_Containers"><span class="nav-number">1.3.</span> <span class="nav-text">Docker Containers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker_Client"><span class="nav-number">1.4.</span> <span class="nav-text">Docker Client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker_Registry"><span class="nav-number">1.5.</span> <span class="nav-text">Docker Registry</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis"><span class="nav-number">2.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找镜像"><span class="nav-number">2.1.</span> <span class="nav-text">查找镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉取镜像"><span class="nav-number">2.2.</span> <span class="nav-text">拉取镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列出所有镜像"><span class="nav-number">2.3.</span> <span class="nav-text">列出所有镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建并启动容器"><span class="nav-number">2.4.</span> <span class="nav-text">创建并启动容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看容器启动情况"><span class="nav-number">2.5.</span> <span class="nav-text">查看容器启动情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接、查看容器"><span class="nav-number">2.6.</span> <span class="nav-text">连接、查看容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zookeeper"><span class="nav-number">3.</span> <span class="nav-text">Zookeeper</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找zookeeper镜像"><span class="nav-number">3.1.</span> <span class="nav-text">查找zookeeper镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉取镜像-1"><span class="nav-number">3.2.</span> <span class="nav-text">拉取镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建并启动容器-1"><span class="nav-number">3.3.</span> <span class="nav-text">创建并启动容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看当前容器列表"><span class="nav-number">3.4.</span> <span class="nav-text">查看当前容器列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入容器"><span class="nav-number">3.5.</span> <span class="nav-text">进入容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql"><span class="nav-number">4.</span> <span class="nav-text">Mysql</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构建镜像"><span class="nav-number">4.1.</span> <span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写Dockerfile文件"><span class="nav-number">4.1.1.</span> <span class="nav-text">编写Dockerfile文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建mysql镜像"><span class="nav-number">4.1.2.</span> <span class="nav-text">构建mysql镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看镜像"><span class="nav-number">4.1.3.</span> <span class="nav-text">查看镜像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建并启动容器-2"><span class="nav-number">4.2.</span> <span class="nav-text">创建并启动容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建并启动mysql容器"><span class="nav-number">4.2.1.</span> <span class="nav-text">创建并启动mysql容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#连接、查看容器-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">连接、查看容器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关注公众号"><span class="nav-number">5.</span> <span class="nav-text">关注公众号</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyan9110</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=34501123" charset="UTF-8"></script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yywang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
